@@ -19,6 +19,15 @@ describe('Order', () => {
       const order = new Order(table, names);
     }).toThrow('Table must be a number');
   })
+
+  it('throws error if names is not a string', () => {
+    const table = 2;
+    const names = ['Andy', 'Anna'];
+    
+    expect(() => {
+      const order = new Order(table, names);
+    }).toThrow('Names must be a string');
+  })
 })
 
 
