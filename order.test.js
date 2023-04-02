@@ -20,6 +20,24 @@ describe('Order', () => {
     }).toThrow('Table must be a number');
   })
 
+  it('throws error if table is not in valid range (only four tables in cafe)', () => {
+    const table = 0;
+    const names = 'Andy';
+    
+    expect(() => {
+      const order = new Order(table, names);
+    }).toThrow('There are only four tables in the cafe');
+  })
+
+  it('throws error if table is not in valid range (only four tables in cafe)', () => {
+    const table = 5;
+    const names = 'Andy';
+    
+    expect(() => {
+      const order = new Order(table, names);
+    }).toThrow('There are only four tables in the cafe');
+  })
+
   it('throws error if names is not a string', () => {
     const table = 2;
     const names = ['Andy', 'Anna'];
