@@ -131,7 +131,7 @@ describe('Order', () => {
     expect(order.getItems()).toEqual(['Cafe Latte']);
   })
 
-  it('throws error if item is not a string', () => {
+  it('addItem: throws error if item is not a string', () => {
     const table = 1;
     const names = 'Andy';
     const order = new Order(table, names);
@@ -141,7 +141,7 @@ describe('Order', () => {
     }).toThrowError('Items must be type string');
   })
 
-  it('throws error if item is an empty string', () => {
+  it('addItem: throws error if item is an empty string', () => {
     const table = 1;
     const names = 'Andy';
     const order = new Order(table, names);
@@ -151,7 +151,7 @@ describe('Order', () => {
     }).toThrowError('Please enter an item');
   })
 
-  it('throws error if item is not on menu', () => {
+  it('addItem: throws error if item is not on menu', () => {
     const table = 1;
     const names = 'Andy';
     const order = new Order(table, names);
