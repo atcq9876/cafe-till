@@ -34,6 +34,7 @@ class Order {
 
   removeItem(item) {
     this.#validateItem(item);
+    if (!this._items.includes(item)) throw new Error("Can't remove an item that hasn't been added yet");
     this._items.splice(this._items.indexOf(item), 1);
   }
 

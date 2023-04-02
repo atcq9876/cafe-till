@@ -204,4 +204,15 @@ describe('Order', () => {
       order.removeItem('Green Tea');
     }).toThrowError('This is not an item on the menu');
   })
+
+  it('removeItem: throws error if item has not been added yet', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.addItem('Tea');
+
+    expect(() => {
+      order.removeItem('Americano');
+    }).toThrowError("Can't remove an item that hasn't been added yet");
+  })
 })
