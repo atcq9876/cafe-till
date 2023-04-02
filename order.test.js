@@ -160,4 +160,15 @@ describe('Order', () => {
       order.addItem('Green Tea');
     }).toThrowError('This is not an item on the menu');
   })
+
+  it('removes an item from the menu', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.addItem('Americano');
+    order.addItem('Single Espresso');
+    order.removeItem('Americano');
+    
+    expect(order.getItems()).toEqual(['Single Espresso']);
+  })
 })
