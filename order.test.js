@@ -29,7 +29,7 @@ describe('Order', () => {
     expect(order.getTable()).toEqual(4);
   })
 
-  it('throws error if table is not a number', () => {
+  it('constructor: throws error if table is not a number', () => {
     const table = 'One';
     const names = 'Andy';
     
@@ -38,7 +38,7 @@ describe('Order', () => {
     }).toThrow('Table must be a number');
   })
 
-  it('throws error if table is not in valid range (only four tables in cafe)', () => {
+  it('constructor: throws error if table is not in valid range (only four tables in cafe)', () => {
     const table = 0;
     const names = 'Andy';
     
@@ -47,12 +47,42 @@ describe('Order', () => {
     }).toThrow('There are only four tables in the cafe');
   })
 
-  it('throws error if table is not in valid range (only four tables in cafe)', () => {
+  it('constructor: throws error if table is not in valid range (only four tables in cafe)', () => {
     const table = 5;
     const names = 'Andy';
     
     expect(() => {
       const order = new Order(table, names);
+    }).toThrow('There are only four tables in the cafe');
+  })
+
+  it('setTable: throws error if table is not a number', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    
+    expect(() => {
+      order.setTable('Two');
+    }).toThrow('Table must be a number');
+  })
+
+  it('setTable: throws error if table is not in valid range (only four tables in cafe)', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    
+    expect(() => {
+      order.setTable(0);
+    }).toThrow('There are only four tables in the cafe');
+  })
+
+  it('setTable: throws error if table is not in valid range (only four tables in cafe)', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    
+    expect(() => {
+      order.setTable(5);
     }).toThrow('There are only four tables in the cafe');
   })
 

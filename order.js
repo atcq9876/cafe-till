@@ -20,6 +20,7 @@ class Order {
   }
 
   setTable(table) {
+    this.#validateTableNumber(table);
     this._table = table;
   }
 
