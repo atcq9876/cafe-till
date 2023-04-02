@@ -28,6 +28,15 @@ describe('Order', () => {
       const order = new Order(table, names);
     }).toThrow('Names must be a string');
   })
+
+  it('throws error if names is an empty string', () => {
+    const table = 2;
+    const names = '';
+    
+    expect(() => {
+      const order = new Order(table, names);
+    }).toThrow('Please enter one or more names');
+  })
 })
 
 
