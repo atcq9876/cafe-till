@@ -20,6 +20,15 @@ describe('Order', () => {
     expect(order.getNames()).toEqual('Belle, Chris');
   })
 
+  it('can setTable', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.setTable(4);
+
+    expect(order.getTable()).toEqual(4);
+  })
+
   it('throws error if table is not a number', () => {
     const table = 'One';
     const names = 'Andy';

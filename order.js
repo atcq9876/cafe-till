@@ -19,6 +19,10 @@ class Order {
     return this._table;
   }
 
+  setTable(table) {
+    this._table = table;
+  }
+
   addItem(item) {
     this._items.push(item);
   }
