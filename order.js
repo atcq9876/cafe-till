@@ -2,17 +2,25 @@ class Order {
   constructor(table, names) {
     this.#validateTableNumber(table);
     this.#validateNames(names);
-    this.table = table;
-    this.names = names;
-    this.items = [];
+    this._table = table;
+    this._names = names;
+    this._items = [];
+  }
+
+  getNames() {
+    return this._names;
+  }
+
+  getTable() {
+    return this._table;
   }
 
   addItem(item) {
-    this.items.push(item);
+    this._items.push(item);
   }
 
   getItems() {
-    return this.items;
+    return this._items;
   }
 
   #validateTableNumber(table) {

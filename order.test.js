@@ -6,9 +6,9 @@ describe('Order', () => {
     const names = 'Andy';
     const order = new Order(table, names);
 
-    expect(order.table).toEqual(1);
-    expect(order.names).toEqual('Andy');
-    expect(order.items).toEqual([]);
+    expect(order.getTable()).toEqual(1);
+    expect(order.getNames()).toEqual('Andy');
+    expect(order.getItems()).toEqual([]);
   })
 
   it('throws error if table is not a number', () => {
