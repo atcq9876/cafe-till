@@ -26,8 +26,7 @@ class Order {
   }
 
   addItem(item) {
-    if (typeof item !== 'string') throw new Error('Items must be type string');
-    if (item === '') throw new Error('Please enter an item');
+    this.#validateItem(item);
     this._items.push(item);
   }
 
@@ -43,6 +42,11 @@ class Order {
   #validateNames(names) {
     if (typeof names !== 'string') throw new Error('Names must be a string');
     if (names === '') throw new Error('Please enter one or more names');
+  }
+
+  #validateItem(item) {
+    if (typeof item !== 'string') throw new Error('Items must be type string');
+    if (item === '') throw new Error('Please enter an item');
   }
 }
 
