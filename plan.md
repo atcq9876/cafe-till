@@ -24,15 +24,14 @@ Your receipt must calculate and show the correct amount of tax (in this shop's c
 ### Classes
 Order
 - constructor(table, names)
-    - _this.table = table;
-    - _this.names = names; (names is a comma-separated string list of names, or one single name)
-    - _this.items = [];
+    - this._table = table;
+    - this._names = names; (names is a comma-separated string list of names, or one single name)
+    - this._items = [];
 - addItem(item)
     - Takes individual items (strings) one by one and adds them to this.items
 - removeItem(item)
     - removes an item from this.items (that has the same name)
-- editNames(names)
-    - _this.names = names;
+- get and set methods where applicable for names, table, items
 
 Receipt
 - constructor(order)
