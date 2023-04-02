@@ -26,6 +26,7 @@ class Order {
   }
 
   addItem(item) {
+    if (typeof item !== 'string') throw new Error('Items must be type string');
     this._items.push(item);
   }
 

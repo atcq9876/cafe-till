@@ -130,4 +130,14 @@ describe('Order', () => {
 
     expect(order.getItems()).toEqual(['Cafe Latte']);
   })
+
+  it('throws error if item is not a string', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+
+    expect(() => {
+      order.addItem(5);
+    }).toThrowError('Items must be type string');
+  })
 })
