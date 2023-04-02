@@ -150,4 +150,14 @@ describe('Order', () => {
       order.addItem('');
     }).toThrowError('Please enter an item');
   })
+
+  it('throws error if item is not on menu', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+
+    expect(() => {
+      order.addItem('Green Tea');
+    }).toThrowError('This is not an item on the menu');
+  })
 })

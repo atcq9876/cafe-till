@@ -1,3 +1,5 @@
+const menu = require('./cafeMenu.json');
+
 class Order {
   constructor(table, names) {
     this.#validateTableNumber(table);
@@ -47,6 +49,7 @@ class Order {
   #validateItem(item) {
     if (typeof item !== 'string') throw new Error('Items must be type string');
     if (item === '') throw new Error('Please enter an item');
+    if (!menu[0].prices[0].hasOwnProperty(item)) throw new Error('This is not an item on the menu');
   }
 }
 
