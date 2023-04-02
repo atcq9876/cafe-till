@@ -11,6 +11,10 @@ class Order {
     return this._names;
   }
 
+  setNames(names) {
+    this._names = names;
+  }
+
   getTable() {
     return this._table;
   }

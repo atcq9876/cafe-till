@@ -11,6 +11,15 @@ describe('Order', () => {
     expect(order.getItems()).toEqual([]);
   })
 
+  it('can setNames', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.setNames('Belle, Chris');
+
+    expect(order.getNames()).toEqual('Belle, Chris');
+  })
+
   it('throws error if table is not a number', () => {
     const table = 'One';
     const names = 'Andy';
