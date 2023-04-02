@@ -7,6 +7,14 @@ class Order {
     this.items = [];
   }
 
+  addItem(item) {
+    this.items.push(item);
+  }
+
+  getItems() {
+    return this.items;
+  }
+
   #validateTableNumber(table) {
     if (typeof table !== 'number') throw new Error('Table must be a number');
     if (table < 1 || table > 4) throw new Error('There are only four tables in the cafe');

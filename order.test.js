@@ -55,6 +55,13 @@ describe('Order', () => {
       const order = new Order(table, names);
     }).toThrow('Please enter one or more names');
   })
+
+  it('adds an item to order', () => {
+    const order = new Order(3, 'Andy, Anna');
+    order.addItem('Cafe Latte');
+
+    expect(order.getItems()).toEqual(['Cafe Latte']);
+  })
 })
 
 
