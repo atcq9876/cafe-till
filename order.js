@@ -12,6 +12,7 @@ class Order {
   }
 
   setNames(names) {
+    this.#validateNames(names);
     this._names = names;
   }
 

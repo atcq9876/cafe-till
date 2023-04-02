@@ -86,7 +86,7 @@ describe('Order', () => {
     }).toThrow('There are only four tables in the cafe');
   })
 
-  it('throws error if names is not a string', () => {
+  it('constructor: throws error if names is not a string', () => {
     const table = 2;
     const names = ['Andy', 'Anna'];
     
@@ -95,12 +95,32 @@ describe('Order', () => {
     }).toThrow('Names must be a string');
   })
 
-  it('throws error if names is an empty string', () => {
+  it('constructor: throws error if names is an empty string', () => {
     const table = 2;
     const names = '';
     
     expect(() => {
       const order = new Order(table, names);
+    }).toThrow('Please enter one or more names');
+  })
+
+  it('setNames: throws error if names is an empty string', () => {
+    const table = 2;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    
+    expect(() => {
+      order.setNames(['James']);
+    }).toThrow('Names must be a string');
+  })
+
+  it('setNames: throws error if names is an empty string', () => {
+    const table = 2;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    
+    expect(() => {
+      order.setNames('');
     }).toThrow('Please enter one or more names');
   })
 
