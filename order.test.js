@@ -124,7 +124,7 @@ describe('Order', () => {
     }).toThrow('Please enter one or more names');
   })
 
-  it('adds an item to order', () => {
+  it('adds an item to order if item is on the menu', () => {
     const order = new Order(3, 'Andy, Anna');
     order.addItem('Cafe Latte');
 
