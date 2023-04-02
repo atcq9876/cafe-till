@@ -33,7 +33,7 @@ class Order {
   }
 
   removeItem(item) {
-    
+    this.#validateItem(item);
     this._items.splice(this._items.indexOf(item), 1);
   }
 

@@ -171,4 +171,37 @@ describe('Order', () => {
     
     expect(order.getItems()).toEqual(['Single Espresso']);
   })
+
+  it('removeItem: throws error if item is not a string', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.addItem('Tea');
+
+    expect(() => {
+      order.removeItem(5);
+    }).toThrowError('Items must be type string');
+  })
+
+  it('removeItem: throws error if item is an empty string', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.addItem('Tea');
+
+    expect(() => {
+      order.removeItem('');
+    }).toThrowError('Please enter an item');
+  })
+
+  it('removeItem: throws error if item is not on menu', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+    order.addItem('Tea');
+
+    expect(() => {
+      order.removeItem('Green Tea');
+    }).toThrowError('This is not an item on the menu');
+  })
 })
