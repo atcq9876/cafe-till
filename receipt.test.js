@@ -1,0 +1,2 @@
+const Receipt = require('./receipt');
+
