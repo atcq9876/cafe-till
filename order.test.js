@@ -140,4 +140,14 @@ describe('Order', () => {
       order.addItem(5);
     }).toThrowError('Items must be type string');
   })
+
+  it('throws error if item is an empty string', () => {
+    const table = 1;
+    const names = 'Andy';
+    const order = new Order(table, names);
+
+    expect(() => {
+      order.addItem('');
+    }).toThrowError('Please enter an item');
+  })
 })
