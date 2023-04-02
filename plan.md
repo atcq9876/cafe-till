@@ -56,3 +56,4 @@ Receipt
 
 ## Ideas for later sprints
 Add a Payment class for handling payments, change, etc.
+- Think about how best to incorporate this, e.g., what arguments/objects it will take, how its return values will then be returned to the receipt, etc.
