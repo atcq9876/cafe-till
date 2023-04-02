@@ -38,7 +38,7 @@ describe('Order', () => {
     }).toThrow('Table must be a number');
   })
 
-  it('constructor: throws error if table is not in valid range (only four tables in cafe)', () => {
+  it('constructor: throws error if table is below valid range (only four tables in cafe)', () => {
     const table = 0;
     const names = 'Andy';
     
@@ -47,7 +47,7 @@ describe('Order', () => {
     }).toThrow('There are only four tables in the cafe');
   })
 
-  it('constructor: throws error if table is not in valid range (only four tables in cafe)', () => {
+  it('constructor: throws error if table is above valid range (only four tables in cafe)', () => {
     const table = 5;
     const names = 'Andy';
     
@@ -66,7 +66,7 @@ describe('Order', () => {
     }).toThrow('Table must be a number');
   })
 
-  it('setTable: throws error if table is not in valid range (only four tables in cafe)', () => {
+  it('setTable: throws error if table is below valid range (only four tables in cafe)', () => {
     const table = 1;
     const names = 'Andy';
     const order = new Order(table, names);
@@ -76,7 +76,7 @@ describe('Order', () => {
     }).toThrow('There are only four tables in the cafe');
   })
 
-  it('setTable: throws error if table is not in valid range (only four tables in cafe)', () => {
+  it('setTable: throws error if table is above valid range (only four tables in cafe)', () => {
     const table = 1;
     const names = 'Andy';
     const order = new Order(table, names);
@@ -131,8 +131,3 @@ describe('Order', () => {
     expect(order.getItems()).toEqual(['Cafe Latte']);
   })
 })
-
-
-// expect(() => {
-//   bankAccount.depositFunds('03/01/2023', -10.00);
-// }).toThrow('Only positive amounts can be deposited');
