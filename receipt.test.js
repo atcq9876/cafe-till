@@ -70,10 +70,17 @@ describe('Receipt', () => {
     }).toThrow('Only instances of Order can be passed to Receipt');
   })
 
-  it('returns the basic cafe info on the receipt', () => {
+  it('prints the basic cafe info on the receipt', () => {
     const mockOrder = new Order();
     const receipt = new Receipt(mockOrder);
 
     expect(receipt.printReceipt()).toContain('The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708');
+  })
+
+  it('prints the table number and names on the receipt', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+
+    expect(receipt.printReceipt()).toContain('Table: 2 / [4]\nAndy, Anna');
   })
 })

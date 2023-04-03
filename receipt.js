@@ -7,7 +7,10 @@ class Receipt {
   }
 
   printReceipt() {
-    let receipt = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708';
+    let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n';
+    let table = `Table: ${this.order.getTable()} / [4]\n`;
+    let name = `${this.order.getNames()}\n`;
+    let receipt = cafeInfo + table + name;
     return receipt;
   }
 
