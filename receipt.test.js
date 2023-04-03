@@ -31,4 +31,10 @@ describe('Receipt', () => {
       new Receipt('string');
     }).toThrow('Only objects can be passed to Receipt');
   })
+
+  test(('throws error if argument is not an order'), () => {
+    expect(() => {
+      new Receipt(new String('string'));
+    }).toThrow('Only instances of Order can be passed to Receipt');
+  })
 })
