@@ -12,15 +12,6 @@ class Receipt {
     return receipt;
   }
 
-  getDateAndTime() {
-    return new Date(Date.now())
-      .toISOString()
-      .replace('T', ' ')
-      .replace(/\..+/, '')
-      .replace(/-/g, '.')
-      + '\n';
-  }
-
   #formatReceipt() {
     let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n';
     let table = `Table: ${this._order.getTable()} / [4]\n`;
@@ -29,6 +20,15 @@ class Receipt {
     let receipt = this.getDateAndTime() + cafeInfo + table + name + items;
     console.log(receipt);
     return receipt;
+  }
+
+  getDateAndTime() {
+    return new Date(Date.now())
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\..+/, '')
+      .replace(/-/g, '.')
+      + '\n';
   }
 
   #formatItems() {
@@ -55,7 +55,7 @@ class Receipt {
       formattedItems += `   ${itemsAndQuantities[i + 1]} x`
       formattedItems += ` ${menu[0].prices[0][itemsAndQuantities[i]]}\n`;
     }
-    
+
     return formattedItems;
   }
 
