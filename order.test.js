@@ -5,7 +5,7 @@ const menu = [
   {
     "shopName": "The Coffee Connection",
     "address": "123 Lakeside Way",
-    "phone": "16503600708",
+    "phone": "+1 (650) 360-0708",
     "prices": [
       {
         "Cafe Latte": 4.75,
