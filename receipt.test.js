@@ -96,4 +96,14 @@ describe('Receipt', () => {
 
     spy.mockRestore();
   })
+
+  it('prints the ordered items on the receipt', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+
+    expect(receipt.printReceipt()).toContain('Cafe Latte');
+    expect(receipt.printReceipt()).toContain('2 x 4.75');
+    expect(receipt.printReceipt()).toContain('Tea');
+    expect(receipt.printReceipt()).toContain('1 x 3.65');
+  })
 })
