@@ -11,7 +11,7 @@ jest.mock('./order', () => {
       setTable: jest.fn(),
       setNames: jest.fn(),
       getTable: jest.fn().mockReturnValue(2),
-      getNames: jest.fn().mockReturnValue('Andy', 'Anna'),
+      getNames: jest.fn().mockReturnValue('Andy, Anna'),
     };
   });
 });
@@ -54,7 +54,7 @@ describe('Receipt', () => {
 
     expect(receipt.order).toEqual(mockOrder);
     expect(receipt.order.getTable()).toEqual(2);
-    expect(receipt.order.getNames()).toEqual('Andy', 'Anna');
+    expect(receipt.order.getNames()).toEqual('Andy, Anna');
     expect(receipt.order.getItems()).toEqual(['Cafe Latte', 'Cafe Latte', 'Tea']);
   })
 
