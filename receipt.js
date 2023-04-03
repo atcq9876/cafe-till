@@ -19,7 +19,8 @@ class Receipt {
       .toISOString()
       .replace('T', ' ')
       .replace(/\..+/, '')
-      .replace(/-/g, '.') + '\n';
+      .replace(/-/g, '.')
+      + '\n';
   }
 
   #validateOrder(order) {
