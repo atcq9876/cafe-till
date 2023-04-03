@@ -47,6 +47,8 @@ const menu = [
 // Mock the import of the cafeMenu
 jest.mock('./cafeMenu.json', () => menu);
 
+
+
 describe('Receipt', () => { 
   it('initialises correctly if passed an Order object', () => {
     const mockOrder = new Order();
@@ -82,5 +84,13 @@ describe('Receipt', () => {
     const receipt = new Receipt(mockOrder);
 
     expect(receipt.printReceipt()).toContain('Table: 2 / [4]\nAndy, Anna');
+  })
+
+  it('prints the date and time on the receipt', () => {
+    const mockOrder = new Order();
+    const mockedDateAndTime = '2023.11.10 08:08:43';
+    const receipt = new Receipt(mockOrder, mockedDateAndTime);
+
+    expect(receipt.printReceipt()).toContain('2023.11.10 08:08:43');
   })
 })
