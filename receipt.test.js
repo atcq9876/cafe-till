@@ -25,4 +25,10 @@ describe('Receipt', () => {
     expect(receipt.order.getNames()).toEqual('Andy', 'Anna');
     expect(receipt.order.getItems()).toEqual(['Cafe Latte', 'Cafe Latte', 'Tea']);
   })
+
+  test(('throws error if argument is not an order'), () => {
+    expect(() => {
+      new Receipt('string');
+    }).toThrow('Only objects can be passed to Receipt');
+  })
 })
