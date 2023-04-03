@@ -18,7 +18,6 @@ class Receipt {
     let name = `${this._order.getNames()}\n`;
     let items = this.#formatItems();
     let receipt = this.getDateAndTime() + cafeInfo + table + name + items;
-    console.log(receipt);
     return receipt;
   }
 
