@@ -8,12 +8,32 @@ class Receipt {
   }
 
   printReceipt() {
+    const receipt = this.#formatReceipt();
+    return receipt;
+  }
+
+  getDateAndTime() {
+    return new Date(Date.now())
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\..+/, '')
+      .replace(/-/g, '.')
+      + '\n';
+  }
+
+  #formatReceipt() {
     let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n';
     let table = `Table: ${this._order.getTable()} / [4]\n`;
     let name = `${this._order.getNames()}\n`;
-    let orderedItems = this._order.getItems();
-    
-    let itemsAndQuantities = orderedItems.reduce((array, item, index) => {
+    let items = this.#formatItems();
+    let receipt = this.getDateAndTime() + cafeInfo + table + name + items;
+    console.log(receipt);
+    return receipt;
+  }
+
+  #formatItems() {
+    let items = this._order.getItems();
+    let itemsAndQuantities = items.reduce((array, item, index) => {
       if (index === 0) {
         array.push(item);
         array.push(1);
@@ -28,23 +48,15 @@ class Receipt {
         return array;
       }
     }, []);
+
     let formattedItems = '';
     for (let i = 0; i < itemsAndQuantities.length; i += 2) {
-      formattedItems += `  ${itemsAndQuantities[i]}     ${itemsAndQuantities[i + 1]} x ${menu[0].prices[0][itemsAndQuantities[i]]}\n`;
+      formattedItems += `   ${itemsAndQuantities[i]}`
+      formattedItems += `   ${itemsAndQuantities[i + 1]} x`
+      formattedItems += ` ${menu[0].prices[0][itemsAndQuantities[i]]}\n`;
     }
-
-    let receipt = this.getDateAndTime() + cafeInfo + table + name + formattedItems;
-    console.log(receipt);
-    return receipt;
-  }
-
-  getDateAndTime() {
-    return new Date(Date.now())
-      .toISOString()
-      .replace('T', ' ')
-      .replace(/\..+/, '')
-      .replace(/-/g, '.')
-      + '\n';
+    
+    return formattedItems;
   }
 
   #validateOrder(order) {
