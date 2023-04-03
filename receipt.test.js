@@ -52,10 +52,10 @@ describe('Receipt', () => {
     const mockOrder = new Order();
     const receipt = new Receipt(mockOrder);
 
-    expect(receipt.order).toEqual(mockOrder);
-    expect(receipt.order.getTable()).toEqual(2);
-    expect(receipt.order.getNames()).toEqual('Andy, Anna');
-    expect(receipt.order.getItems()).toEqual(['Cafe Latte', 'Cafe Latte', 'Tea']);
+    expect(receipt._order).toEqual(mockOrder);
+    expect(receipt._order.getTable()).toEqual(2);
+    expect(receipt._order.getNames()).toEqual('Andy, Anna');
+    expect(receipt._order.getItems()).toEqual(['Cafe Latte', 'Cafe Latte', 'Tea']);
   })
 
   test(('throws error if argument is not an order'), () => {
