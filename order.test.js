@@ -28,6 +28,7 @@ const menu = [
   }
 ];
 
+// Mock the import of the cafeMenu
 jest.mock('./cafeMenu.json', () => menu);
 
 
