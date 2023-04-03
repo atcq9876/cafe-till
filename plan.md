@@ -36,19 +36,20 @@ Order
 Receipt
 - constructor(order)
     - Takes an Order object as an argument (uses order.table, order.names and order.items)
-    - _this.order = order; 
-    - _this.receipt = ''; (or don't bother with instance variable and just get formatReceipt to return receipt to printReceipt)
+    - throw error if argument is not an Order object (typeof "order")
+    - this._order = order; 
+    - this._receipt = ''; (or don't bother with instance variable and just get formatReceipt to return receipt to printReceipt)
 - printReceipt()
     - calls formatReceipt();
     - prints receipt;
-- private formatReceipt()
+- #formatReceipt()
     - updates this.receipt to include all cafe info, date&time, names, ordered items (and quantity of them)
     - uses cafeMenu.json to add individual prices next to items
     - calls calculatePrice() to get the totalPrice
     - calls calculateTax() to get tax (not added to totalPrice, just a portion of the totalPrice)
-- private calculatePrice()
+- #calculatePrice()
     - uses this.order.items and cafeMenu.json to update this.totalPrice
-- private calculateTax()
+- #calculateTax()
     - 8.64% of totalPrice
 
 
