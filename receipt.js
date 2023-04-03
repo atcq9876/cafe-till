@@ -1,18 +1,25 @@
 const Order = require('./order');
 
 class Receipt {
-  constructor(order, dateAndTime) {
+  constructor(order) {
     this.#validateOrder(order);
     this._order = order;
-    this._dateAndTime = dateAndTime;
   }
 
   printReceipt() {
     let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n';
     let table = `Table: ${this._order.getTable()} / [4]\n`;
     let name = `${this._order.getNames()}\n`;
-    let receipt = this._dateAndTime + cafeInfo + table + name;
+    let receipt = this.getDateAndTime() + cafeInfo + table + name;
     return receipt;
+  }
+
+  getDateAndTime() {
+    return new Date(Date.now())
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\..+/, '')
+      .replace(/-/g, '.') + '\n';
   }
 
   #validateOrder(order) {

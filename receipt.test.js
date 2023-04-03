@@ -88,9 +88,12 @@ describe('Receipt', () => {
 
   it('prints the date and time on the receipt', () => {
     const mockOrder = new Order();
-    const mockedDateAndTime = '2023.11.10 08:08:43';
-    const receipt = new Receipt(mockOrder, mockedDateAndTime);
+    const receipt = new Receipt(mockOrder);
+    const spy = jest.spyOn(receipt, 'getDateAndTime');
+    spy.mockReturnValue('2023.11.10 08:08:43');
 
     expect(receipt.printReceipt()).toContain('2023.11.10 08:08:43');
+
+    spy.mockRestore();
   })
 })
