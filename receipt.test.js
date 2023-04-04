@@ -160,7 +160,6 @@ describe('Receipt', () => {
     // 30 - 12 = 18
     const totalBlankSpace = '                  '
 
-    console.log(receipt.printReceipt());
     expect(receipt.printReceipt()).toContain('Total:' + totalBlankSpace + '$13.15');
   })
 
@@ -170,5 +169,16 @@ describe('Receipt', () => {
     const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
 
     expect(receipt.printReceipt()).toContain(discount);
+  })
+
+  test(('throw error if order is empty'), () => {
+    const emptyOrder = {
+      getTable: () => 1,
+      getItems: () => []
+    };
+    
+    expect(() => {
+      const receipt = new Receipt(emptyOrder);
+    }).toThrow('Orders must contain at least one item');
   })
 })
