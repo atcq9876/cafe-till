@@ -11,7 +11,6 @@ class PriceCalculator {
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
     })
-    // totalPrice = Math.round(totalPrice * 100) / 100;
     return totalPrice;
   }
 }

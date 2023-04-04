@@ -65,4 +65,12 @@ describe('PriceCalculator', () => {
 
     expect(priceCalculator.calculateTotalPrice()).toEqual(12.05);
   })
+
+  it('calculates the total price for a different order', () => {
+    const MockOrder = createMockOrder(['Cafe Latte', 'Cappucino']);
+    const order = new MockOrder();
+    const priceCalculator = new PriceCalculator(order);
+
+    expect(priceCalculator.calculateTotalPrice()).toStrictEqual(8.60);
+  })
 })
