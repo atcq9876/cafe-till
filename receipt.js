@@ -54,7 +54,7 @@ class Receipt {
     let formattedItems = '';
     for (let i = 0; i < itemsAndQuantities.length; i += 2) {
       formattedItems += ` ${itemsAndQuantities[i]}`.padEnd(18);
-      formattedItems += `${itemsAndQuantities[i + 1]} x ${menu[0].prices[0][itemsAndQuantities[i]]}`.padStart(12);
+      formattedItems += `${itemsAndQuantities[i + 1]} x ${menu[0].prices[0][itemsAndQuantities[i]].toFixed(2)}`.padStart(12);
       formattedItems += '\n';
     }
 
@@ -67,6 +67,7 @@ class Receipt {
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
     })
+    totalPrice = totalPrice.toFixed(2);
     this.totalPrice = totalPrice;
     return 'Total:' + `$${totalPrice}`.padStart(24) + '\n';
   }
