@@ -56,4 +56,11 @@ describe('PriceCalculator', () => {
     expect(priceCalculator._order.getNames()).toEqual('Jim, Jen');
     expect(priceCalculator._order.getItems()).toEqual(['Cortado', 'Americano', 'Americano']);
   })
+
+  it('calculates the total price of an order that does not end in a 0 decimal', () => {
+    const mockOrder = new Order();
+    const priceCalculator = new PriceCalculator(mockOrder);
+
+    expect(priceCalculator.calculateTotalPrice()).toEqual(12.05);
+  })
 })
