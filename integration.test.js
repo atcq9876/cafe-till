@@ -68,4 +68,11 @@ describe('integration', () => {
     
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
+
+  test(('throws error if passing an order with no items to receipt'), () => {
+    const emptyOrder = new Order(2, 'Name');
+    expect(() => {
+      new Receipt(emptyOrder);
+    }).toThrow('Orders must contain at least one item');
+  })
 })
