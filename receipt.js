@@ -13,14 +13,14 @@ class Receipt {
   }
 
   #formatReceipt() {
-    let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
+    const cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
     const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
-    let table = `Table: ${this._order.getTable()} / [4]\n`;
-    let name = `${this._order.getNames()}\n`;
-    let items = this.#formatItems();
-    let totalPrice = this.#calculateTotalPrice();
-    let tax = this.#calculateTax();
-    let receipt = this.getDateAndTime() + cafeInfo + discount + table + name + items + tax + totalPrice;
+    const table = `Table: ${this._order.getTable()} / [4]\n`;
+    const name = `${this._order.getNames()}\n`;
+    const items = this.#formatItems();
+    const totalPrice = this.#calculateTotalPrice();
+    const tax = this.#calculateTax();
+    const receipt = this.getDateAndTime() + cafeInfo + discount + table + name + items + tax + totalPrice;
     return receipt;
   }
 
@@ -34,8 +34,8 @@ class Receipt {
   }
 
   #formatItems() {
-    let items = this._order.getItems();
-    let itemsAndQuantities = items.reduce((array, item, index) => {
+    const items = this._order.getItems();
+    const itemsAndQuantities = items.reduce((array, item, index) => {
       if (index === 0) {
         array.push(item);
         array.push(1);
@@ -62,7 +62,7 @@ class Receipt {
   }
 
   #calculateTotalPrice() {
-    let items = this._order.getItems();
+    const items = this._order.getItems();
     let totalPrice = 0;
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
