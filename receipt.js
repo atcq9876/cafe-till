@@ -52,7 +52,7 @@ class Receipt {
 
     let formattedItems = '';
     for (let i = 0; i < itemsAndQuantities.length; i += 2) {
-      formattedItems += `   ${itemsAndQuantities[i]}`
+      formattedItems += ` ${itemsAndQuantities[i]}`
       formattedItems += `   ${itemsAndQuantities[i + 1]} x`
       formattedItems += ` ${menu[0].prices[0][itemsAndQuantities[i]]}\n`;
     }
