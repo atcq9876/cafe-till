@@ -7,11 +7,11 @@ jest.mock('./order', () => {
     return {
       addItem: jest.fn(),
       removeItem: jest.fn(),
-      getItems: jest.fn().mockReturnValue(['Cafe Latte', 'Cafe Latte', 'Tea']),
+      getItems: jest.fn().mockReturnValue(['Cortado', 'Americano', 'Americano']),
       setTable: jest.fn(),
       setNames: jest.fn(),
       getTable: jest.fn().mockReturnValue(2),
-      getNames: jest.fn().mockReturnValue('Andy, Anna'),
+      getNames: jest.fn().mockReturnValue('Jim, Jen'),
     };
   });
 });
