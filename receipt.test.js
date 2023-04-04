@@ -122,4 +122,22 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain('Tax:');
     expect(receipt.printReceipt()).toContain('$1.14');
   })
+
+  it('prints the correct amount of whitespace between items and prices on receipt', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+    // Max 30 characters on one line
+    // Max item length is 18 characters
+    // Max 'quantity x price' length is 12 characters
+
+    // ' Cafe Latte' (length = 11)   +   '2 x 4.75' (length = 8) = 19
+    // 30 - 19 = 11
+    const latteBlankSpace = '           ';
+    // ' Tea' (length = 4)    '1 x 3.65' (length = 8) = 11
+    // 30 - 12 = 18
+    const teaBlankSpace = '                  ';
+
+    expect(receipt.printReceipt()).toContain(' Cafe Latte' + latteBlankSpace + '2 x 4.75');
+    expect(receipt.printReceipt()).toContain(' Tea' + teaBlankSpace + '1 x 3.65');
+  })
 })
