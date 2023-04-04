@@ -52,6 +52,7 @@ Receipt
 - #calculateTax()
     - 8.64% of totalPrice
 
+**Extract price, tax and all money things to a separate class?**
 
 
 ## Ideas for later sprints
