@@ -1,7 +1,6 @@
 const Order = require('./order');
 const Receipt = require('./receipt');
 
-
 describe('integration', () => {
   it('prints correct receipt for order of three items', () => {
     const table = 3;
