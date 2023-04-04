@@ -52,9 +52,32 @@ Receipt
 - #calculateTax()
     - 8.64% of totalPrice
 
-**Extract price, tax and all money things to a separate class?**
-
 
 ## Ideas for later sprints
 Add a Payment class for handling payments, change, etc.
 - Think about how best to incorporate this, e.g., what arguments/objects it will take, how its return values will then be returned to the receipt, etc.
+
+**Extract price, tax and all money things to a separate class, then inject this into Receipt**
+class PriceCalculator {
+  constructor(order) {
+    this.#validateOrder;
+    this._order = order;
+  }
+
+  <!-- move from Receipt to PriceCalculator -->
+  #calculateTotalPrice() {
+
+  }
+
+  #calculateTax() {
+
+  }
+}
+
+Version 2
+---------
+
+- Add functionality to take payment and calculate correct change.  
+- Add functionality to handle discounts - in this example, a 5% discount on orders over $50, and a 10% muffin discount.
+
+
