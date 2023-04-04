@@ -178,7 +178,7 @@ describe('Receipt', () => {
     };
     
     expect(() => {
-      const receipt = new Receipt(emptyOrder);
+      new Receipt(emptyOrder);
     }).toThrow('Orders must contain at least one item');
   })
 })
