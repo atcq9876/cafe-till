@@ -81,4 +81,12 @@ describe('PriceCalculator', () => {
 
     expect(priceCalculator.calculateTax()).toEqual(1.04);
   })
+
+  it('calculates the tax of a different order', () => {
+    const MockOrder = createMockOrder(['Cafe Latte', 'Cappucino']);
+    const order = new MockOrder();
+    const priceCalculator = new PriceCalculator(order);
+
+    expect(priceCalculator.calculateTax()).toEqual(0.74);
+  })
 })
