@@ -13,6 +13,11 @@ class PriceCalculator {
     })
     return totalPrice;
   }
+
+  calculateTax() {
+    const tax = parseFloat((this.calculateTotalPrice() * 0.0864).toFixed(2));
+    return tax;
+  }
 }
 
 module.exports = PriceCalculator;

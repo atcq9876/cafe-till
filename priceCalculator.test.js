@@ -71,6 +71,14 @@ describe('PriceCalculator', () => {
     const order = new MockOrder();
     const priceCalculator = new PriceCalculator(order);
 
-    expect(priceCalculator.calculateTotalPrice()).toStrictEqual(8.60);
+    expect(priceCalculator.calculateTotalPrice()).toEqual(8.60);
+  })
+
+  it('calculates the tax of an order', () => {
+    const MockOrder = createMockOrder(['Cortado', 'Americano', 'Americano']);
+    const order = new MockOrder();
+    const priceCalculator = new PriceCalculator(order);
+
+    expect(priceCalculator.calculateTax()).toEqual(1.04);
   })
 })
