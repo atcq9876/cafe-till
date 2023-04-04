@@ -1,4 +1,3 @@
-const Order = require('./order');
 const menu = require('./cafeMenu.json');
 
 class Receipt {
@@ -17,7 +16,8 @@ class Receipt {
     let table = `Table: ${this._order.getTable()} / [4]\n`;
     let name = `${this._order.getNames()}\n`;
     let items = this.#formatItems();
-    let receipt = this.getDateAndTime() + cafeInfo + table + name + items;
+    let totalPrice = this.#calculateTotalPrice();
+    let receipt = this.getDateAndTime() + cafeInfo + table + name + items + totalPrice;
     return receipt;
   }
 
@@ -56,6 +56,15 @@ class Receipt {
     }
 
     return formattedItems;
+  }
+
+  #calculateTotalPrice() {
+    let items = this._order.getItems();
+    let totalPrice = 0;
+    items.forEach((item) => {
+      totalPrice += menu[0].prices[0][item];
+    })
+    return `\nTotal:   $${totalPrice}\n`;
   }
 
   #validateOrder(order) {
