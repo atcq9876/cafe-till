@@ -151,4 +151,15 @@ describe('Receipt', () => {
 
     expect(receipt.printReceipt()).toContain('Tax:' + taxBlankSpace + '$1.14');
   })
+
+  it('prints the correct amount of whitespace for total', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+    // Max 30 characters on one line
+    // 'Total:' (6)  +  '$13.15' (6) = 12
+    // 30 - 12 = 18
+    const totalBlankSpace = '                  '
+
+    expect(receipt.printReceipt()).toContain('Total:' + totalBlankSpace + '$13.15');
+  })
 })

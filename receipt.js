@@ -67,7 +67,7 @@ class Receipt {
       totalPrice += menu[0].prices[0][item];
     })
     this.totalPrice = totalPrice;
-    return `Total:     $${totalPrice}\n`;
+    return 'Total:' + `$${totalPrice}`.padStart(24) + '\n';
   }
 
   #calculateTax() {
