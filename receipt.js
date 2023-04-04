@@ -55,7 +55,7 @@ class Receipt {
       formattedItems += ` ${menu[0].prices[0][itemsAndQuantities[i]]}\n`;
     }
 
-    return formattedItems;
+    return formattedItems + '\n';
   }
 
   #calculateTotalPrice() {
@@ -64,7 +64,7 @@ class Receipt {
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
     })
-    return `\nTotal:   $${totalPrice}\n`;
+    return `Total:   $${totalPrice}\n`;
   }
 
   #validateOrder(order) {
