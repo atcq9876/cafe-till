@@ -1,20 +1,20 @@
 const PriceCalculator = require('./priceCalculator');
 const Order = require('./order');
 
-// Mock Order class
-jest.mock('./order', () => {
+// Function to create a mock order
+createMockOrder = (items) => {
   return jest.fn().mockImplementation(() => {
     return {
       addItem: jest.fn(),
       removeItem: jest.fn(),
-      getItems: jest.fn().mockReturnValue(['Cortado', 'Americano', 'Americano']),
+      getItems: jest.fn().mockReturnValue(items),
       setTable: jest.fn(),
       setNames: jest.fn(),
       getTable: jest.fn().mockReturnValue(2),
       getNames: jest.fn().mockReturnValue('Jim, Jen'),
     };
   });
-});
+}
 
 // Mock menu object
 const menu = [
@@ -49,8 +49,9 @@ jest.mock('./cafeMenu.json', () => menu);
 
 describe('PriceCalculator', () => {
   it('initialises and sets an order instance variable', () => {
-    const mockedOrder = new Order();
-    const priceCalculator = new PriceCalculator(mockedOrder);
+    const MockOrder = createMockOrder(['Cortado', 'Americano', 'Americano']);
+    const order = new MockOrder();
+    const priceCalculator = new PriceCalculator(order);
 
     expect(priceCalculator._order.getTable()).toEqual(2);
     expect(priceCalculator._order.getNames()).toEqual('Jim, Jen');
@@ -58,8 +59,9 @@ describe('PriceCalculator', () => {
   })
 
   it('calculates the total price of an order that does not end in a 0 decimal', () => {
-    const mockOrder = new Order();
-    const priceCalculator = new PriceCalculator(mockOrder);
+    const MockOrder = createMockOrder(['Cortado', 'Americano', 'Americano']);
+    const order = new MockOrder();
+    const priceCalculator = new PriceCalculator(order);
 
     expect(priceCalculator.calculateTotalPrice()).toEqual(12.05);
   })
