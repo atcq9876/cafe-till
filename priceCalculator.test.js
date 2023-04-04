@@ -48,5 +48,12 @@ const menu = [
 jest.mock('./cafeMenu.json', () => menu);
 
 describe('PriceCalculator', () => {
+  it('initialises and sets an order instance variable', () => {
+    const mockedOrder = new Order();
+    const priceCalculator = new PriceCalculator(mockedOrder);
 
+    expect(priceCalculator._order.getTable()).toEqual(2);
+    expect(priceCalculator._order.getNames()).toEqual('Jim, Jen');
+    expect(priceCalculator._order.getItems()).toEqual(['Cortado', 'Americano', 'Americano']);
+  })
 })
