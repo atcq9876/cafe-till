@@ -4,6 +4,7 @@ class Receipt {
   constructor(order) {
     this.#validateOrder(order);
     this._order = order;
+    this._totalPrice = 0;
   }
 
   printReceipt() {
@@ -17,7 +18,8 @@ class Receipt {
     let name = `${this._order.getNames()}\n`;
     let items = this.#formatItems();
     let totalPrice = this.#calculateTotalPrice();
-    let receipt = this.getDateAndTime() + cafeInfo + table + name + items + totalPrice;
+    let tax = this.#calculateTax();
+    let receipt = this.getDateAndTime() + cafeInfo + table + name + items + tax + totalPrice;
     return receipt;
   }
 
@@ -64,7 +66,13 @@ class Receipt {
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
     })
-    return `Total:   $${totalPrice}\n`;
+    this.totalPrice = totalPrice;
+    return `Total:     $${totalPrice}\n`;
+  }
+
+  #calculateTax() {
+    const tax = (this.totalPrice * 0.0864).toFixed(2);
+    return `Tax:     $${tax}\n`;
   }
 
   #validateOrder(order) {

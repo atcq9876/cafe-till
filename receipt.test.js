@@ -114,4 +114,12 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain('Total:');
     expect(receipt.printReceipt()).toContain('$13.15');
   })
+
+  it('prints tax on the receipt', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+
+    expect(receipt.printReceipt()).toContain('Tax:');
+    expect(receipt.printReceipt()).toContain('$1.14');
+  })
 })
