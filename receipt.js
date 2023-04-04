@@ -13,13 +13,14 @@ class Receipt {
   }
 
   #formatReceipt() {
-    let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n';
+    let cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
+    const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
     let table = `Table: ${this._order.getTable()} / [4]\n`;
     let name = `${this._order.getNames()}\n`;
     let items = this.#formatItems();
     let totalPrice = this.#calculateTotalPrice();
     let tax = this.#calculateTax();
-    let receipt = this.getDateAndTime() + cafeInfo + table + name + items + tax + totalPrice;
+    let receipt = this.getDateAndTime() + cafeInfo + discount + table + name + items + tax + totalPrice;
     return receipt;
   }
 

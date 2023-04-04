@@ -160,6 +160,15 @@ describe('Receipt', () => {
     // 30 - 12 = 18
     const totalBlankSpace = '                  '
 
+    console.log(receipt.printReceipt());
     expect(receipt.printReceipt()).toContain('Total:' + totalBlankSpace + '$13.15');
+  })
+
+  it('prints discount info on receipt', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+    const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
+
+    expect(receipt.printReceipt()).toContain(discount);
   })
 })
