@@ -140,4 +140,15 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain(' Cafe Latte' + latteBlankSpace + '2 x 4.75');
     expect(receipt.printReceipt()).toContain(' Tea' + teaBlankSpace + '1 x 3.65');
   })
+
+  it('prints the correct amount of whitespace for tax', () => {
+    const mockOrder = new Order();
+    const receipt = new Receipt(mockOrder);
+    // Max 30 characters on one line
+    // 'Tax:' (4)  +  '$1.14' (5) = 9
+    // 30 - 9 = 21
+    const taxBlankSpace = '                     '
+
+    expect(receipt.printReceipt()).toContain('Tax:' + taxBlankSpace + '$1.14');
+  })
 })

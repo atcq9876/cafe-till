@@ -72,7 +72,7 @@ class Receipt {
 
   #calculateTax() {
     const tax = (this.totalPrice * 0.0864).toFixed(2);
-    return `Tax:     $${tax}\n`;
+    return 'Tax:' + `$${tax}`.padStart(26) + '\n';
   }
 
   #validateOrder(order) {
