@@ -72,13 +72,15 @@ describe('Receipt', () => {
     expect(receipt._order.getItems()).toEqual(['Cafe Latte', 'Cafe Latte', 'Tea']);
   })
 
-  test(('throws error if argument is not an order'), () => {
+  // This and the below test are workarounds for directly checking if the object
+  // is an instance of Order as a mockedOrder is not an instance of Order
+  test(('throws error if argument is not an object'), () => {
     expect(() => {
       new Receipt('string');
     }).toThrow('Only objects can be passed to Receipt');
   })
 
-  test(('throws error if argument is not an order'), () => {
+  test(('throws error if argument does not contain a function of Order object'), () => {
     expect(() => {
       new Receipt(new String('string'));
     }).toThrow('Only instances of Order can be passed to Receipt');

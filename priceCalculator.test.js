@@ -90,6 +90,8 @@ describe('PriceCalculator', () => {
     expect(priceCalculator.calculateTax()).toEqual(0.74);
   })
 
+  // This and the below test are workarounds for directly checking if the object
+  // is an instance of Order as a mockedOrder is not an instance of Order
   test(('throws error if argument is not an object'), () => {
     expect(() => {
       new PriceCalculator('string');
