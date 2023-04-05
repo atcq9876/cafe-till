@@ -1,8 +1,10 @@
 class Payment {
   constructor(priceCalculator, cash) {
     this.#validatePriceCalculator(priceCalculator);
-    if (typeof cash !== 'number') throw new Error('Cash must be a number');
     this._priceCalculator = priceCalculator;
+    if (typeof cash !== 'number') throw new Error('Cash must be a number');
+    if (cash < 0) throw new Error('Cash must not be less than zero');
+    if (cash < this._priceCalculator.calculateTotalPrice()) throw new Error('Cash must not be less than total price');
     this._cash = cash;
   }
 
