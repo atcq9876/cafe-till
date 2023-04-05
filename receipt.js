@@ -9,11 +9,6 @@ class Receipt {
   }
 
   printReceipt() {
-    const receipt = this.#formatReceipt();
-    return receipt;
-  }
-
-  #formatReceipt() {
     const cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
     const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
     const table = `Table: ${this._order.getTable()} / [4]\n`;
