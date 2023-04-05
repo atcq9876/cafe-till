@@ -78,6 +78,21 @@ Version 2
 ---------
 
 - Add functionality to take payment and calculate correct change.  
-- Add functionality to handle discounts - in this example, a 5% discount on orders over $50, and a 10% muffin discount.
+class Payment {
+    constructor(paymentCalculator, cash) {
+        - validate paymentCalculator
+        - validate cash
+        - this.paymentCalculator = paymentCalculator
+        - this.cash = cash
+    }
 
+    calculateChange() {
+        return cash - paymentCalculator.calculateTotalPrice()
+    }
+}
+
+
+
+- Add functionality to handle discounts - in this example, a 5% discount on orders over $50, and a 10% muffin discount.
+        - Could add this to PaymentCalculator class and pass a discount(object?) to the PC class for this
 
