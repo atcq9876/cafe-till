@@ -16,4 +16,11 @@ describe('Payment', () => {
     expect(payment._priceCalculator).toEqual(mockPriceCalculator);
     expect(payment._cash).toEqual(cash);
   })
+
+  // validate priceCalculator
+  test(('throws error if priceCalculator is not an object'), () => {
+    expect(() => {
+      new Payment('test', 10);
+    }).toThrow('The first argument should be an instance of PriceCalculator');
+  })
 })
