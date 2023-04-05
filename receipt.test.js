@@ -253,13 +253,13 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain('$20.00');
   })
 
-  it('prints the correct amount of whitespace for total', () => {
+  it('prints the correct amount of whitespace for cash', () => {
     const mockOrder = new Order();
     const mockPriceCalculator = new PriceCalculator();
     const mockPayment = new Payment(20);
     const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
     // Max 30 characters on one line
-    // 'Cash:' (5)  +  '$13.15' (6) = 11
+    // 'Cash:' (5)  +  '$20.00' (6) = 11
     // 30 - 11 = 19
     const totalBlankSpace = '                   '
 
@@ -274,5 +274,18 @@ describe('Receipt', () => {
 
     expect(receipt.printReceipt()).toContain('Change:');
     expect(receipt.printReceipt()).toContain('$6.85');
+  })
+
+  it('prints the correct amount of whitespace for change', () => {
+    const mockOrder = new Order();
+    const mockPriceCalculator = new PriceCalculator();
+    const mockPayment = new Payment(20);
+    const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
+    // Max 30 characters on one line
+    // 'Change:' (7)  +  '$6.85.' (5) = 12
+    // 30 - 12 = 18
+    const totalBlankSpace = '                  '
+
+    expect(receipt.printReceipt()).toContain('Change:' + totalBlankSpace + '$6.85');
   })
 })
