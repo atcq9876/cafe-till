@@ -1,6 +1,7 @@
 const Order = require('./order');
 const Receipt = require('./receipt');
 const PriceCalculator = require('./priceCalculator');
+const Payment = require('./payment');
 
 describe('integration', () => {
   it('prints correct receipt for order of three items', () => {
@@ -12,8 +13,11 @@ describe('integration', () => {
     order.addItem('Muffin Of The Day');
 
     const priceCalculator = new PriceCalculator(order);
+    
+    const cash = 15;
+    const payment = new Payment(priceCalculator, cash)
 
-    const receipt = new Receipt(order, priceCalculator);
+    const receipt = new Receipt(order, priceCalculator, payment);
     const currentDateAndTime = new Date(Date.now())
       .toISOString()
       .replace('T', ' ')
@@ -31,7 +35,9 @@ describe('integration', () => {
       + ' Americano            2 x 3.75\n'
       + ' Muffin Of The Day    1 x 4.55\n\n'
       + 'Tax:                     $1.04\n'
-      + 'Total:                  $12.05\n';
+      + 'Total:                  $12.05\n'
+      + 'Cash:                   $15.00\n'
+      + 'Change:                  $2.95\n';
     
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
@@ -47,8 +53,11 @@ describe('integration', () => {
     order.addItem('Choc Mudcake');
 
     const priceCalculator = new PriceCalculator(order);
+    
+    const cash = 30;
+    const payment = new Payment(priceCalculator, cash)
 
-    const receipt = new Receipt(order, priceCalculator);
+    const receipt = new Receipt(order, priceCalculator, payment);
     const currentDateAndTime = new Date(Date.now())
       .toISOString()
       .replace('T', ' ')
@@ -68,9 +77,10 @@ describe('integration', () => {
       + ' Tea                  1 x 3.65\n'
       + ' Choc Mudcake         1 x 6.40\n\n'
       + 'Tax:                     $2.02\n'
-      + 'Total:                  $23.40\n';
+      + 'Total:                  $23.40\n'
+      + 'Cash:                   $30.00\n'
+      + 'Change:                  $6.60\n';
     
-    console.log(receipt.printReceipt());
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
 
