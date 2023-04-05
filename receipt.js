@@ -3,6 +3,7 @@ const menu = require('./cafeMenu.json');
 class Receipt {
   constructor(order, priceCalculator) {
     this.#validateOrder(order);
+    this.#validatePriceCalculator(priceCalculator);
     this._order = order;
     this._priceCalculator = priceCalculator;
   }
@@ -65,6 +66,11 @@ class Receipt {
     if (typeof order !== 'object') throw new Error('Only objects can be passed to Receipt');
     if (typeof order.getTable !== 'function') throw new Error('Only instances of Order can be passed to Receipt');
     if (order.getItems().length === 0) throw new Error('Orders must contain at least one item');
+  }
+
+  #validatePriceCalculator(priceCalculator) {
+    if (typeof priceCalculator !== 'object') throw new Error('Only objects can be passed to Receipt');
+    if (typeof priceCalculator.calculateTax !== 'function') throw new Error('The second argument should be an instance of PriceCalculator');
   }
 }
 

@@ -103,4 +103,6 @@ describe('PriceCalculator', () => {
       new PriceCalculator(new String('string'));
     }).toThrow('Only instances of Order can be passed to Receipt');
   })
+
+  // Add test for making sure order isn't empty
 })

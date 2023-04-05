@@ -205,4 +205,20 @@ describe('Receipt', () => {
       new Receipt(emptyOrder);
     }).toThrow('Orders must contain at least one item');
   })
+
+  // This and the below test are workarounds for directly checking if the object
+  // is an instance of PriceCalculator as a mock is not a true instance
+  test(('throws error if priceCalculator argument is not an object'), () => {
+    const mockedOrder = new Order();
+    expect(() => {
+      new Receipt(mockedOrder, 'string');
+    }).toThrow('Only objects can be passed to Receipt');
+  })
+
+  test(('throws error if priceCalculator argument does not contain a function of the PC class'), () => {
+    const mockedOrder = new Order();
+    expect(() => {
+      new Receipt(mockedOrder, new String('string'));
+    }).toThrow('The second argument should be an instance of PriceCalculator');
+  })
 })
