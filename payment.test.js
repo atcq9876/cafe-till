@@ -17,7 +17,8 @@ describe('Payment', () => {
     expect(payment._cash).toEqual(cash);
   })
 
-  // validate priceCalculator
+  // This and the below test are workarounds for directly checking if the object
+  // is an instance of PriceCalculator as a mock is not a true instance
   test(('throws error if priceCalculator is not an object'), () => {
     expect(() => {
       new Payment('test', 10);
@@ -28,5 +29,12 @@ describe('Payment', () => {
     expect(() => {
       new Payment(new String('Test'), 10);
     }).toThrow('The first argument should be an instance of PriceCalculator');
+  })
+
+  test(('throws error if priceCalculator does not have any price data'), () => {
+    const mockPriceCalculator = createMockPriceCalculator();
+    expect(() => {
+      new Payment(mockPriceCalculator, 10);
+    }).toThrow('Price calculator must contain order price data');
   })
 })
