@@ -9,6 +9,7 @@ class Receipt {
   }
 
   printReceipt() {
+    const timestamp = this.getDateAndTime();
     const cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
     const discount = 'Voucher 10% Off All Muffins!\nValid 01/04/2023 to 31/12/2023\n';
     const table = `Table: ${this._order.getTable()} / [4]\n`;
@@ -16,7 +17,7 @@ class Receipt {
     const items = this.#formatItems();
     const tax = 'Tax:' + `$${this._priceCalculator.calculateTax().toFixed(2)}`.padStart(26) + '\n';
     const totalPrice = 'Total:' + `$${this._priceCalculator.calculateTotalPrice().toFixed(2)}`.padStart(24) + '\n';
-    const receipt = this.getDateAndTime() + cafeInfo + discount + table + name + items + tax + totalPrice;
+    const receipt = timestamp + cafeInfo + discount + table + name + items + tax + totalPrice;
     return receipt;
   }
 
