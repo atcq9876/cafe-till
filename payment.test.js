@@ -1,5 +1,4 @@
 const Payment = require('./payment');
-const PriceCalculator = require('./priceCalculator');
 
 const createMockPriceCalculator = (totalPrice) => {
   return {

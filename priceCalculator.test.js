@@ -1,5 +1,4 @@
 const PriceCalculator = require('./priceCalculator');
-const Order = require('./order');
 
 // Function to create a mock order
 const createMockOrder = (items) => {
