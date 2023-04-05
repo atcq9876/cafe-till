@@ -2,7 +2,7 @@ const PriceCalculator = require('./priceCalculator');
 const Order = require('./order');
 
 // Function to create a mock order
-createMockOrder = (items) => {
+const createMockOrder = (items) => {
   return jest.fn().mockImplementation(() => {
     return {
       addItem: jest.fn(),
