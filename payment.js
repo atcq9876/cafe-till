@@ -1,6 +1,7 @@
 class Payment {
-  constructor() {
-
+  constructor(priceCalculator, cash) {
+    this._priceCalculator = priceCalculator;
+    this._cash = cash;
   }
 }
 
