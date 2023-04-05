@@ -1,10 +1,10 @@
 const menu = require('./cafeMenu.json');
 
 class Receipt {
-  constructor(order) {
+  constructor(order, priceCalculator) {
     this.#validateOrder(order);
     this._order = order;
-    this._totalPrice = 0;
+    this._priceCalculator = priceCalculator;
   }
 
   printReceipt() {
@@ -18,8 +18,8 @@ class Receipt {
     const table = `Table: ${this._order.getTable()} / [4]\n`;
     const name = `${this._order.getNames()}\n`;
     const items = this.#formatItems();
-    const totalPrice = this.#calculateTotalPrice();
-    const tax = this.#calculateTax();
+    const tax = 'Tax:' + `$${this._priceCalculator.calculateTax()}`.padStart(26) + '\n';
+    const totalPrice = 'Total:' + `$${this._priceCalculator.calculateTotalPrice()}`.padStart(24) + '\n';
     const receipt = this.getDateAndTime() + cafeInfo + discount + table + name + items + tax + totalPrice;
     return receipt;
   }
@@ -59,22 +59,6 @@ class Receipt {
     }
 
     return formattedItems + '\n';
-  }
-
-  #calculateTotalPrice() {
-    const items = this._order.getItems();
-    let totalPrice = 0;
-    items.forEach((item) => {
-      totalPrice += menu[0].prices[0][item];
-    })
-    totalPrice = totalPrice.toFixed(2);
-    this.totalPrice = totalPrice;
-    return 'Total:' + `$${totalPrice}`.padStart(24) + '\n';
-  }
-
-  #calculateTax() {
-    const tax = (this.totalPrice * 0.0864).toFixed(2);
-    return 'Tax:' + `$${tax}`.padStart(26) + '\n';
   }
 
   #validateOrder(order) {

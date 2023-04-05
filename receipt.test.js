@@ -1,5 +1,6 @@
 const Receipt = require('./receipt');
 const Order = require('./order');
+const PriceCalculator = require('./priceCalculator');
 
 // Mock Order class
 jest.mock('./order', () => {
@@ -15,6 +16,16 @@ jest.mock('./order', () => {
     };
   });
 });
+
+// Mock PriceCalculator class
+jest.mock('./priceCalculator', () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      calculateTotalPrice: jest.fn().mockReturnValue(13.15),
+      calculateTax: jest.fn().mockReturnValue(1.14),
+    }
+  })
+})
 
 // Mock menu object
 const menu = [
@@ -52,7 +63,8 @@ jest.mock('./cafeMenu.json', () => menu);
 describe('Receipt', () => { 
   it('initialises correctly if passed an Order object', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
 
     expect(receipt._order).toEqual(mockOrder);
     expect(receipt._order.getTable()).toEqual(2);
@@ -74,21 +86,24 @@ describe('Receipt', () => {
 
   it('prints the basic cafe info on the receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
 
     expect(receipt.printReceipt()).toContain('The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708');
   })
 
   it('prints the table number and names on the receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
 
     expect(receipt.printReceipt()).toContain('Table: 2 / [4]\nAndy, Anna');
   })
 
   it('prints the date and time on the receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
     const spy = jest.spyOn(receipt, 'getDateAndTime');
     spy.mockReturnValue('2023.11.10 08:08:43');
 
@@ -99,7 +114,8 @@ describe('Receipt', () => {
 
   it('prints the ordered items on the receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
 
     expect(receipt.printReceipt()).toContain('Cafe Latte');
     expect(receipt.printReceipt()).toContain('2 x 4.75');
@@ -109,7 +125,8 @@ describe('Receipt', () => {
 
   it('prints the total order price on the receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
 
     expect(receipt.printReceipt()).toContain('Total:');
     expect(receipt.printReceipt()).toContain('$13.15');
@@ -117,7 +134,8 @@ describe('Receipt', () => {
 
   it('prints tax on the receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
 
     expect(receipt.printReceipt()).toContain('Tax:');
     expect(receipt.printReceipt()).toContain('$1.14');
@@ -125,7 +143,8 @@ describe('Receipt', () => {
 
   it('prints the correct amount of whitespace between items and prices on receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
     // Max 30 characters on one line
     // Max item length is 18 characters
     // Max 'quantity x price' length is 12 characters
@@ -143,7 +162,8 @@ describe('Receipt', () => {
 
   it('prints the correct amount of whitespace for tax', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
     // Max 30 characters on one line
     // 'Tax:' (4)  +  '$1.14' (5) = 9
     // 30 - 9 = 21
@@ -154,7 +174,8 @@ describe('Receipt', () => {
 
   it('prints the correct amount of whitespace for total', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
     // Max 30 characters on one line
     // 'Total:' (6)  +  '$13.15' (6) = 12
     // 30 - 12 = 18
@@ -165,7 +186,8 @@ describe('Receipt', () => {
 
   it('prints discount info on receipt', () => {
     const mockOrder = new Order();
-    const receipt = new Receipt(mockOrder);
+    const mockPriceCalculator = new PriceCalculator();
+    const receipt = new Receipt(mockOrder, mockPriceCalculator);
     const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
 
     expect(receipt.printReceipt()).toContain(discount);
