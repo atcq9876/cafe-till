@@ -37,4 +37,19 @@ describe('Payment', () => {
       new Payment(mockPriceCalculator, 10);
     }).toThrow('Price calculator must contain order price data');
   })
+
+  test(('it throws error if cash is not a number'), () => {
+    const mockPriceCalculator = createMockPriceCalculator(15.00)
+    const cash = '50';
+
+    expect(() => {
+      new Payment(mockPriceCalculator, cash);
+    }).toThrow('Cash must be a number');
+  })
+
+  // throw error if cash is equal to or less than 0
+
+
+  // throw error if cash is less than price
+  
 })

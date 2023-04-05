@@ -1,6 +1,7 @@
 class Payment {
   constructor(priceCalculator, cash) {
     this.#validatePriceCalculator(priceCalculator);
+    if (typeof cash !== 'number') throw new Error('Cash must be a number');
     this._priceCalculator = priceCalculator;
     this._cash = cash;
   }
