@@ -23,4 +23,10 @@ describe('Payment', () => {
       new Payment('test', 10);
     }).toThrow('The first argument should be an instance of PriceCalculator');
   })
+
+  test(('throws error if priceCalculator does not have a calculateTotalPrice function'), () => {
+    expect(() => {
+      new Payment(new String('Test'), 10);
+    }).toThrow('The first argument should be an instance of PriceCalculator');
+  })
 })
