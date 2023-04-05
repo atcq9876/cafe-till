@@ -89,4 +89,16 @@ describe('PriceCalculator', () => {
 
     expect(priceCalculator.calculateTax()).toEqual(0.74);
   })
+
+  test(('throws error if argument is not an object'), () => {
+    expect(() => {
+      new PriceCalculator('string');
+    }).toThrow('Only objects can be passed to Receipt');
+  })
+
+  test(('throws error if argument does not contain a function of Order object'), () => {
+    expect(() => {
+      new PriceCalculator(new String('string'));
+    }).toThrow('Only instances of Order can be passed to Receipt');
+  })
 })
