@@ -3,8 +3,8 @@ const menu = require('./cafeMenu.json');
 class Receipt {
   constructor(order, priceCalculator) {
     this.#validateOrder(order);
-    this.#validatePriceCalculator(priceCalculator);
     this._order = order;
+    this.#validatePriceCalculator(priceCalculator);
     this._priceCalculator = priceCalculator;
   }
 

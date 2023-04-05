@@ -3,8 +3,8 @@ const menu = require('./cafeMenu.json');
 class Order {
   constructor(table, names) {
     this.#validateTableNumber(table);
-    this.#validateNames(names);
     this._table = table;
+    this.#validateNames(names);
     this._names = names;
     this._items = [];
   }
