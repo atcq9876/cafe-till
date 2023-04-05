@@ -19,7 +19,8 @@ class Receipt {
     const tax = 'Tax:' + `$${this._priceCalculator.calculateTax().toFixed(2)}`.padStart(26) + '\n';
     const totalPrice = 'Total:' + `$${this._priceCalculator.calculateTotalPrice().toFixed(2)}`.padStart(24) + '\n';
     const cash = 'Cash:' + `$${this._payment.getCash().toFixed(2)}`.padStart(25) + '\n';
-    const receipt = timestamp + cafeInfo + discount + table + name + items + tax + totalPrice + cash;
+    const change = 'Change:' + `$${this._payment.calculateChange().toFixed(2)}`.padStart(25) + '\n';
+    const receipt = timestamp + cafeInfo + discount + table + name + items + tax + totalPrice + cash + change;
     return receipt;
   }
 

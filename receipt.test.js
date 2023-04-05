@@ -32,7 +32,7 @@ jest.mock('./priceCalculator', () => {
 jest.mock('./payment', () => {
   return jest.fn().mockImplementation((cash) => {
     return {
-      calculateChange: jest.fn().mockReturnValue(parseFloat(cash - 13.15).toFixed(2)),
+      calculateChange: jest.fn().mockReturnValue(parseFloat((cash - 13.15).toFixed(2))),
       getCash: jest.fn().mockReturnValue(cash)
     }
   })
@@ -264,5 +264,15 @@ describe('Receipt', () => {
     const totalBlankSpace = '                   '
 
     expect(receipt.printReceipt()).toContain('Cash:' + totalBlankSpace + '$20.00');
+  })
+
+  it('prints cash on the receipt', () => {
+    const mockOrder = new Order();
+    const mockPriceCalculator = new PriceCalculator();
+    const mockPayment = new Payment(20);
+    const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
+
+    expect(receipt.printReceipt()).toContain('Change:');
+    expect(receipt.printReceipt()).toContain('$6.85');
   })
 })
