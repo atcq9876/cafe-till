@@ -77,13 +77,13 @@ describe('Receipt', () => {
   test(('throws error if argument is not an object'), () => {
     expect(() => {
       new Receipt('string');
-    }).toThrow('Only objects can be passed to Receipt');
+    }).toThrow('The first argument should be an instance of Order');
   })
 
   test(('throws error if argument does not contain a function of Order object'), () => {
     expect(() => {
       new Receipt(new String('string'));
-    }).toThrow('Only instances of Order can be passed to Receipt');
+    }).toThrow('The first argument should be an instance of Order');
   })
 
   it('prints the basic cafe info on the receipt', () => {
