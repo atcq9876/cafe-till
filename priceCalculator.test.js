@@ -95,13 +95,13 @@ describe('PriceCalculator', () => {
   test(('throws error if argument is not an object'), () => {
     expect(() => {
       new PriceCalculator('string');
-    }).toThrow('Only objects can be passed to Receipt');
+    }).toThrow('The first argument should be an instance of Order');
   })
 
   test(('throws error if argument does not contain a function of Order object'), () => {
     expect(() => {
       new PriceCalculator(new String('string'));
-    }).toThrow('Only instances of Order can be passed to Receipt');
+    }).toThrow('The first argument should be an instance of Order');
   })
 
   test(('throw error if order is empty'), () => {

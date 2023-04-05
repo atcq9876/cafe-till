@@ -21,9 +21,11 @@ class PriceCalculator {
   }
 
   #validateOrder(order) {
-    if (typeof order !== 'object') throw new Error('Only objects can be passed to Receipt');
-    if (typeof order.getTable !== 'function') throw new Error('Only instances of Order can be passed to Receipt');
-    if (order.getItems().length === 0) throw new Error('Orders must contain at least one item');
+    if (typeof order !== 'object' || typeof order.getTable !== 'function') {
+      throw new Error('The first argument should be an instance of Order');
+    } else if (order.getItems().length === 0) {
+      throw new Error('Orders must contain at least one item');
+    }
   }
 }
 
