@@ -1,5 +1,6 @@
 const Order = require('./order');
 const Receipt = require('./receipt');
+const PriceCalculator = require('./priceCalculator');
 
 describe('integration', () => {
   it('prints correct receipt for order of three items', () => {
@@ -10,7 +11,9 @@ describe('integration', () => {
     order.addItem('Americano');
     order.addItem('Muffin Of The Day');
 
-    const receipt = new Receipt(order);
+    const priceCalculator = new PriceCalculator(order);
+
+    const receipt = new Receipt(order, priceCalculator);
     const currentDateAndTime = new Date(Date.now())
       .toISOString()
       .replace('T', ' ')
@@ -43,7 +46,9 @@ describe('integration', () => {
     order.addItem('Tea');
     order.addItem('Choc Mudcake');
 
-    const receipt = new Receipt(order);
+    const priceCalculator = new PriceCalculator(order);
+
+    const receipt = new Receipt(order, priceCalculator);
     const currentDateAndTime = new Date(Date.now())
       .toISOString()
       .replace('T', ' ')

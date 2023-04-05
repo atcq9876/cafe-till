@@ -18,8 +18,8 @@ class Receipt {
     const table = `Table: ${this._order.getTable()} / [4]\n`;
     const name = `${this._order.getNames()}\n`;
     const items = this.#formatItems();
-    const tax = 'Tax:' + `$${this._priceCalculator.calculateTax()}`.padStart(26) + '\n';
-    const totalPrice = 'Total:' + `$${this._priceCalculator.calculateTotalPrice()}`.padStart(24) + '\n';
+    const tax = 'Tax:' + `$${this._priceCalculator.calculateTax().toFixed(2)}`.padStart(26) + '\n';
+    const totalPrice = 'Total:' + `$${this._priceCalculator.calculateTotalPrice().toFixed(2)}`.padStart(24) + '\n';
     const receipt = this.getDateAndTime() + cafeInfo + discount + table + name + items + tax + totalPrice;
     return receipt;
   }
