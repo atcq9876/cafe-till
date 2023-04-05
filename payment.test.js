@@ -79,4 +79,12 @@ describe('Payment', () => {
 
     expect(payment.calculateChange()).toEqual(4.50);
   })
+
+  it('gets cash value', () => {
+    const mockPriceCalculator = createMockPriceCalculator(5.50)
+    const cash = 10;
+    const payment = new Payment(mockPriceCalculator, cash);
+
+    expect(payment.getCash()).toEqual(10);
+  })
 })

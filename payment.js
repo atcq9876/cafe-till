@@ -12,6 +12,10 @@ class Payment {
     return change;
   }
 
+  getCash() {
+    return this._cash;
+  }
+
   #validatePriceCalculator(priceCalculator) {
     if (typeof priceCalculator !== 'object' || typeof priceCalculator.calculateTotalPrice !== 'function') {
       throw new Error('The first argument should be an instance of PriceCalculator');
