@@ -10,7 +10,7 @@ class Receipt {
 
   printReceipt() {
     const cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
-    const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
+    const discount = 'Voucher 10% Off All Muffins!\nValid 01/04/2023 to 31/12/2023\n';
     const table = `Table: ${this._order.getTable()} / [4]\n`;
     const name = `${this._order.getNames()}\n`;
     const items = this.#formatItems();

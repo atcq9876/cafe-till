@@ -25,7 +25,7 @@ describe('integration', () => {
       + '123 Lakeside Way\n'
       + 'Phone: +1 (650) 360-0708\n\n'
       + 'Voucher 10% Off All Muffins!\n'
-      + 'Valid 01/05/2023 to 31/05/2023\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n'
       + 'Table: 3 / [4]\n'
       + 'Geoff, June\n'
       + ' Americano            2 x 3.75\n'
@@ -60,7 +60,7 @@ describe('integration', () => {
       + '123 Lakeside Way\n'
       + 'Phone: +1 (650) 360-0708\n\n'
       + 'Voucher 10% Off All Muffins!\n'
-      + 'Valid 01/05/2023 to 31/05/2023\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n'
       + 'Table: 1 / [4]\n'
       + 'Geoff, June, John, Jen\n'
       + ' Cappucino            1 x 3.85\n'
@@ -70,6 +70,7 @@ describe('integration', () => {
       + 'Tax:                     $2.02\n'
       + 'Total:                  $23.40\n';
     
+    console.log(receipt.printReceipt());
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
 

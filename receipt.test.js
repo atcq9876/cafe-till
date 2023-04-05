@@ -190,7 +190,7 @@ describe('Receipt', () => {
     const mockOrder = new Order();
     const mockPriceCalculator = new PriceCalculator();
     const receipt = new Receipt(mockOrder, mockPriceCalculator);
-    const discount = 'Voucher 10% Off All Muffins!\nValid 01/05/2023 to 31/05/2023\n';
+    const discount = 'Voucher 10% Off All Muffins!\nValid 01/04/2023 to 31/12/2023\n';
 
     expect(receipt.printReceipt()).toContain(discount);
   })
