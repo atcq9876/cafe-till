@@ -104,5 +104,14 @@ describe('PriceCalculator', () => {
     }).toThrow('Only instances of Order can be passed to Receipt');
   })
 
-  // Add test for making sure order isn't empty
+  test(('throw error if order is empty'), () => {
+    const emptyOrder = {
+      getTable: () => 1,
+      getItems: () => []
+    };
+    
+    expect(() => {
+      new PriceCalculator(emptyOrder);
+    }).toThrow('Orders must contain at least one item');
+  })
 })
