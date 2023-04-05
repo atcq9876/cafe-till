@@ -6,6 +6,12 @@ class Payment {
     this._cash = cash;
   }
 
+  calculateChange() {
+    const totalPrice = this._priceCalculator.calculateTotalPrice();
+    const change = parseFloat((this._cash - totalPrice).toFixed(2));
+    return change;
+  }
+
   #validatePriceCalculator(priceCalculator) {
     if (typeof priceCalculator !== 'object' || typeof priceCalculator.calculateTotalPrice !== 'function') {
       throw new Error('The first argument should be an instance of PriceCalculator');

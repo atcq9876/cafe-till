@@ -65,9 +65,11 @@ describe('Payment', () => {
     }).toThrow('Cash must not be less than total price');
   })
 
-  // throw error if cash is equal to or less than 0
+  it('calculates change', () => {
+    const mockPriceCalculator = createMockPriceCalculator(17.05)
+    const cash = 20;
+    const payment = new Payment(mockPriceCalculator, cash);
 
-
-  // throw error if cash is less than price
-
+    expect(payment.calculateChange()).toEqual(2.95);
+  })
 })
