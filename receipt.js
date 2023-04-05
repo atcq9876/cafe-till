@@ -71,8 +71,9 @@ class Receipt {
   }
 
   #validatePriceCalculator(priceCalculator) {
-    if (typeof priceCalculator !== 'object') throw new Error('Only objects can be passed to Receipt');
-    if (typeof priceCalculator.calculateTax !== 'function') throw new Error('The second argument should be an instance of PriceCalculator');
+    if (typeof priceCalculator !== 'object' || typeof priceCalculator.calculateTax !== 'function') {
+      throw new Error('The second argument should be an instance of PriceCalculator');
+    }
   }
 }
 

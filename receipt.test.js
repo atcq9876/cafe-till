@@ -212,7 +212,7 @@ describe('Receipt', () => {
     const mockedOrder = new Order();
     expect(() => {
       new Receipt(mockedOrder, 'string');
-    }).toThrow('Only objects can be passed to Receipt');
+    }).toThrow('The second argument should be an instance of PriceCalculator');
   })
 
   test(('throws error if priceCalculator argument does not contain a function of the PC class'), () => {
