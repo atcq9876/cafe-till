@@ -1,12 +1,12 @@
 const menu = require('./cafeMenu.json');
 
 class PriceCalculator {
-  constructor(order, totalPriceDiscount = null, itemDiscount = null) {
+  constructor(order, itemDiscount = null, totalPriceDiscount = null) {
     this.#validateOrder(order);
     this._order = order;
+    this._itemDiscount = itemDiscount;
     this.#validateTotalPriceDiscount(totalPriceDiscount)
     this._totalPriceDiscount = totalPriceDiscount;
-    this._itemDiscount = itemDiscount;
   }
 
   calculateTotalPrice() {
