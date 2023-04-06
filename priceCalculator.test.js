@@ -213,22 +213,22 @@ describe('PriceCalculator', () => {
     expect(priceCalculator.calculateTotalPrice()).toEqual(2.92);
   })
 
-  // it('calculates a 20% itemDiscount and 10% totalPriceDiscount', () => {
-  //   const MockOrder = createMockOrder(['Caffe Latte', 'Tea', 'Cappucino']);
-  //   const order = new MockOrder();
+  it('calculates a 20% itemDiscount and 10% totalPriceDiscount', () => {
+    const MockOrder = createMockOrder(['Cafe Latte', 'Tea', 'Cappucino']);
+    const order = new MockOrder();
     
-  //   const itemName = 'Tea'
-  //   const itemDiscount = 20;
-  //   const MockItemDiscount = createMockItemDiscount(itemName, itemDiscount);
-  //   const itemDiscountInstance = new MockItemDiscount();
+    const itemName = 'Tea'
+    const itemDiscount = 20;
+    const MockItemDiscount = createMockItemDiscount(itemName, itemDiscount);
+    const itemDiscountInstance = new MockItemDiscount();
 
-  //   const minPriceForDiscount = 10;
-  //   const totalPriceDiscount = 10;
-  //   const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, totalPriceDiscount);
-  //   const totalPriceDiscountInstance = new MockTotalPriceDiscount();
+    const minPriceForDiscount = 10;
+    const totalPriceDiscount = 10;
+    const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, totalPriceDiscount);
+    const totalPriceDiscountInstance = new MockTotalPriceDiscount();
 
-  //   const priceCalculator = new PriceCalculator(order, itemDiscountInstance, totalPriceDiscountInstance);
+    const priceCalculator = new PriceCalculator(order, itemDiscountInstance, totalPriceDiscountInstance);
 
-  //   expect(priceCalculator.calculateTotalPrice()).toEqual(10.37);
-  // })
+    expect(priceCalculator.calculateTotalPrice()).toEqual(10.37);
+  })
 })
