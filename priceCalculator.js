@@ -13,16 +13,19 @@ class PriceCalculator {
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
     })
-    if (this._totalPriceDiscount) {
-      totalPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
-      totalPrice = parseFloat(totalPrice.toFixed(2));
-    }
+    if (this._totalPriceDiscount) totalPrice = this.#applyTotalPriceDiscount(totalPrice);
     return totalPrice;
   }
 
   calculateTax() {
     const tax = parseFloat((this.calculateTotalPrice() * 0.0864).toFixed(2));
     return tax;
+  }
+
+  #applyTotalPriceDiscount(totalPrice) {
+    let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
+    discountedPrice = parseFloat(discountedPrice.toFixed(2));
+    return discountedPrice;
   }
 
   #validateOrder(order) {
