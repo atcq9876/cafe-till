@@ -123,7 +123,7 @@ describe('PriceCalculator', () => {
     }).toThrow('Orders must contain at least one item');
   })
 
-  it('calculates a totalPrice discount', () => {
+  it('calculates a 5% totalPrice discount', () => {
     const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato', 'Affogato', 'Affogato']);
     const order = new MockOrder();
 
@@ -135,5 +135,19 @@ describe('PriceCalculator', () => {
     const priceCalculator = new PriceCalculator(order, totalPriceDiscount);
 
     expect(priceCalculator.calculateTotalPrice()).toEqual(63.84);
+  })
+
+  it('calculates a 10% totalPrice discount', () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato', 'Affogato', 'Affogato']);
+    const order = new MockOrder();
+
+    const minPriceForDiscount = 50;
+    const discount = 10;
+    const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, discount);
+    const totalPriceDiscount = new MockTotalPriceDiscount();
+
+    const priceCalculator = new PriceCalculator(order, totalPriceDiscount);
+
+    expect(priceCalculator.calculateTotalPrice()).toEqual(60.48);
   })
 })

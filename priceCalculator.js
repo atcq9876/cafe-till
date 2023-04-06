@@ -15,6 +15,7 @@ class PriceCalculator {
     })
     if (this._totalPriceDiscount) {
       totalPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
+      totalPrice = parseFloat(totalPrice.toFixed(2));
     }
     return totalPrice;
   }
