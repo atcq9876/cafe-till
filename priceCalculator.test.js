@@ -231,4 +231,18 @@ describe('PriceCalculator', () => {
 
     expect(priceCalculator.calculateTotalPrice()).toEqual(10.37);
   })
+
+  it('does not give discount if total price is below discount minTotalPrice', () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato', 'Affogato', 'Affogato']);
+    const order = new MockOrder();
+
+    const minPriceForDiscount = 100;
+    const discount = 10;
+    const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, discount);
+    const totalPriceDiscount = new MockTotalPriceDiscount();
+
+    const priceCalculator = new PriceCalculator(order, null, totalPriceDiscount);
+
+    expect(priceCalculator.calculateTotalPrice()).toEqual(67.2);
+  })
 })
