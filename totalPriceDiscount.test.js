@@ -17,4 +17,12 @@ describe('TotalPriceDiscount', () => {
 
     expect(totalPriceDiscount.getMinTotalPrice()).toEqual(40);
   })
+
+  it('gets the discountPercent', () => {
+    const minTotalPrice = 30;
+    const discountPercent = 20;
+    const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+
+    expect(totalPriceDiscount.getDiscountPercent()).toEqual(20);
+  })
 })

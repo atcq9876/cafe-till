@@ -7,6 +7,10 @@ class TotalPriceDiscount {
   getMinTotalPrice() {
     return this._minTotalPrice;
   }
+
+  getDiscountPercent() {
+    return this._discountPercent;
+  }
 }
 
 module.exports = TotalPriceDiscount;
