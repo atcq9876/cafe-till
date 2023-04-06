@@ -8,7 +8,7 @@ class Payment {
 
   calculateChange() {
     const totalPrice = this._priceCalculator.calculateTotalPrice();
-    const change = parseFloat((this._cash - totalPrice).toFixed(2));
+    const change = Math.round(100 * (this._cash - totalPrice)) / 100;
     return change;
   }
 

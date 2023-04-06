@@ -25,7 +25,7 @@ class PriceCalculator {
   }
 
   calculateTax() {
-    const tax = parseFloat((this.calculateTotalPrice() * 0.0864).toFixed(2));
+    const tax = Math.round((100 * this.calculateTotalPrice()) * 0.0864) / 100;
     return tax;
   }
 
@@ -37,7 +37,7 @@ class PriceCalculator {
 
   #applyTotalPriceDiscount(totalPrice) {
     let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
-    discountedPrice = parseFloat(discountedPrice.toFixed(2));
+    discountedPrice = Math.round(discountedPrice * 100) / 100;
     return discountedPrice;
   }
 
