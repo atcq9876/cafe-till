@@ -44,7 +44,7 @@ describe('TotalPriceDiscount', () => {
     }).toThrow('minTotalPrice must not be a negative number');
   })
 
-  test(('throws error if minTotalPrice is not a number'), () => {
+  test(('throws error if discountPercent is not a number'), () => {
     const minTotalPrice = 30;
     const discountPercent = '20';
     
