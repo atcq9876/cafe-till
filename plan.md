@@ -98,7 +98,7 @@ class Payment {
 class totalPriceDiscount {
     constructor(minTotalPrice, discountPercent) {
         validate minTotalPrice
-        this.minTotalPrice = minTotalPrice
+        this._minTotalPrice = minTotalPrice
         validate discountPercent
         this._discountPercent = discountPercent
     }
