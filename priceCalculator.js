@@ -1,9 +1,13 @@
 const menu = require('./cafeMenu.json');
 
 class PriceCalculator {
-  constructor(order, totalPriceDiscount) {
+  constructor(order, totalPriceDiscount = null) {
     this.#validateOrder(order);
     this._order = order;
+    // VALIDATE TOTALPRICEDISCOUNT
+    if (totalPriceDiscount !== null && typeof totalPriceDiscount !== 'object') {
+      throw new Error('The second argument should be an instance of TotalPriceDiscount');
+    }
     this._totalPriceDiscount = totalPriceDiscount;
   }
 
