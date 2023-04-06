@@ -1,9 +1,10 @@
 const menu = require('./cafeMenu.json');
 
 class PriceCalculator {
-  constructor(order) {
+  constructor(order, totalPriceDiscount) {
     this.#validateOrder(order);
     this._order = order;
+    this._totalPriceDiscount = totalPriceDiscount;
   }
 
   calculateTotalPrice() {
@@ -12,6 +13,9 @@ class PriceCalculator {
     items.forEach((item) => {
       totalPrice += menu[0].prices[0][item];
     })
+    if (this._totalPriceDiscount) {
+      totalPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
+    }
     return totalPrice;
   }
 

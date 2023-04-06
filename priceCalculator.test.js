@@ -15,6 +15,15 @@ const createMockOrder = (items) => {
   });
 }
 
+const createMockTotalPriceDiscount = (minTotalPrice, discountPercent) => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      getMinTotalPrice: jest.fn().mockReturnValue(minTotalPrice),
+      getDiscountPercent: jest.fn().mockReturnValue(discountPercent),
+    }
+  })
+}
+
 // Mock menu object
 const menu = [
   {
@@ -112,5 +121,19 @@ describe('PriceCalculator', () => {
     expect(() => {
       new PriceCalculator(emptyOrder);
     }).toThrow('Orders must contain at least one item');
+  })
+
+  it('calculates a totalPrice discount', () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato', 'Affogato', 'Affogato']);
+    const order = new MockOrder();
+
+    const minPriceForDiscount = 50;
+    const discount = 5;
+    const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, discount);
+    const totalPriceDiscount = new MockTotalPriceDiscount();
+
+    const priceCalculator = new PriceCalculator(order, totalPriceDiscount);
+
+    expect(priceCalculator.calculateTotalPrice()).toEqual(63.84);
   })
 })
