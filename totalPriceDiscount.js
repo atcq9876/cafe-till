@@ -3,6 +3,7 @@ class TotalPriceDiscount {
     this.#validateMinTotalPrice(minTotalPrice);
     this._minTotalPrice = minTotalPrice;
     if (typeof discountPercent !== 'number') throw new Error('discountPercent must be a number');
+    if (discountPercent < 1) throw new Error('discountPercent must be between 1 and 100');
     this._discountPercent = discountPercent;
   }
 

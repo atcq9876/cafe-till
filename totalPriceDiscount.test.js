@@ -52,4 +52,13 @@ describe('TotalPriceDiscount', () => {
       const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('discountPercent must be a number');
   })
+
+  test(('throws error if discountPercent is below one'), () => {
+    const minTotalPrice = 50;
+    const discountPercent = 0;
+    
+    expect(() => {
+      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+    }).toThrow('discountPercent must be between 1 and 100');
+  })
 })
