@@ -4,8 +4,9 @@ class PriceCalculator {
   constructor(order, itemDiscount = null, totalPriceDiscount = null) {
     this.#validateOrder(order);
     this._order = order;
+    this.#validateItemDiscount(itemDiscount);
     this._itemDiscount = itemDiscount;
-    this.#validateTotalPriceDiscount(totalPriceDiscount)
+    this.#validateTotalPriceDiscount(totalPriceDiscount);
     this._totalPriceDiscount = totalPriceDiscount;
   }
 
@@ -54,6 +55,12 @@ class PriceCalculator {
   #validateTotalPriceDiscount(totalPriceDiscount) {
     if (totalPriceDiscount !== null && typeof totalPriceDiscount.getMinTotalPrice !== 'function') {
       throw new Error('The second argument should be an instance of TotalPriceDiscount');
+    }
+  }
+
+  #validateItemDiscount(itemDiscount) {
+    if (itemDiscount !== null && typeof itemDiscount.getItemName !== 'function') {
+      throw new Error('The second argument should be an instance of itemDiscount');
     }
   }
 }

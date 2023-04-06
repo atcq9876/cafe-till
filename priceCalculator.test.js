@@ -245,4 +245,28 @@ describe('PriceCalculator', () => {
 
     expect(priceCalculator.calculateTotalPrice()).toEqual(67.2);
   })
+
+
+  // This and the below test are workarounds for directly checking if the object
+  // is an instance of PriceCalculator as a mock is not a true instance.
+  // null is the default value if no discount is passed
+  test(('throws error if totalPriceDiscount is not null or an object'), () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato']);
+    const order = new MockOrder();
+    const itemDiscount = 'test';
+
+    expect(() => {
+      new PriceCalculator(order, itemDiscount, null);
+    }).toThrow('The second argument should be an instance of itemDiscount');
+  })
+
+  test(('throws error if totalPriceDiscount does not have getMinTotalPrice function'), () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato']);
+    const order = new MockOrder();
+    const itemDiscount = new String('Test');
+
+    expect(() => {
+      new PriceCalculator(order, itemDiscount, null);
+    }).toThrow('The second argument should be an instance of itemDiscount');
+  })
 })
