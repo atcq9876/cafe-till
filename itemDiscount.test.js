@@ -75,7 +75,7 @@ describe('ItemDiscount', () => {
     }).toThrow('That item is not on the menu');
   })
 
-  it('Does not throw error if the itemName is Muffin', () => {
+  it('Does not throw error if the itemName is Muffin (for muffin discount)', () => {
     const itemName = 'Muffin';
     const discountPercent = 10;
     const muffinDiscount = new ItemDiscount(itemName, discountPercent);
