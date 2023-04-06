@@ -29,15 +29,15 @@ class PriceCalculator {
     return tax;
   }
 
-  #applyTotalPriceDiscount(totalPrice) {
-    let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
-    discountedPrice = parseFloat(discountedPrice.toFixed(2));
-    return discountedPrice;
-  }
-
   #applyItemDiscount(itemPrice) {
     let discountedPrice = ((itemPrice / 100) * (100 - this._itemDiscount.getDiscountPercent()));
     discountedPrice = Math.round(discountedPrice * 100) / 100;
+    return discountedPrice;
+  }
+
+  #applyTotalPriceDiscount(totalPrice) {
+    let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
+    discountedPrice = parseFloat(discountedPrice.toFixed(2));
     return discountedPrice;
   }
 
