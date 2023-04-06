@@ -163,4 +163,14 @@ describe('PriceCalculator', () => {
       new PriceCalculator(order, totalPriceDiscount);
     }).toThrow('The second argument should be an instance of TotalPriceDiscount');
   })
+
+  test(('throws error if totalPriceDiscount does not have getMinTotalPrice function'), () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato']);
+    const order = new MockOrder();
+    const totalPriceDiscount = new String('Test');
+
+    expect(() => {
+      new PriceCalculator(order, totalPriceDiscount);
+    }).toThrow('The second argument should be an instance of TotalPriceDiscount');
+  })
 })

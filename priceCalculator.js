@@ -7,6 +7,8 @@ class PriceCalculator {
     // VALIDATE TOTALPRICEDISCOUNT
     if (totalPriceDiscount !== null && typeof totalPriceDiscount !== 'object') {
       throw new Error('The second argument should be an instance of TotalPriceDiscount');
+    } else if (totalPriceDiscount !== null && typeof totalPriceDiscount.getMinTotalPrice !== 'function') {
+      throw new Error('The second argument should be an instance of TotalPriceDiscount');
     }
     this._totalPriceDiscount = totalPriceDiscount;
   }
