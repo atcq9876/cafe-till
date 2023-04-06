@@ -15,9 +15,7 @@ class PriceCalculator {
     items.forEach((item) => {
       let itemPrice = menu[0].prices[0][item];
       if (this._itemDiscount && item.includes(this._itemDiscount.getItemName())) {
-        let discountedPrice = ((itemPrice / 100) * (100 - this._itemDiscount.getDiscountPercent()));
-        discountedPrice = Math.round(discountedPrice * 100) / 100;
-        totalPrice += discountedPrice;
+        totalPrice += this.#applyItemDiscount(itemPrice);
       } else {
         totalPrice += itemPrice;
       }
@@ -34,6 +32,12 @@ class PriceCalculator {
   #applyTotalPriceDiscount(totalPrice) {
     let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
     discountedPrice = parseFloat(discountedPrice.toFixed(2));
+    return discountedPrice;
+  }
+
+  #applyItemDiscount(itemPrice) {
+    let discountedPrice = ((itemPrice / 100) * (100 - this._itemDiscount.getDiscountPercent()));
+    discountedPrice = Math.round(discountedPrice * 100) / 100;
     return discountedPrice;
   }
 
