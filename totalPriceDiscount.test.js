@@ -25,4 +25,13 @@ describe('TotalPriceDiscount', () => {
 
     expect(totalPriceDiscount.getDiscountPercent()).toEqual(20);
   })
+
+  test(('throws error if minTotalPrice is not a number'), () => {
+    const minTotalPrice = '30';
+    const discountPercent = 20;
+    
+    expect(() => {
+      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+    }).toThrow('minTotalPrice must be a number');
+  })
 })

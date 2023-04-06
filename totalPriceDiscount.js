@@ -1,5 +1,6 @@
 class TotalPriceDiscount {
   constructor(minTotalPrice, discountPercent) {
+    if (typeof minTotalPrice !== 'number') throw new Error('minTotalPrice must be a number');
     this._minTotalPrice = minTotalPrice;
     this._discountPercent = discountPercent;
   }
