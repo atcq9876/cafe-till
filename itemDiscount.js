@@ -1,5 +1,6 @@
 class ItemDiscount {
   constructor(itemName, discountPercent) {
+    if (typeof itemName !== 'string') throw new Error('itemName must be a string');
     this._itemName = itemName;
     this._discountPercent = discountPercent;
   }

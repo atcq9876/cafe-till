@@ -25,4 +25,13 @@ describe('ItemDiscount', () => {
     
     expect(itemDiscount.getDiscountPercent()).toEqual(5);
   })
+
+  test(('throws error if itemName is not a string'), () => {
+    const itemName = 10;
+    const discountPercent = 20;
+    
+    expect(() => {
+      new ItemDiscount(itemName, discountPercent);
+    }).toThrow('itemName must be a string');
+  })
 })
