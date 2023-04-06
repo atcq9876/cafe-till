@@ -15,10 +15,21 @@ const createMockOrder = (items) => {
   });
 }
 
+// Function to create a mock totalPriceDiscount
 const createMockTotalPriceDiscount = (minTotalPrice, discountPercent) => {
   return jest.fn().mockImplementation(() => {
     return {
       getMinTotalPrice: jest.fn().mockReturnValue(minTotalPrice),
+      getDiscountPercent: jest.fn().mockReturnValue(discountPercent),
+    }
+  })
+}
+
+// Function to create a mock itemDiscount
+const createMockItemDiscount = (itemName, discountPercent) => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      getItemName: jest.fn().mockReturnValue(itemName),
       getDiscountPercent: jest.fn().mockReturnValue(discountPercent),
     }
   })
@@ -172,5 +183,19 @@ describe('PriceCalculator', () => {
     expect(() => {
       new PriceCalculator(order, totalPriceDiscount);
     }).toThrow('The second argument should be an instance of TotalPriceDiscount');
+  })
+
+  it('calculates a 10% itemDiscount for type muffin', () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Muffin Of The Day']);
+    const order = new MockOrder();
+
+    const itemName = 'Muffin'
+    const discount = 10;
+    const MockItemDiscount = createMockItemDiscount(itemName, discount);
+    const itemDiscount = new MockItemDiscount();
+
+    const priceCalculator = new PriceCalculator(order, null, itemDiscount);
+
+    expect(priceCalculator.calculateTotalPrice()).toEqual(15.50);
   })
 })
