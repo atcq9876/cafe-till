@@ -2,6 +2,7 @@ class TotalPriceDiscount {
   constructor(minTotalPrice, discountPercent) {
     this.#validateMinTotalPrice(minTotalPrice);
     this._minTotalPrice = minTotalPrice;
+    if (typeof discountPercent !== 'number') throw new Error('discountPercent must be a number');
     this._discountPercent = discountPercent;
   }
 

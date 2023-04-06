@@ -43,4 +43,13 @@ describe('TotalPriceDiscount', () => {
       const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('minTotalPrice must not be a negative number');
   })
+
+  test(('throws error if minTotalPrice is not a number'), () => {
+    const minTotalPrice = 30;
+    const discountPercent = '20';
+    
+    expect(() => {
+      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+    }).toThrow('discountPercent must be a number');
+  })
 })
