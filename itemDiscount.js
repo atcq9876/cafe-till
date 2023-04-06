@@ -6,7 +6,7 @@ class ItemDiscount {
     
     const menuItems = Object.keys(menu[0].prices[0]);
     let menuContainsItem = menuItems.includes(itemName) ? true : false;
-    if (menuContainsItem === false) throw new Error('That item is not on the menu');
+    if (menuContainsItem === false && itemName !== 'Muffin') throw new Error('That item is not on the menu');
 
     this._itemName = itemName;
     this._discountPercent = discountPercent;

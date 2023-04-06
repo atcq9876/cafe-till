@@ -74,4 +74,12 @@ describe('ItemDiscount', () => {
       new ItemDiscount(itemName, discountPercent);
     }).toThrow('That item is not on the menu');
   })
+
+  it('Does not throw error if the itemName is Muffin', () => {
+    const itemName = 'Muffin';
+    const discountPercent = 10;
+    const muffinDiscount = new ItemDiscount(itemName, discountPercent);
+
+    expect(muffinDiscount.getItemName()).toEqual('Muffin');
+  })
 })
