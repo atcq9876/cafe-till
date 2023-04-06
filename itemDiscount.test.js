@@ -17,4 +17,12 @@ describe('ItemDiscount', () => {
     
     expect(itemDiscount.getItemName()).toEqual('Latte');
   })
+
+  it('gets discountPercent', () => {
+    const itemName = 'Latte';
+    const discountPercent = 5;
+    const itemDiscount = new ItemDiscount(itemName, discountPercent);
+    
+    expect(itemDiscount.getDiscountPercent()).toEqual(5);
+  })
 })

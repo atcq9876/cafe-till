@@ -7,6 +7,10 @@ class ItemDiscount {
   getItemName() {
     return this._itemName;
   }
+
+  getDiscountPercent() {
+    return this._discountPercent;
+  }
 }
 
 module.exports = ItemDiscount;
