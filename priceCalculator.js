@@ -20,7 +20,9 @@ class PriceCalculator {
         totalPrice += itemPrice;
       }
     })
-    if (this._totalPriceDiscount) totalPrice = this.#applyTotalPriceDiscount(totalPrice);
+    if (this._totalPriceDiscount && totalPrice >= this._totalPriceDiscount.getMinTotalPrice()) {
+      totalPrice = this.#applyTotalPriceDiscount(totalPrice);
+    }
     return totalPrice;
   }
 
