@@ -4,6 +4,7 @@ class ItemDiscount {
   constructor(itemName, discountPercent) {
     this.#validateItemName(itemName);
     this._itemName = itemName;
+    this.#validateDiscountPercent(discountPercent);
     this._discountPercent = discountPercent;
   }
 
@@ -22,6 +23,14 @@ class ItemDiscount {
     let menuContainsItem = menuItems.includes(itemName) ? true : false;
     if (menuContainsItem === false && itemName !== 'Muffin') {
       throw new Error('That item is not on the menu');
+    }
+  }
+
+  #validateDiscountPercent(discountPercent) {
+    if (typeof discountPercent !== 'number') {
+      throw new Error('discountPercent must be a number');
+    } else if (discountPercent < 1 || discountPercent > 100) {
+      throw new Error('discountPercent must be between 1 and 100');
     }
   }
 }

@@ -82,4 +82,31 @@ describe('ItemDiscount', () => {
 
     expect(muffinDiscount.getItemName()).toEqual('Muffin');
   })
+
+  test(('throws error if discountPercent is not a number'), () => {
+    const itemName = 'Cappucino';
+    const discountPercent = '20';
+    
+    expect(() => {
+      new ItemDiscount(itemName, discountPercent);
+    }).toThrow('discountPercent must be a number');
+  })
+
+  test(('throws error if discountPercent is below one'), () => {
+    const itemName = 'Cappucino';
+    const discountPercent = 0;
+    
+    expect(() => {
+      new ItemDiscount(itemName, discountPercent);
+    }).toThrow('discountPercent must be between 1 and 100');
+  })
+
+  test(('throws error if discountPercent is above 100'), () => {
+    const itemName = 'Cappucino';
+    const discountPercent = 101;
+    
+    expect(() => {
+      new ItemDiscount(itemName, discountPercent);
+    }).toThrow('discountPercent must be between 1 and 100');
+  })
 })
