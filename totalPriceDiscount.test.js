@@ -31,7 +31,7 @@ describe('TotalPriceDiscount', () => {
     const discountPercent = 20;
     
     expect(() => {
-      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+      new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('minTotalPrice must be a number');
   })
 
@@ -40,7 +40,7 @@ describe('TotalPriceDiscount', () => {
     const discountPercent = 10;
     
     expect(() => {
-      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+      new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('minTotalPrice must not be a negative number');
   })
 
@@ -49,7 +49,7 @@ describe('TotalPriceDiscount', () => {
     const discountPercent = '20';
     
     expect(() => {
-      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+      new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('discountPercent must be a number');
   })
 
@@ -58,7 +58,7 @@ describe('TotalPriceDiscount', () => {
     const discountPercent = 0;
     
     expect(() => {
-      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+      new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('discountPercent must be between 1 and 100');
   })
 
@@ -67,7 +67,7 @@ describe('TotalPriceDiscount', () => {
     const discountPercent = 101;
     
     expect(() => {
-      const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, discountPercent);
+      new TotalPriceDiscount(minTotalPrice, discountPercent);
     }).toThrow('discountPercent must be between 1 and 100');
   })
 })
