@@ -198,4 +198,18 @@ describe('PriceCalculator', () => {
 
     expect(priceCalculator.calculateTotalPrice()).toEqual(15.50);
   })
+
+  it('calculates a 10% itemDiscount for type muffin', () => {
+    const MockOrder = createMockOrder(['Tea']);
+    const order = new MockOrder();
+
+    const itemName = 'Tea'
+    const discount = 20;
+    const MockItemDiscount = createMockItemDiscount(itemName, discount);
+    const itemDiscount = new MockItemDiscount();
+
+    const priceCalculator = new PriceCalculator(order, null, itemDiscount);
+
+    expect(priceCalculator.calculateTotalPrice()).toEqual(2.92);
+  })
 })
