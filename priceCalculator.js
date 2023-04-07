@@ -42,15 +42,19 @@ class PriceCalculator {
 
   #applyItemDiscount(itemPrice) {
     let discountedPrice = ((itemPrice / 100) * (100 - this._itemDiscount.getDiscountPercent()));
+    // Use Math.round to round up
     discountedPrice = Math.round(discountedPrice * 100) / 100;
+    // Use toFixed(2) to round down
     this._overallDiscountValue += parseFloat((itemPrice - discountedPrice).toFixed(2));
     return discountedPrice;
   }
 
   #applyTotalPriceDiscount(totalPrice) {
     let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
+    // Use Math.round to round up
     discountedPrice = Math.round(discountedPrice * 100) / 100;
-    this._overallDiscountValue = parseFloat(((totalPrice - discountedPrice) + this._itemsDiscountValue).toFixed(2));
+    // Use toFixed(2) to round down
+    this._overallDiscountValue += parseFloat(((totalPrice - discountedPrice) + this._itemsDiscountValue).toFixed(2));
     return discountedPrice;
   }
 

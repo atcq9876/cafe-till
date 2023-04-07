@@ -299,4 +299,28 @@ describe('PriceCalculator', () => {
     // 3.65 - 2.92 = 0.73
     expect(priceCalculator.getOverallDiscountValue()).toEqual(0.73);
   })
+
+  it('gets the complete discount value (when applying both item and totalPrice discounts)', () => {
+    const MockOrder = createMockOrder(['Cafe Latte', 'Tea', 'Cappucino']);
+    const order = new MockOrder();
+    
+    const itemName = 'Tea'
+    const itemDiscount = 20;
+    const MockItemDiscount = createMockItemDiscount(itemName, itemDiscount);
+    const itemDiscountInstance = new MockItemDiscount();
+
+    const minPriceForDiscount = 10;
+    const totalPriceDiscount = 10;
+    const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, totalPriceDiscount);
+    const totalPriceDiscountInstance = new MockTotalPriceDiscount();
+
+    const priceCalculator = new PriceCalculator(order, itemDiscountInstance, totalPriceDiscountInstance);
+
+    // 3.65 + 4.75 + 3.85 = 12.25
+    // 3.65 - 2.92 = 0.73
+    // 2.92 + 4.75 + 3.85 = 11.52
+    // 11.52 * 0.9 = 10.37
+    // 12.25 - 10.37 = 1.88
+    expect(priceCalculator.getOverallDiscountValue()).toEqual(1.88);
+  })
 })
