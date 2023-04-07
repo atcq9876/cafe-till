@@ -38,14 +38,14 @@ jest.mock('./priceCalculator', () => {
       return {
         calculateTotalPrice: jest.fn().mockReturnValue(11.84),
         calculateTax: jest.fn().mockReturnValue(1.02),
-        getDiscountValue: jest.fn().mockReturnValue(1.31),
+        getOverallDiscountValue: jest.fn().mockReturnValue(1.31),
         totalPriceDiscount,
       }
     } else {
       return {
         calculateTotalPrice: jest.fn().mockReturnValue(13.15),
         calculateTax: jest.fn().mockReturnValue(1.14),
-        getDiscountValue: jest.fn().mockReturnValue(0),
+        getOverallDiscountValue: jest.fn().mockReturnValue(0),
       }
     }
   })
@@ -289,7 +289,7 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain('Cash:' + totalBlankSpace + '$20.00');
   })
 
-  it('prints cash on the receipt', () => {
+  it('prints change on the receipt', () => {
     const mockOrder = new Order();
     const mockPriceCalculator = new PriceCalculator();
     const mockPayment = new Payment(20);
@@ -312,7 +312,21 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain('Change:' + totalBlankSpace + '$6.85');
   })
 
-  it('prints the correct amount of whitespace for change', () => {
+  it('prints discount to receipt', () => {
+    const mockOrder = new Order();
+    const totalPriceDiscount = new TotalPriceDiscount();
+    const mockPriceCalculator = new PriceCalculator(totalPriceDiscount);
+    const mockPayment = new Payment(20);
+    const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
+
+    // 10% discount on $13.15 bill
+    expect(receipt.printReceipt()).toContain('Disc:');
+    expect(receipt.printReceipt()).toContain('$1.31');
+    expect(receipt.printReceipt()).toContain('Total:');
+    expect(receipt.printReceipt()).toContain('$11.84');
+  })
+
+  it('prints the correct amount of whitespace for discount', () => {
     const mockOrder = new Order();
     const totalPriceDiscount = new TotalPriceDiscount();
     const mockPriceCalculator = new PriceCalculator(totalPriceDiscount);
