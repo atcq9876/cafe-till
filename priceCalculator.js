@@ -9,7 +9,7 @@ class PriceCalculator {
     this.#validateTotalPriceDiscount(totalPriceDiscount);
     this._totalPriceDiscount = totalPriceDiscount;
     this._itemsDiscountValue = 0;
-    this._completeDiscountValue = 0;
+    this._overallDiscountValue = 0;
   }
 
   calculateTotalPrice() {
@@ -35,8 +35,8 @@ class PriceCalculator {
     return tax;
   }
 
-  getDiscountValue() {
-    return this._completeDiscountValue;
+  getOverallDiscountValue() {
+    return this._overallDiscountValue;
   }
 
   #applyItemDiscount(itemPrice) {
@@ -49,7 +49,7 @@ class PriceCalculator {
   #applyTotalPriceDiscount(totalPrice) {
     let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
     discountedPrice = Math.round(discountedPrice * 100) / 100;
-    this._completeDiscountValue = (totalPrice - discountedPrice) + this._itemsDiscountValue;
+    this._overallDiscountValue = parseFloat(((totalPrice - discountedPrice) + this._itemsDiscountValue).toFixed(2));
     return discountedPrice;
   }
 

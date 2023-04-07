@@ -269,4 +269,19 @@ describe('PriceCalculator', () => {
       new PriceCalculator(order, itemDiscount, null);
     }).toThrow('The second argument should be an instance of itemDiscount');
   })
+
+  it('gets the complete discount value (when applying a totalPriceDiscount)', () => {
+    const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato', 'Affogato', 'Affogato']);
+    const order = new MockOrder();
+
+    const minPriceForDiscount = 50;
+    const discount = 10;
+    const MockTotalPriceDiscount = createMockTotalPriceDiscount(minPriceForDiscount, discount);
+    const totalPriceDiscount = new MockTotalPriceDiscount();
+
+    const priceCalculator = new PriceCalculator(order, null, totalPriceDiscount);
+    // 67.2 - 60.48 = 
+    expect(priceCalculator.calculateTotalPrice()).toEqual(60.48);
+    expect(priceCalculator.getOverallDiscountValue()).toEqual(6.72);
+  })
 })
