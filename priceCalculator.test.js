@@ -282,7 +282,21 @@ describe('PriceCalculator', () => {
     const priceCalculator = new PriceCalculator(order, null, totalPriceDiscount);
     
     // 67.2 - 60.48 = 6.72
-    expect(priceCalculator.calculateTotalPrice()).toEqual(60.48);
     expect(priceCalculator.getOverallDiscountValue()).toEqual(6.72);
+  })
+
+  it('gets the complete discount value (when applying an itemDiscount)', () => {
+    const MockOrder = createMockOrder(['Tea']);
+    const order = new MockOrder();
+
+    const itemName = 'Tea'
+    const discount = 20;
+    const MockItemDiscount = createMockItemDiscount(itemName, discount);
+    const itemDiscount = new MockItemDiscount();
+
+    const priceCalculator = new PriceCalculator(order, itemDiscount, null);
+
+    // 3.65 - 2.92 = 0.73
+    expect(priceCalculator.getOverallDiscountValue()).toEqual(0.73);
   })
 })

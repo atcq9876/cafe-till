@@ -36,13 +36,14 @@ class PriceCalculator {
   }
 
   getOverallDiscountValue() {
+    this.calculateTotalPrice();
     return this._overallDiscountValue;
   }
 
   #applyItemDiscount(itemPrice) {
     let discountedPrice = ((itemPrice / 100) * (100 - this._itemDiscount.getDiscountPercent()));
     discountedPrice = Math.round(discountedPrice * 100) / 100;
-    // this._itemsDiscountValue += (itemPrice - discountedPrice);
+    this._overallDiscountValue += parseFloat((itemPrice - discountedPrice).toFixed(2));
     return discountedPrice;
   }
 
