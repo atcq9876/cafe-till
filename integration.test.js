@@ -148,4 +148,60 @@ describe('integration', () => {
     
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
+
+  it('prints correct receipt for order of five items with different total discount', () => {
+    const table = 1;
+    const names = 'Andy, June, John, Jen';
+    const order = new Order(table, names);
+    order.addItem('Cappucino'); // 3.85
+    order.addItem('Flat White'); // 4.75
+    order.addItem('Flat White'); // 4.75
+    order.addItem('Tea'); // 3.65
+    order.addItem('Choc Mudcake'); // 6.40
+    // Total price w/o discounts = 23.40
+
+    // Cappucino discounted price = 2.89
+    // Total price w/ 25% off cappucino discount = 22.44
+    const itemName = 'Cappucino';
+    const itemDiscountPercent = 25;
+    const itemDiscount = new ItemDiscount(itemName, itemDiscountPercent);
+
+    // Total price w/ 5% off total discount = 21.32
+    // Total discount value = 23.40 - 21.32 = 2.08
+    const minTotalPrice = 10;
+    const totalDiscountPercent = 5;
+    const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, totalDiscountPercent)
+
+    const priceCalculator = new PriceCalculator(order, itemDiscount, totalPriceDiscount);
+    
+    const cash = 25;
+    const payment = new Payment(priceCalculator, cash)
+
+    const receipt = new Receipt(order, priceCalculator, payment);
+    const currentDateAndTime = new Date(Date.now())
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\..+/, '')
+      .replace(/-/g, '.')
+      + '\n';
+    const expectedReceipt = currentDateAndTime
+      + 'The Coffee Connection\n\n'
+      + '123 Lakeside Way\n'
+      + 'Phone: +1 (650) 360-0708\n\n'
+      + 'Voucher 10% Off All Muffins!\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n'
+      + 'Table: 1 / [4]\n'
+      + 'Andy, June, John, Jen\n'
+      + ' Cappucino            1 x 3.85\n'
+      + ' Flat White           2 x 4.75\n'
+      + ' Tea                  1 x 3.65\n'
+      + ' Choc Mudcake         1 x 6.40\n\n'
+      + 'Disc:                    $2.08\n'
+      + 'Tax:                     $1.84\n'
+      + 'Total:                  $21.32\n'
+      + 'Cash:                   $25.00\n'
+      + 'Change:                  $3.68\n';
+    
+    expect(receipt.printReceipt()).toEqual(expectedReceipt);
+  })
 })
