@@ -280,7 +280,8 @@ describe('PriceCalculator', () => {
     const totalPriceDiscount = new MockTotalPriceDiscount();
 
     const priceCalculator = new PriceCalculator(order, null, totalPriceDiscount);
-    // 67.2 - 60.48 = 
+    
+    // 67.2 - 60.48 = 6.72
     expect(priceCalculator.calculateTotalPrice()).toEqual(60.48);
     expect(priceCalculator.getOverallDiscountValue()).toEqual(6.72);
   })
