@@ -283,7 +283,7 @@ describe('PriceCalculator', () => {
     
     // 67.2 - 60.48 = 6.72
     expect(priceCalculator.calculateTotalPrice()).toEqual(60.48);
-    expect(priceCalculator.getOverallDiscountValue()).toEqual(6.72);
+    expect(priceCalculator.calculateOverallDiscount()).toEqual(6.72);
   })
 
   it('gets the complete discount value (when applying an itemDiscount)', () => {
@@ -299,7 +299,7 @@ describe('PriceCalculator', () => {
 
     // 3.65 - 2.92 = 0.73
     expect(priceCalculator.calculateTotalPrice()).toEqual(2.92);
-    expect(priceCalculator.getOverallDiscountValue()).toEqual(0.73);
+    expect(priceCalculator.calculateOverallDiscount()).toEqual(0.73);
   })
 
   it('gets the complete discount value (when applying both item and totalPrice discounts)', () => {
@@ -324,6 +324,6 @@ describe('PriceCalculator', () => {
     // 11.52 * 0.9 = 10.37
     // 12.25 - 10.37 = 1.88
     expect(priceCalculator.calculateTotalPrice()).toEqual(10.37);
-    expect(priceCalculator.getOverallDiscountValue()).toEqual(1.88);
+    expect(priceCalculator.calculateOverallDiscount()).toEqual(1.88);
   })
 })

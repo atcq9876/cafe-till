@@ -38,14 +38,14 @@ jest.mock('./priceCalculator', () => {
       return {
         calculateTotalPrice: jest.fn().mockReturnValue(11.84),
         calculateTax: jest.fn().mockReturnValue(1.02),
-        getOverallDiscountValue: jest.fn().mockReturnValue(1.31),
+        calculateOverallDiscount: jest.fn().mockReturnValue(1.31),
         totalPriceDiscount,
       }
     } else {
       return {
         calculateTotalPrice: jest.fn().mockReturnValue(13.15),
         calculateTax: jest.fn().mockReturnValue(1.14),
-        getOverallDiscountValue: jest.fn().mockReturnValue(0),
+        calculateOverallDiscount: jest.fn().mockReturnValue(0),
       }
     }
   })

@@ -63,8 +63,8 @@ class Receipt {
   }
 
   #checkForDiscount() {
-    if (this._priceCalculator.getOverallDiscountValue()) {
-      return 'Disc:' + `$${this._priceCalculator.getOverallDiscountValue().toFixed(2)}`.padStart(25) + '\n';
+    if (this._priceCalculator.calculateOverallDiscount()) {
+      return 'Disc:' + `$${this._priceCalculator.calculateOverallDiscount().toFixed(2)}`.padStart(25) + '\n';
     } else {
       return '';
     }

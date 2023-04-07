@@ -35,7 +35,7 @@ class PriceCalculator {
     return tax;
   }
 
-  getOverallDiscountValue() {
+  calculateOverallDiscount() {
     this._overallDiscountValue = 0;
     this.calculateTotalPrice();
     return this._overallDiscountValue;
