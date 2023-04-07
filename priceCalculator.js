@@ -8,11 +8,14 @@ class PriceCalculator {
     this._itemDiscount = itemDiscount;
     this.#validateTotalPriceDiscount(totalPriceDiscount);
     this._totalPriceDiscount = totalPriceDiscount;
+    this._itemsDiscountValue = 0;
+    this._completeDiscountValue = 0;
   }
 
   calculateTotalPrice() {
     const items = this._order.getItems();
     let totalPrice = 0;
+    this._itemDiscountValue = 0;
     items.forEach((item) => {
       let itemPrice = menu[0].prices[0][item];
       if (this._itemDiscount && item.includes(this._itemDiscount.getItemName())) {
@@ -32,15 +35,21 @@ class PriceCalculator {
     return tax;
   }
 
+  getDiscountValue() {
+    return this._completeDiscountValue;
+  }
+
   #applyItemDiscount(itemPrice) {
     let discountedPrice = ((itemPrice / 100) * (100 - this._itemDiscount.getDiscountPercent()));
     discountedPrice = Math.round(discountedPrice * 100) / 100;
+    // this._itemsDiscountValue += (itemPrice - discountedPrice);
     return discountedPrice;
   }
 
   #applyTotalPriceDiscount(totalPrice) {
     let discountedPrice = ((totalPrice / 100) * (100 - this._totalPriceDiscount.getDiscountPercent()));
     discountedPrice = Math.round(discountedPrice * 100) / 100;
+    this._completeDiscountValue = (totalPrice - discountedPrice) + this._itemsDiscountValue;
     return discountedPrice;
   }
 

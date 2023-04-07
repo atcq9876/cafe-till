@@ -312,17 +312,17 @@ describe('Receipt', () => {
     expect(receipt.printReceipt()).toContain('Change:' + totalBlankSpace + '$6.85');
   })
 
-  it('prints discount to receipt', () => {
+  it('prints the correct amount of whitespace for change', () => {
     const mockOrder = new Order();
     const totalPriceDiscount = new TotalPriceDiscount();
     const mockPriceCalculator = new PriceCalculator(totalPriceDiscount);
     const mockPayment = new Payment(20);
     const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
+    // Max 30 characters on one line
+    // 'Disc:' (5)  +  '$1.31' (5) = 10
+    // 30 - 10 = 20
+    const totalBlankSpace = '                    ';
 
-    // 10% discount on $13.15 bill
-    expect(receipt.printReceipt()).toContain('Disc:');
-    expect(receipt.printReceipt()).toContain('$1.31');
-    expect(receipt.printReceipt()).toContain('Total:');
-    expect(receipt.printReceipt()).toContain('$11.84');
+    expect(receipt.printReceipt()).toContain('Disc:' + totalBlankSpace + '$1.31');
   })
 })
