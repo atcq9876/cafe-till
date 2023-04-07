@@ -2,6 +2,8 @@ const Order = require('./order');
 const Receipt = require('./receipt');
 const PriceCalculator = require('./priceCalculator');
 const Payment = require('./payment');
+const ItemDiscount = require('./itemDiscount');
+const TotalPriceDiscount = require('./totalPriceDiscount');
 
 describe('integration', () => {
   it('prints correct receipt for order of three items', () => {
@@ -89,5 +91,61 @@ describe('integration', () => {
     expect(() => {
       new Receipt(emptyOrder);
     }).toThrow('Orders must contain at least one item');
+  })
+
+  it('prints correct receipt for order of five items with discounts', () => {
+    const table = 1;
+    const names = 'Andy, June, John, Jen';
+    const order = new Order(table, names);
+    order.addItem('Cappucino'); // 3.85
+    order.addItem('Flat White'); // 4.75
+    order.addItem('Flat White'); // 4.75
+    order.addItem('Tea'); // 3.65
+    order.addItem('Choc Mudcake'); // 6.40
+    // Total price w/o discounts = 23.40
+
+    // Cappucino discounted price = 2.89
+    // Total price w/ 25% off cappucino discount = 22.44
+    const itemName = 'Cappucino';
+    const itemDiscountPercent = 25;
+    const itemDiscount = new ItemDiscount(itemName, itemDiscountPercent);
+
+    // Total price w/ 10% off total discount = 20.20
+    // Total discount value = 23.40 - 20.20 = 3.20
+    const minTotalPrice = 10;
+    const totalDiscountPercent = 10;
+    const totalPriceDiscount = new TotalPriceDiscount(minTotalPrice, totalDiscountPercent)
+
+    const priceCalculator = new PriceCalculator(order, itemDiscount, totalPriceDiscount);
+    
+    const cash = 25;
+    const payment = new Payment(priceCalculator, cash)
+
+    const receipt = new Receipt(order, priceCalculator, payment);
+    const currentDateAndTime = new Date(Date.now())
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\..+/, '')
+      .replace(/-/g, '.')
+      + '\n';
+    const expectedReceipt = currentDateAndTime
+      + 'The Coffee Connection\n\n'
+      + '123 Lakeside Way\n'
+      + 'Phone: +1 (650) 360-0708\n\n'
+      + 'Voucher 10% Off All Muffins!\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n'
+      + 'Table: 1 / [4]\n'
+      + 'Andy, June, John, Jen\n'
+      + ' Cappucino            1 x 3.85\n'
+      + ' Flat White           2 x 4.75\n'
+      + ' Tea                  1 x 3.65\n'
+      + ' Choc Mudcake         1 x 6.40\n\n'
+      + 'Disc:                    $3.20\n'
+      + 'Tax:                     $1.75\n'
+      + 'Total:                  $20.20\n'
+      + 'Cash:                   $25.00\n'
+      + 'Change:                  $4.80\n';
+    
+    expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
 })

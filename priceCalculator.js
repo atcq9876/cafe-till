@@ -36,6 +36,7 @@ class PriceCalculator {
   }
 
   getOverallDiscountValue() {
+    this._overallDiscountValue = 0;
     this.calculateTotalPrice();
     return this._overallDiscountValue;
   }

@@ -282,6 +282,7 @@ describe('PriceCalculator', () => {
     const priceCalculator = new PriceCalculator(order, null, totalPriceDiscount);
     
     // 67.2 - 60.48 = 6.72
+    expect(priceCalculator.calculateTotalPrice()).toEqual(60.48);
     expect(priceCalculator.getOverallDiscountValue()).toEqual(6.72);
   })
 
@@ -297,6 +298,7 @@ describe('PriceCalculator', () => {
     const priceCalculator = new PriceCalculator(order, itemDiscount, null);
 
     // 3.65 - 2.92 = 0.73
+    expect(priceCalculator.calculateTotalPrice()).toEqual(2.92);
     expect(priceCalculator.getOverallDiscountValue()).toEqual(0.73);
   })
 
@@ -321,6 +323,7 @@ describe('PriceCalculator', () => {
     // 2.92 + 4.75 + 3.85 = 11.52
     // 11.52 * 0.9 = 10.37
     // 12.25 - 10.37 = 1.88
+    expect(priceCalculator.calculateTotalPrice()).toEqual(10.37);
     expect(priceCalculator.getOverallDiscountValue()).toEqual(1.88);
   })
 })
