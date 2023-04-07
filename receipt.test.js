@@ -2,6 +2,8 @@ const Receipt = require('./receipt');
 const Order = require('./order');
 const PriceCalculator = require('./priceCalculator');
 const Payment = require('./payment');
+const totalPriceDiscount = require('./totalPriceDiscount');
+const TotalPriceDiscount = require('./totalPriceDiscount');
 
 // Mock Order class
 jest.mock('./order', () => {
@@ -18,12 +20,33 @@ jest.mock('./order', () => {
   });
 });
 
-// Mock PriceCalculator class
-jest.mock('./priceCalculator', () => {
+// Mock TotalPriceDiscount class
+jest.mock('./totalPriceDiscount', () => {
   return jest.fn().mockImplementation(() => {
     return {
-      calculateTotalPrice: jest.fn().mockReturnValue(13.15),
-      calculateTax: jest.fn().mockReturnValue(1.14),
+      getMinTotalPrice: jest.fn().mockReturnValue(10),
+      getDiscountPercent: jest.fn().mockReturnValue(10),
+    }
+  })
+})
+
+// Mock PriceCalculator class
+jest.mock('./priceCalculator', () => {
+  return jest.fn().mockImplementation((discount) => {
+    const totalPriceDiscount = discount;
+    if (totalPriceDiscount) {
+      return {
+        calculateTotalPrice: jest.fn().mockReturnValue(11.84),
+        calculateTax: jest.fn().mockReturnValue(1.02),
+        getDiscountValue: jest.fn().mockReturnValue(1.31),
+        totalPriceDiscount,
+      }
+    } else {
+      return {
+        calculateTotalPrice: jest.fn().mockReturnValue(13.15),
+        calculateTax: jest.fn().mockReturnValue(1.14),
+        getDiscountValue: jest.fn().mockReturnValue(0),
+      }
     }
   })
 })
@@ -287,5 +310,19 @@ describe('Receipt', () => {
     const totalBlankSpace = '                  '
 
     expect(receipt.printReceipt()).toContain('Change:' + totalBlankSpace + '$6.85');
+  })
+
+  it('prints discount to receipt', () => {
+    const mockOrder = new Order();
+    const totalPriceDiscount = new TotalPriceDiscount();
+    const mockPriceCalculator = new PriceCalculator(totalPriceDiscount);
+    const mockPayment = new Payment(20);
+    const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
+
+    // 10% discount on $13.15 bill
+    expect(receipt.printReceipt()).toContain('Disc:');
+    expect(receipt.printReceipt()).toContain('$1.31');
+    expect(receipt.printReceipt()).toContain('Total:');
+    expect(receipt.printReceipt()).toContain('$11.84');
   })
 })

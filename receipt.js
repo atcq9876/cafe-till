@@ -12,15 +12,16 @@ class Receipt {
   printReceipt() {
     const timestamp = this.getDateAndTime();
     const cafeInfo = 'The Coffee Connection\n\n123 Lakeside Way\nPhone: +1 (650) 360-0708\n\n';
-    const discount = 'Voucher 10% Off All Muffins!\nValid 01/04/2023 to 31/12/2023\n';
+    const discountVoucher = 'Voucher 10% Off All Muffins!\nValid 01/04/2023 to 31/12/2023\n';
     const table = `Table: ${this._order.getTable()} / [4]\n`;
     const name = `${this._order.getNames()}\n`;
     const items = this.#formatItems();
+    const discount = this.#checkForDiscount();
     const tax = 'Tax:' + `$${this._priceCalculator.calculateTax().toFixed(2)}`.padStart(26) + '\n';
     const totalPrice = 'Total:' + `$${this._priceCalculator.calculateTotalPrice().toFixed(2)}`.padStart(24) + '\n';
     const cash = 'Cash:' + `$${this._payment.getCash().toFixed(2)}`.padStart(25) + '\n';
     const change = 'Change:' + `$${this._payment.calculateChange().toFixed(2)}`.padStart(23) + '\n';
-    const receipt = timestamp + cafeInfo + discount + table + name + items + tax + totalPrice + cash + change;
+    const receipt = timestamp + cafeInfo + discountVoucher + table + name + items + discount + tax + totalPrice + cash + change;
     return receipt;
   }
 
@@ -59,6 +60,14 @@ class Receipt {
     }
 
     return formattedItems + '\n';
+  }
+
+  #checkForDiscount() {
+    if (this._priceCalculator.getDiscountValue()) {
+      return 'Disc:' + `$${this._priceCalculator.getDiscountValue().toFixed(2)}`.padStart(25) + '\n';
+    } else {
+      return '';
+    }
   }
 
   #validateOrder(order) {
