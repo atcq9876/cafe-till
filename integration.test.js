@@ -31,7 +31,7 @@ describe('integration', () => {
       + '123 Lakeside Way\n'
       + 'Phone: +1 (650) 360-0708\n\n'
       + 'Voucher 10% Off All Muffins!\n'
-      + 'Valid 01/04/2023 to 31/12/2023\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n\n'
       + 'Table: 3 / [4]\n'
       + 'Geoff, June\n'
       + ' Americano            2 x 3.75\n'
@@ -71,7 +71,7 @@ describe('integration', () => {
       + '123 Lakeside Way\n'
       + 'Phone: +1 (650) 360-0708\n\n'
       + 'Voucher 10% Off All Muffins!\n'
-      + 'Valid 01/04/2023 to 31/12/2023\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n\n'
       + 'Table: 1 / [4]\n'
       + 'Geoff, June, John, Jen\n'
       + ' Cappucino            1 x 3.85\n'
@@ -133,7 +133,7 @@ describe('integration', () => {
       + '123 Lakeside Way\n'
       + 'Phone: +1 (650) 360-0708\n\n'
       + 'Voucher 10% Off All Muffins!\n'
-      + 'Valid 01/04/2023 to 31/12/2023\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n\n'
       + 'Table: 1 / [4]\n'
       + 'Andy, June, John, Jen\n'
       + ' Cappucino            1 x 3.85\n'
@@ -189,7 +189,7 @@ describe('integration', () => {
       + '123 Lakeside Way\n'
       + 'Phone: +1 (650) 360-0708\n\n'
       + 'Voucher 10% Off All Muffins!\n'
-      + 'Valid 01/04/2023 to 31/12/2023\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n\n'
       + 'Table: 1 / [4]\n'
       + 'Andy, June, John, Jen\n'
       + ' Cappucino            1 x 3.85\n'
@@ -202,6 +202,7 @@ describe('integration', () => {
       + 'Cash:                   $25.00\n'
       + 'Change:                  $3.68\n';
     
+      console.log(receipt.printReceipt());
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
   })
 })
