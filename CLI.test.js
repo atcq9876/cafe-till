@@ -14,10 +14,12 @@ describe('CLI', () => {
 
   describe('start', () => {
     it('should call getTableNumber', () => {
+      const consoleSpy = jest.spyOn(console, 'log');
       jest.spyOn(cli, 'getTableNumber');
 
       cli.start();
 
+      expect(consoleSpy).toHaveBeenCalledWith('New order opened');
       expect(cli.getTableNumber).toHaveBeenCalled();
     })
   })
