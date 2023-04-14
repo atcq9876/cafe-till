@@ -36,7 +36,7 @@ class CLI {
   }
 
   getCustomerNames() {
-      this._rl.question('Please enter the customer name(s): ', (names) => {
+    this._rl.question('Please enter the customer name(s): ', (names) => {
       try {
         this._customerNames = names;
         console.log('Customer name(s) successfully added')
@@ -50,7 +50,13 @@ class CLI {
   }
 
   takeOrder() {
-
+    const options = 'Press one of the following keys to update the order:\n'
+      + '1 - Add an item\n'
+      + '2 - Remove an item\n'
+      + '3 - View the order\n'
+      + '4 - Complete the order\n'
+      + 'X - Cancel the order\n'
+    console.log(options);    
   }
 }
 
