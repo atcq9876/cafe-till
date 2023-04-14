@@ -20,7 +20,7 @@ describe('CLI', () => {
       cli.start();
 
       expect(consoleSpy).toHaveBeenCalledWith('New order opened\n');
-      expect(cli.getTableNumber).toHaveBeenCalled();
+      expect(cli.getTableNumber).toHaveBeenCalledTimes(1);
     })
   })
 
@@ -37,7 +37,7 @@ describe('CLI', () => {
   
       expect(consoleSpy).toHaveBeenCalledWith('Table number successfully added\n')
       expect(cli._tableNumber).toEqual(expectedTableNumber);
-      expect(cli.getCustomerNames).toHaveBeenCalled();
+      expect(cli.getCustomerNames).toHaveBeenCalledTimes(1);
     })
   
     it('should prompt for input again if input is not a number', () => {
@@ -91,7 +91,7 @@ describe('CLI', () => {
       expect(cli._customerNames).toEqual('Andy, Anna');
       expect(cli._order.getTable()).toEqual(1);
       expect(cli._order.getNames()).toEqual('Andy, Anna');
-      expect(cli.takeOrder).toHaveBeenCalled();
+      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
     })
   
     it('should prompt for input again if input is an empty string', () => {
