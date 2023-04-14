@@ -64,7 +64,7 @@ class Receipt {
 
   #checkForDiscount() {
     if (this._priceCalculator.calculateOverallDiscount()) {
-      return 'Disc:' + `$${this._priceCalculator.calculateOverallDiscount().toFixed(2)}`.padStart(25) + '\n';
+      return 'Discount:' + `$${this._priceCalculator.calculateOverallDiscount().toFixed(2)}`.padStart(21) + '\n';
     } else {
       return '';
     }

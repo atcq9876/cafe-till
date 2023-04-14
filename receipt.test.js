@@ -320,7 +320,7 @@ describe('Receipt', () => {
     const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
 
     // 10% discount on $13.15 bill
-    expect(receipt.printReceipt()).toContain('Disc:');
+    expect(receipt.printReceipt()).toContain('Discount:');
     expect(receipt.printReceipt()).toContain('$1.31');
     expect(receipt.printReceipt()).toContain('Total:');
     expect(receipt.printReceipt()).toContain('$11.84');
@@ -333,10 +333,10 @@ describe('Receipt', () => {
     const mockPayment = new Payment(20);
     const receipt = new Receipt(mockOrder, mockPriceCalculator, mockPayment);
     // Max 30 characters on one line
-    // 'Disc:' (5)  +  '$1.31' (5) = 10
-    // 30 - 10 = 20
-    const totalBlankSpace = '                    ';
+    // 'Discount:' (9)  +  '$1.31' (5) = 14
+    // 30 - 14 = 16
+    const totalBlankSpace = '                ';
 
-    expect(receipt.printReceipt()).toContain('Disc:' + totalBlankSpace + '$1.31');
+    expect(receipt.printReceipt()).toContain('Discount:' + totalBlankSpace + '$1.31');
   })
 })
