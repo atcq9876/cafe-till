@@ -62,6 +62,8 @@ class CLI {
         if (!validOptions.includes(input)) throw new Error('Please enter 1, 2, 3, 4 or 9');
         if (input === '1') {
           this.addItem();
+        } else if (input === '2') {
+          this.removeItem();
         }
       } catch (err) {
         this.takeOrder();
@@ -73,11 +75,24 @@ class CLI {
     this._rl.question('Which item would you like to add? ', (item) => {
       try {
         this._order.addItem(item);
-        console.log('Item successfully added\n')
+        console.log('Item successfully added\n');
         this.takeOrder();
       } catch (err) {
         console.error(`Error: ${err.message}`);
         this.addItem();
+      }
+    })
+  }
+
+  removeItem() {
+    this._rl.question('Which item would you like to remove? ', (item) => {
+      try {
+        this._order.removeItem(item);
+        console.log('Item successfully removed\n');
+        this.takeOrder();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.removeItem();
       }
     })
   }

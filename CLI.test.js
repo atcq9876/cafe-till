@@ -136,6 +136,7 @@ describe('CLI', () => {
     it('can add an item to the order', () => {
       cli._order = new Order(1, 'Andy');
       jest.spyOn(cli, 'takeOrder');
+      jest.spyOn(cli, 'addItem');
 
       cli.takeOrder();
       cli._rl.input.emit('data', '1\n');
@@ -143,6 +144,7 @@ describe('CLI', () => {
 
       expect(cli._order.getItems()).toEqual(['Tea']);
       expect(cli.takeOrder).toHaveBeenCalledTimes(2);
+      expect(cli.addItem).toHaveBeenCalledTimes(1);
     })
 
     it('prompts for input again if input is not on the menu', () => {
@@ -157,6 +159,38 @@ describe('CLI', () => {
       expect(cli._order.getItems()).toEqual([]);
       expect(console.error).toHaveBeenCalled();
       expect(cli.addItem).toHaveBeenCalledTimes(2);
+    })
+
+    it('can remove an item from the order', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'takeOrder');
+      jest.spyOn(cli, 'removeItem');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '2\n');
+      cli._rl.input.emit('data', 'Tea\n');
+
+      expect(cli._order.getItems()).toEqual([]);
+      expect(cli.takeOrder).toHaveBeenCalledTimes(3);
+      expect(cli.removeItem).toHaveBeenCalledTimes(1);
+    })
+
+    it('prompts for input again if input is not on the menu', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'removeItem');
+      jest.spyOn(console, 'error');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '2\n');
+      cli._rl.input.emit('data', 'testtt\n');
+
+      expect(cli._order.getItems()).toEqual(['Tea']);
+      expect(console.error).toHaveBeenCalled();
+      expect(cli.removeItem).toHaveBeenCalledTimes(2);
     })
   })
 })
