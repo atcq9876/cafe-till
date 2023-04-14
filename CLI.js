@@ -41,11 +41,16 @@ class CLI {
         this._customerNames = names;
         console.log('Customer name(s) successfully added')
         this._order = new Order(this._tableNumber, this._customerNames);
+        this.takeOrder();
       } catch (err) {
         console.error(`Error: ${err.message}`);
         this.getCustomerNames();
       }
     })
+  }
+
+  takeOrder() {
+
   }
 }
 

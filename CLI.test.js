@@ -77,6 +77,7 @@ describe('CLI', () => {
     it('should set the customer name(s) if input is valid', () => {
       cli._tableNumber = 1;
       const validInput = 'Andy, Anna';
+      jest.spyOn(cli, 'takeOrder');
   
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${validInput}\n`);
@@ -84,6 +85,7 @@ describe('CLI', () => {
       expect(cli._customerNames).toEqual('Andy, Anna');
       expect(cli._order.getTable()).toEqual(1);
       expect(cli._order.getNames()).toEqual('Andy, Anna');
+      expect(cli.takeOrder).toHaveBeenCalled();
     })
   
     it('should prompt for input again if input is an empty string', () => {
