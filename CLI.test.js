@@ -14,12 +14,12 @@ describe('CLI', () => {
 
   describe('start', () => {
     it('should call getTableNumber', () => {
-      const consoleSpy = jest.spyOn(console, 'log');
+      const mockConsoleLog = jest.spyOn(console, 'log');
       jest.spyOn(cli, 'getTableNumber');
 
       cli.start();
 
-      expect(consoleSpy).toHaveBeenCalledWith('New order opened\n');
+      expect(mockConsoleLog).toHaveBeenCalledWith('New order opened\n');
       expect(cli.getTableNumber).toHaveBeenCalledTimes(1);
     })
   })
@@ -29,13 +29,13 @@ describe('CLI', () => {
       const validInput = '3';
       const expectedTableNumber = parseInt(validInput);
   
-      const consoleSpy = jest.spyOn(console, 'log');
+      const mockConsoleLog = jest.spyOn(console, 'log');
       jest.spyOn(cli, 'getCustomerNames');
   
       cli.getTableNumber();
       cli._rl.input.emit('data', `${validInput}\n`);
   
-      expect(consoleSpy).toHaveBeenCalledWith('Table number successfully added\n')
+      expect(mockConsoleLog).toHaveBeenCalledWith('Table number successfully added\n')
       expect(cli._tableNumber).toEqual(expectedTableNumber);
       expect(cli.getCustomerNames).toHaveBeenCalledTimes(1);
     })
@@ -81,13 +81,13 @@ describe('CLI', () => {
     it('should set the customer name(s) if input is valid', () => {
       cli._tableNumber = 1;
       const validInput = 'Andy, Anna';
-      const consoleSpy = jest.spyOn(console, 'log');
+      const mockConsoleLog = jest.spyOn(console, 'log');
       jest.spyOn(cli, 'takeOrder');
   
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${validInput}\n`);
   
-      expect(consoleSpy).toHaveBeenCalledWith('Customer name(s) successfully added\n')
+      expect(mockConsoleLog).toHaveBeenCalledWith('Customer name(s) successfully added\n')
       expect(cli._customerNames).toEqual('Andy, Anna');
       expect(cli._order.getTable()).toEqual(1);
       expect(cli._order.getNames()).toEqual('Andy, Anna');
