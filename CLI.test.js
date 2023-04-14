@@ -97,5 +97,18 @@ describe('CLI', () => {
       expect(console.error).toHaveBeenCalled();
       expect(cli.getCustomerNames).toHaveBeenCalledTimes(2);
     })
+  
+    it('should prompt for input again if input is null', () => {
+      const invalidInput = '';
+      jest.spyOn(cli, 'getCustomerNames');
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+  
+      cli.getCustomerNames();
+      cli._rl.input.emit('data', `${invalidInput}\n`);
+
+      expect(console.error).toHaveBeenCalled();
+      expect(cli.getCustomerNames).toHaveBeenCalledTimes(2);
+      expect(cli._order).toEqual(null);
+    })
   })
 })
