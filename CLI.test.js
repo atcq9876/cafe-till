@@ -148,12 +148,14 @@ describe('CLI', () => {
     it('prompts for input again if input is not on the menu', () => {
       cli._order = new Order(1, 'Andy');
       jest.spyOn(cli, 'addItem');
+      jest.spyOn(console, 'error');
 
       cli.takeOrder();
       cli._rl.input.emit('data', '1\n');
       cli._rl.input.emit('data', 'test\n');
 
       expect(cli._order.getItems()).toEqual([]);
+      expect(console.error).toHaveBeenCalled();
       expect(cli.addItem).toHaveBeenCalledTimes(2);
     })
   })
