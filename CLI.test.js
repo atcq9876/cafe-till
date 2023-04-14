@@ -1,5 +1,4 @@
 const CLI = require('./CLI');
-const Order = require('./order');
 
 describe('CLI', () => {
   let cli;
@@ -29,11 +28,13 @@ describe('CLI', () => {
       const validInput = '3';
       const expectedTableNumber = parseInt(validInput);
   
+      const consoleSpy = jest.spyOn(console, 'log');
       jest.spyOn(cli, 'getCustomerNames');
   
       cli.getTableNumber();
       cli._rl.input.emit('data', `${validInput}\n`);
   
+      expect(consoleSpy).toHaveBeenCalledWith('Table number successfully added')
       expect(cli._tableNumber).toEqual(expectedTableNumber);
       expect(cli.getCustomerNames).toHaveBeenCalled();
     })
@@ -79,11 +80,13 @@ describe('CLI', () => {
     it('should set the customer name(s) if input is valid', () => {
       cli._tableNumber = 1;
       const validInput = 'Andy, Anna';
+      const consoleSpy = jest.spyOn(console, 'log');
       jest.spyOn(cli, 'takeOrder');
   
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${validInput}\n`);
   
+      expect(consoleSpy).toHaveBeenCalledWith('Customer name(s) successfully added')
       expect(cli._customerNames).toEqual('Andy, Anna');
       expect(cli._order.getTable()).toEqual(1);
       expect(cli._order.getNames()).toEqual('Andy, Anna');
@@ -115,4 +118,10 @@ describe('CLI', () => {
       expect(cli._order).toEqual(null);
     })
   })
+
+  // describe('takeOrder', () => {
+  //   it('provides a list of options - add, remove, view, complete order', () => {
+
+  //   })
+  // })
 })
