@@ -59,5 +59,43 @@ describe('CLI', () => {
       expect(console.error).toHaveBeenCalled();
       expect(cli.getTableNumber).toHaveBeenCalledTimes(2);
     })
+  
+    it('should prompt for input again if input is an empty string', () => {
+      const invalidInput = '';
+      jest.spyOn(cli, 'getTableNumber');
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+  
+      cli.getTableNumber();
+      cli._rl.input.emit('data', `${invalidInput}\n`);
+
+      expect(console.error).toHaveBeenCalled();
+      expect(cli.getTableNumber).toHaveBeenCalledTimes(2);
+    })
+  })
+
+  describe('getCustomerNames', () => {
+    it('should set the customer name(s) if input is valid', () => {
+      cli._tableNumber = 1;
+      const validInput = 'Andy, Anna';
+  
+      cli.getCustomerNames();
+      cli._rl.input.emit('data', `${validInput}\n`);
+  
+      expect(cli._customerNames).toEqual('Andy, Anna');
+      expect(cli._order.getTable()).toEqual(1);
+      expect(cli._order.getNames()).toEqual('Andy, Anna');
+    })
+  
+    it('should prompt for input again if input is an empty string', () => {
+      const invalidInput = '';
+      jest.spyOn(cli, 'getCustomerNames');
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+  
+      cli.getCustomerNames();
+      cli._rl.input.emit('data', `${invalidInput}\n`);
+
+      expect(console.error).toHaveBeenCalled();
+      expect(cli.getCustomerNames).toHaveBeenCalledTimes(2);
+    })
   })
 })

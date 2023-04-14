@@ -36,6 +36,16 @@ class CLI {
   }
 
   getCustomerNames() {
+      this._rl.question('Please enter the customer name(s): ', (names) => {
+      try {
+        this._customerNames = names;
+        console.log('Customer name(s) successfully added')
+        this._order = new Order(this._tableNumber, this._customerNames);
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.getCustomerNames();
+      }
+    })
   }
 }
 
