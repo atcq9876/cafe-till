@@ -208,9 +208,13 @@ describe('CLI', () => {
       cli._rl.input.emit('data', 'Tea\n');
       cli._rl.input.emit('data', '3\n');
 
-      expect(console.log).toHaveBeenCalledWith('Tea, Tea');
+      expect(console.log).toHaveBeenCalledWith('Items added so far:');
+      expect(console.log).toHaveBeenCalledWith('Tea, Tea\n');
       expect(cli.takeOrder).toHaveBeenCalledTimes(4);
       expect(cli.viewItems).toHaveBeenCalledTimes(1);
     })
+
+    // it('can complete an order', () => {
+    // })
   })
 })

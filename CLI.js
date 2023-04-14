@@ -102,7 +102,8 @@ class CLI {
   }
 
   viewItems() {
-    console.log(this._order.getItems().join(', '));
+    console.log('Items added so far:')
+    console.log(this._order.getItems().join(', ') + '\n');
     this.takeOrder();
   }
 }
