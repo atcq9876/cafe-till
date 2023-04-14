@@ -4,13 +4,13 @@ const Order = require('./order');
 
 class CLI {
   constructor() {
-    this.rl = readline.createInterface({
+    this._rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
-    this.tableNumber = null;
-    this.customerNames = null;
-    this.order = null;
+    this._tableNumber = null;
+    this._customerNames = null;
+    this._order = null;
   }
 
   start() {
@@ -19,6 +19,23 @@ class CLI {
   }
 
   getTableNumber() {
+    this._rl.question('Please enter the table number: ', (tableNumber) => {
+      try {
+        const parsedTableNumber = parseInt(tableNumber);
+        if (isNaN(parsedTableNumber) || parsedTableNumber < 1 || parsedTableNumber > 4) {
+          throw new Error('Table must be a number between 1 and 4');
+        }
+        this._tableNumber = parseInt(tableNumber);
+        console.log('Table number successfully added')
+        this.getCustomerNames();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.getTableNumber();
+      }
+    })
+  }
+
+  getCustomerNames() {
   }
 }
 
