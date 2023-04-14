@@ -120,19 +120,16 @@ describe('CLI', () => {
   })
 
   describe('takeOrder', () => {
-    it('provides a list of options - add, remove, view, complete order', () => {
-      const consoleSpy = jest.spyOn(console, 'log');
+    it('should prompt for input again if it is not one of the options', () => {
+      const invalidInput = 6;
+      jest.spyOn(cli, 'takeOrder');
+      jest.spyOn(console, 'error').mockImplementation(() => {});
 
       cli.takeOrder();
+      cli._rl.input.emit('data', `${invalidInput}\n`)
 
-      const expectedMessage = 'Press one of the following keys to update the order:\n'
-        + '1 - Add an item\n'
-        + '2 - Remove an item\n'
-        + '3 - View the order\n'
-        + '4 - Complete the order\n'
-        + 'X - Cancel the order\n'
-
-      expect(consoleSpy).toHaveBeenCalledWith(expectedMessage);
+      expect(console.error).toHaveBeenCalled();
+      expect(cli.takeOrder).toHaveBeenCalledTimes(2);
     })
   })
 })
