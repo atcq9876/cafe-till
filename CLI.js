@@ -23,7 +23,7 @@ class CLI {
       try {
         const parsedTableNumber = parseInt(tableNumber);
         if (isNaN(parsedTableNumber) || parsedTableNumber < 1 || parsedTableNumber > 4) {
-          throw new Error('Table must be a number between 1 and 4');
+          throw new Error('Table must be a number between 1 and 4\n');
         }
         this._tableNumber = parseInt(tableNumber);
         console.log('Table number successfully added\n')
@@ -38,6 +38,7 @@ class CLI {
   getCustomerNames() {
     this._rl.question('Please enter the customer name(s): ', (names) => {
       try {
+        if (!names) throw new Error('Please enter one or more names\n');
         this._customerNames = names;
         console.log('Customer name(s) successfully added\n')
         this._order = new Order(this._tableNumber, this._customerNames);
@@ -59,13 +60,14 @@ class CLI {
     const validOptions = ['1', '2', '3', '4', '9'];
     this._rl.question(optionsMessage, (input) => {
       try {
-        if (!validOptions.includes(input)) throw new Error('Please enter 1, 2, 3, 4 or 9');
+        if (!validOptions.includes(input)) throw new Error('Please enter 1, 2, 3, 4 or 9\n');
         if (input === '1') {
           this.addItem();
         } else if (input === '2') {
           this.removeItem();
         }
       } catch (err) {
+        console.error(`Error: ${err.message}`);
         this.takeOrder();
       }
     }) 
