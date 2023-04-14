@@ -65,6 +65,8 @@ class CLI {
           this.addItem();
         } else if (input === '2') {
           this.removeItem();
+        } else if (input === '3') {
+          this.viewItems();
         }
       } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -97,6 +99,11 @@ class CLI {
         this.removeItem();
       }
     })
+  }
+
+  viewItems() {
+    console.log(this._order.getItems().join(', '));
+    this.takeOrder();
   }
 }
 

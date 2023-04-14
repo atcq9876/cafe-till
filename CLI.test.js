@@ -194,5 +194,23 @@ describe('CLI', () => {
       expect(console.error).toHaveBeenCalledWith('Error: This is not an item on the menu');
       expect(cli.removeItem).toHaveBeenCalledTimes(2);
     })
+
+    it('can display the items of the current order', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'takeOrder');
+      jest.spyOn(cli, 'viewItems');
+      jest.spyOn(console, 'log');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '3\n');
+
+      expect(console.log).toHaveBeenCalledWith('Tea, Tea');
+      expect(cli.takeOrder).toHaveBeenCalledTimes(4);
+      expect(cli.viewItems).toHaveBeenCalledTimes(1);
+    })
   })
 })
