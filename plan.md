@@ -163,3 +163,18 @@ old test for priceCalculator
         }
     }
 } -->
+
+
+
+Version 3
+---------
+
+CLI - communicates with member of staff who takes the order
+Use the 'readline' package
+
+Take the order
+Ask if there is an itemDiscount, enter if so
+Ask if there is a totalPriceDiscount, enter if so
+Calculate the price (and discount and tax)
+Take payment
+Print the receipt
