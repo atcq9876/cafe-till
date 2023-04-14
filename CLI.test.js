@@ -1,4 +1,5 @@
 const CLI = require('./CLI');
+const Order = require('./order');
 
 describe('CLI', () => {
   let cli;
@@ -18,7 +19,7 @@ describe('CLI', () => {
 
       cli.start();
 
-      expect(consoleSpy).toHaveBeenCalledWith('New order opened');
+      expect(consoleSpy).toHaveBeenCalledWith('New order opened\n');
       expect(cli.getTableNumber).toHaveBeenCalled();
     })
   })
@@ -34,7 +35,7 @@ describe('CLI', () => {
       cli.getTableNumber();
       cli._rl.input.emit('data', `${validInput}\n`);
   
-      expect(consoleSpy).toHaveBeenCalledWith('Table number successfully added')
+      expect(consoleSpy).toHaveBeenCalledWith('Table number successfully added\n')
       expect(cli._tableNumber).toEqual(expectedTableNumber);
       expect(cli.getCustomerNames).toHaveBeenCalled();
     })
@@ -86,7 +87,7 @@ describe('CLI', () => {
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${validInput}\n`);
   
-      expect(consoleSpy).toHaveBeenCalledWith('Customer name(s) successfully added')
+      expect(consoleSpy).toHaveBeenCalledWith('Customer name(s) successfully added\n')
       expect(cli._customerNames).toEqual('Andy, Anna');
       expect(cli._order.getTable()).toEqual(1);
       expect(cli._order.getNames()).toEqual('Andy, Anna');
@@ -130,6 +131,30 @@ describe('CLI', () => {
 
       expect(console.error).toHaveBeenCalled();
       expect(cli.takeOrder).toHaveBeenCalledTimes(2);
+    })
+
+    it('can add an item to the order', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'takeOrder');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+
+      expect(cli._order.getItems()).toEqual(['Tea']);
+      expect(cli.takeOrder).toHaveBeenCalledTimes(2);
+    })
+
+    it('prompts for input again if input is not on the menu', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'addItem');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'test\n');
+
+      expect(cli._order.getItems()).toEqual([]);
+      expect(cli.addItem).toHaveBeenCalledTimes(2);
     })
   })
 })

@@ -60,10 +60,26 @@ class CLI {
     this._rl.question(optionsMessage, (input) => {
       try {
         if (!validOptions.includes(input)) throw new Error('Please enter 1, 2, 3, 4 or 9');
+        if (input === '1') {
+          this.addItem();
+        }
       } catch (err) {
         this.takeOrder();
       }
     }) 
+  }
+
+  addItem() {
+    this._rl.question('Which item would you like to add? ', (item) => {
+      try {
+        this._order.addItem(item);
+        console.log('Item successfully added\n')
+        this.takeOrder();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.addItem();
+      }
+    })
   }
 }
 
