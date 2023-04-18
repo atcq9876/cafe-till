@@ -355,5 +355,22 @@ describe('CLI', () => {
       expect(cli.getItemDiscountName).toHaveBeenCalledTimes(0);
       expect(cli._itemDiscount).toEqual(null);
     })
+
+    it('throws error if discounted item isnt on menu', () => {
+      cli._order = new Order(1, 'Andy');
+      const mockItemDiscount = new ItemDiscount('Tea', 10);
+      jest.spyOn(cli, 'getItemDiscountName');
+      jest.spyOn(console, 'error');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '4\n');
+      cli._rl.input.emit('data', 'Yes\n');
+      cli._rl.input.emit('data', 'Test\n');
+
+      expect(cli.getItemDiscountName).toHaveBeenCalledTimes(2);
+      expect(console.error).toHaveBeenCalledWith('Error: That item is not on the menu');
+    })
   })
 })

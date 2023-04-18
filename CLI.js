@@ -1,6 +1,7 @@
 const readline = require('readline');
 const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
+const menu = require('./cafeMenu.json');
 
 
 class CLI {
@@ -158,11 +159,28 @@ class CLI {
   getItemDiscountName() {
     this._rl.question('Item name: ', (item) => {
       try {
+        this.#validateItemName(item);
         this._discountedItemName = item;
         this.getItemDiscountPercent();
       } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.getItemDiscountName();
       }
     })
+  }
+
+  #validateItemName(itemName) {
+    const menuItems = Object.keys(menu[0].prices[0]);
+    const menuContainsItem = menuItems.includes(itemName) ? true : false;
+    const menuContainsItemType = this.#validateItemType(itemName);
+    if (menuContainsItem === false && menuContainsItemType === false) {
+      throw new Error('That item is not on the menu');
+    }
+  }
+
+  #validateItemType(itemName) {
+    const itemTypes = ['Muffin', 'Coffee', 'Tea', 'Drink', 'Food'];
+    return itemTypes.includes(itemName) ? true : false;
   }
 
   getItemDiscountPercent() {
