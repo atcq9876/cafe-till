@@ -457,5 +457,13 @@ describe('CLI', () => {
       expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10');
       expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
     })
+
+    it('closes the application if there is an error when creating the itemDiscountObject', () => {
+      jest.spyOn(cli._rl, 'close');
+      
+      cli.createTotalPriceDiscountObject();
+
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
   })
 })

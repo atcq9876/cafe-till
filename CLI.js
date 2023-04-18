@@ -270,9 +270,14 @@ class CLI {
   }
 
   createTotalPriceDiscountObject() {
-    this._totalPriceDiscount = new TotalPriceDiscount(this._minTotalPriceForDiscount, this._totalPriceDiscountPercent);
-    console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}`);
-    this.calculateTotalPrice();
+    try {
+      this._totalPriceDiscount = new TotalPriceDiscount(this._minTotalPriceForDiscount, this._totalPriceDiscountPercent);
+      console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}`);
+      this.calculateTotalPrice();
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      this._rl.close();
+    }
   }
 
   calculateTotalPrice() {
