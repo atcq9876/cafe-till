@@ -385,14 +385,32 @@ describe('CLI', () => {
 
     it('throws error if response isnt Yes/No', () => {
       jest.spyOn(cli, 'checkForTotalPriceDiscount');
-      jest.spyOn(cli, 'calculateTotalPrice');
 
       cli.checkForTotalPriceDiscount();
       cli._rl.input.emit('data', 'ooo\n');
 
       expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(2);
       expect(cli._totalPriceDiscount).toEqual(null);
-      expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(0);
+    })
+
+    it('calls getMinTotalPrice if response is Yes', () => {
+      jest.spyOn(cli, 'getMinTotalPrice');
+
+      cli.checkForTotalPriceDiscount();
+      cli._rl.input.emit('data', 'Yes\n');
+
+      expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(1);
+    })
+
+    it('throws error if minTotalPrice is a negative number', () => {
+      jest.spyOn(cli, 'getMinTotalPrice');
+      jest.spyOn(console, 'error');
+
+      cli.getMinTotalPrice()
+      cli._rl.input.emit('data', '-1\n');
+
+      expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(2);
+      expect(console.error).toHaveBeenCalledWith('Error: Min total price must not be a negative number');
     })
   })
 })

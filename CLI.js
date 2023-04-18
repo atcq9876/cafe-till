@@ -218,7 +218,9 @@ class CLI {
   checkForTotalPriceDiscount() {
     this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
       try {
-          if (response === 'No') {
+        if (response === 'Yes') {
+          this.getMinTotalPrice();
+        } else if (response === 'No') {
           this.calculateTotalPrice();
         } else {
           throw new Error("Please respond 'Yes' or 'No'");
@@ -228,6 +230,24 @@ class CLI {
         this.checkForTotalPriceDiscount();
       }
     })
+  }
+
+  getMinTotalPrice() {
+    this._rl.question('What is the min total price for the discount? ', (minTotal) => {
+      try {
+        this.#validateMinTotalPrice(minTotal);
+        this.getTotalDiscountPercent();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.getMinTotalPrice();
+      }
+    })
+  }
+
+  #validateMinTotalPrice(minTotalPrice) {
+    if (minTotalPrice < 0) {
+      throw new Error('Min total price must not be a negative number');
+    }
   }
 
   calculateTotalPrice() {
