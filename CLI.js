@@ -219,7 +219,7 @@ class CLI {
   }
 
   checkForTotalPriceDiscount() {
-    this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
+    this._rl.question('Does the customer have a total price discount voucher? Yes/No: ', (response) => {
       try {
         if (response === 'Yes') {
           this.getMinTotalPrice();
