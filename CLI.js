@@ -186,12 +186,21 @@ class CLI {
   getItemDiscountPercent() {
     this._rl.question('Discount percent: ', (percent) => {
       try {
-        this._itemDiscountPercent = parseInt(percent);
+        const intPercent = parseInt(percent);
+        this.#validateDiscountPercent(intPercent);
+        this._itemDiscountPercent = intPercent;
         this.createItemDiscountObject();
       } catch (err) {
         console.error(`Error: ${err.message}`);
+        this.getItemDiscountPercent();
       }
     })
+  }
+
+  #validateDiscountPercent(discountPercent) {
+    if (discountPercent < 1 || discountPercent > 100) {
+      throw new Error('Discount percent must be between 1 and 100');
+    }
   }
 
   createItemDiscountObject() {

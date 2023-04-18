@@ -372,5 +372,22 @@ describe('CLI', () => {
       expect(cli.getItemDiscountName).toHaveBeenCalledTimes(2);
       expect(console.error).toHaveBeenCalledWith('Error: That item is not on the menu');
     })
+
+    it('throws error if percentage is not between 1 and 100', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'getItemDiscountPercent');
+      jest.spyOn(console, 'error');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '4\n');
+      cli._rl.input.emit('data', 'Yes\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '101\n');
+
+      expect(cli.getItemDiscountPercent).toHaveBeenCalledTimes(2);
+      expect(console.error).toHaveBeenCalledWith('Error: Discount percent must be between 1 and 100');
+    })
   })
 })
