@@ -296,7 +296,7 @@ describe('CLI', () => {
       expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
     })
 
-    it('prints the item discount once added', () => {
+    it('creates an item discount and prints its info to console', () => {
       cli._order = new Order(1, 'Andy');
       const mockItemDiscount = new ItemDiscount('Tea', 10);
       jest.spyOn(cli, 'checkForItemDiscount');
