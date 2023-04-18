@@ -312,7 +312,7 @@ describe('CLI', () => {
       cli._rl.input.emit('data', '10\n');
 
       expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
-      expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Tea');
+      expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Teas');
       expect(cli._itemDiscount).toEqual(mockItemDiscount);
       expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
     })

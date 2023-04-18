@@ -206,7 +206,7 @@ class CLI {
   createItemDiscountObject() {
     try {
       this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
-      console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}`);
+      console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s`);
       this.checkForTotalPriceDiscount();
     } catch (err) {
       console.error(`Error: ${err.message}`);
