@@ -69,6 +69,8 @@ class CLI {
           this.viewItems();
         } else if (input === '4') {
           this.finaliseItems();
+        } else if (input == '9') {
+          this.cancelOrder();
         }
       } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -111,6 +113,18 @@ class CLI {
 
   finaliseItems() {
     console.log('Items finalised\n');
+  }
+
+  cancelOrder() {
+    this._rl.question('Are you sure want to cancel the order? ', (response) => {
+      try {
+        if (response === 'Yes') console.log('Order cancelled\n');
+        this._rl.close();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.cancelOrder();
+      }
+    })
   }
 }
 

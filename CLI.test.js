@@ -229,5 +229,22 @@ describe('CLI', () => {
       expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
       expect(console.log).toHaveBeenCalledWith('Items finalised\n');
     })
+
+    it('can cancel an order', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'takeOrder');
+      jest.spyOn(cli, 'cancelOrder');
+      jest.spyOn(console, 'log');
+      jest.spyOn(cli._rl, 'close');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '9\n');
+      cli._rl.input.emit('data', 'Yes\n');
+
+      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+      expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenCalledWith('Order cancelled\n');
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
   })
 })
