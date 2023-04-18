@@ -2,6 +2,7 @@ const readline = require('readline');
 const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
 const menu = require('./cafeMenu.json');
+const TotalPriceDiscount = require('./totalPriceDiscount');
 
 
 class CLI {
@@ -209,7 +210,7 @@ class CLI {
   createItemDiscountObject() {
     try {
       this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
-      console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s`);
+      console.log(`Discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s`);
       this.checkForTotalPriceDiscount();
     } catch (err) {
       console.error(`Error: ${err.message}`);
@@ -269,7 +270,9 @@ class CLI {
   }
 
   createTotalPriceDiscountObject() {
-    
+    this._totalPriceDiscount = new TotalPriceDiscount(this._minTotalPriceForDiscount, this._totalPriceDiscountPercent);
+    console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}`);
+    this.calculateTotalPrice();
   }
 
   calculateTotalPrice() {

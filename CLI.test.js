@@ -306,7 +306,7 @@ describe('CLI', () => {
       cli._rl.input.emit('data', 'Tea\n');
       cli._rl.input.emit('data', '10\n');
 
-      expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Teas');
+      expect(console.log).toHaveBeenCalledWith('Discount added: 10% off Teas');
       expect(cli._itemDiscount).toEqual(mockItemDiscount);
       expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
     })
@@ -444,6 +444,18 @@ describe('CLI', () => {
       expect(cli._totalPriceDiscountPercent).toEqual(null);
       expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(2);
       expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(0);
+    })
+
+    it('creates a totalPriceDiscount object', () => {
+      jest.spyOn(cli, 'calculateTotalPrice');
+      jest.spyOn(console, 'log');
+
+      cli._minTotalPriceForDiscount = 10;
+      cli._totalPriceDiscountPercent = 5;
+      cli.createTotalPriceDiscountObject();
+
+      expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10');
+      expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
     })
   })
 })
