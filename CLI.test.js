@@ -261,5 +261,22 @@ describe('CLI', () => {
       expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
       expect(cli._rl.close).toHaveBeenCalledTimes(0);
     })
+
+    it('will throw error if user doesnt respond Yes or No to warning', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'takeOrder');
+      jest.spyOn(cli, 'cancelOrder');
+      jest.spyOn(cli._rl, 'close');
+      jest.spyOn(console, 'error');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '9\n');
+      cli._rl.input.emit('data', 'test\n');
+
+      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+      expect(cli.cancelOrder).toHaveBeenCalledTimes(2);
+      expect(cli._rl.close).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledWith("Error: Please response 'Yes' or 'No'");
+    })
   })
 })

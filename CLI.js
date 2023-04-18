@@ -116,9 +116,11 @@ class CLI {
   }
 
   cancelOrder() {
-    this._rl.question('Are you sure want to cancel the order? ', (response) => {
+    this._rl.question('Are you sure want to cancel the order? Yes/No', (response) => {
       try {
-        if (response === 'Yes') {
+        if (response !== 'Yes' && response !== 'No') {
+          throw new Error("Please response 'Yes' or 'No'");
+        } else if (response === 'Yes') {
           console.log('Order cancelled\n');
           this._rl.close();
         } else if (response === 'No') {
