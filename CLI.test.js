@@ -1,5 +1,6 @@
 const CLI = require('./CLI');
 const Order = require('./order');
+const ItemDiscount = require('./itemDiscount');
 
 describe('CLI', () => {
   let cli;
@@ -293,6 +294,25 @@ describe('CLI', () => {
 
       expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
       expect(cli.getItemDiscount).toHaveBeenCalledTimes(1);
+    })
+
+    it('prints the item discount once added', () => {
+      cli._order = new Order(1, 'Andy');
+      const mockItemDiscount = new ItemDiscount('Tea', 10);
+      jest.spyOn(cli, 'getItemDiscount');
+      jest.spyOn(console, 'log');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '4\n');
+      cli._rl.input.emit('data', 'Yes\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '10\n');
+
+      expect(cli.getItemDiscount).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Tea');
+      expect(cli._itemDiscount).toEqual(mockItemDiscount);
     })
   })
 })

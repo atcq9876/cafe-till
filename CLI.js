@@ -1,5 +1,6 @@
 const readline = require('readline');
 const Order = require('./order');
+const ItemDiscount = require('./itemDiscount');
 
 
 class CLI {
@@ -11,6 +12,9 @@ class CLI {
     this._tableNumber = null;
     this._customerNames = null;
     this._order = null;
+    this._itemDiscountName = null;
+    this._itemDiscountPercent = null;
+    this._itemDiscount = null;
   }
 
   start() {
@@ -117,7 +121,7 @@ class CLI {
   }
 
   cancelOrder() {
-    this._rl.question('Are you sure want to cancel the order? Yes/No', (response) => {
+    this._rl.question('Are you sure want to cancel the order? Yes/No: ', (response) => {
       try {
         if (response !== 'Yes' && response !== 'No') {
           throw new Error("Please response 'Yes' or 'No'");
@@ -135,7 +139,25 @@ class CLI {
   }
 
   getItemDiscount() {
-
+    this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
+      if (response === 'Yes') {
+        let itemName;
+        let discountPercent;
+        this._rl.question('Item name: ', (item) => {
+          try {
+            itemName = item;
+            console.log(itemName);
+            this._rl.question('Discount percent: ', (percent) => {
+              discountPercent = parseInt(percent);
+              this._itemDiscount = new ItemDiscount(itemName, discountPercent);
+              console.log(`Item discount added: ${discountPercent}% off ${itemName}`);
+            })
+          } catch (err) {
+            console.error(`Error: ${err.message}`);
+          }
+        })
+      }
+    })
   }
 }
 
