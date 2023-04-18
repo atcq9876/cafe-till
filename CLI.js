@@ -55,7 +55,7 @@ class CLI {
       + '1 - Add an item\n'
       + '2 - Remove an item\n'
       + '3 - View the order\n'
-      + '4 - Complete the order\n'
+      + '4 - Finalise items\n'
       + '9 - Cancel the order\n'
     const validOptions = ['1', '2', '3', '4', '9'];
     this._rl.question(optionsMessage, (input) => {
@@ -67,6 +67,8 @@ class CLI {
           this.removeItem();
         } else if (input === '3') {
           this.viewItems();
+        } else if (input === '4') {
+          this.finaliseItems();
         }
       } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -105,6 +107,10 @@ class CLI {
     console.log('Items added so far:')
     console.log(this._order.getItems().join(', ') + '\n');
     this.takeOrder();
+  }
+
+  finaliseItems() {
+    console.log('Items finalised\n');
   }
 }
 
