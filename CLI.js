@@ -16,6 +16,7 @@ class CLI {
     this._discountedItemName = null;
     this._itemDiscountPercent = null;
     this._itemDiscount = null;
+    this._totalPriceDiscount = null;
   }
 
   start() {
@@ -215,6 +216,14 @@ class CLI {
   }
 
   checkForTotalPriceDiscount() {
+    this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
+      if (response === 'No') {
+        this.calculateTotalPrice();
+      }
+    })
+  }
+
+  calculateTotalPrice() {
 
   }
 }

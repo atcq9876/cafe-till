@@ -371,4 +371,16 @@ describe('CLI', () => {
       expect(cli._rl.close).toHaveBeenCalledTimes(1);
     })
   })
+
+  describe('checkForTotalPriceDiscount', () => {
+    it('doesnt create a totalPriceDiscount if customer doesnt have a voucher', () => {
+      jest.spyOn(cli, 'calculateTotalPrice');
+
+      cli.checkForTotalPriceDiscount();
+      cli._rl.input.emit('data', 'No\n');
+
+      expect(cli._totalPriceDiscount).toEqual(null);
+      expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
+    })
+  })
 })
