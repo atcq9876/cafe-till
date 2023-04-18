@@ -214,7 +214,7 @@ describe('CLI', () => {
       expect(cli.viewItems).toHaveBeenCalledTimes(1);
     })
 
-    it('can complete an order', () => {
+    it('can mark the items as finalised', () => {
       cli._order = new Order(1, 'Andy');
       jest.spyOn(cli, 'takeOrder');
       jest.spyOn(cli, 'finaliseItems');
@@ -277,6 +277,22 @@ describe('CLI', () => {
       expect(cli.cancelOrder).toHaveBeenCalledTimes(2);
       expect(cli._rl.close).toHaveBeenCalledTimes(0);
       expect(console.error).toHaveBeenCalledWith("Error: Please response 'Yes' or 'No'");
+    })
+  })
+
+  describe('getItemDiscount', () => {
+    it('is called when items are finalised', () => {
+      cli._order = new Order(1, 'Andy');
+      jest.spyOn(cli, 'finaliseItems');
+      jest.spyOn(cli, 'getItemDiscount');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '4\n');
+
+      expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
+      expect(cli.getItemDiscount).toHaveBeenCalledTimes(1);
     })
   })
 })

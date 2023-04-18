@@ -113,6 +113,7 @@ class CLI {
 
   finaliseItems() {
     console.log('Items finalised\n');
+    this.getItemDiscount();
   }
 
   cancelOrder() {
@@ -131,6 +132,10 @@ class CLI {
         this.cancelOrder();
       }
     })
+  }
+
+  getItemDiscount() {
+
   }
 }
 
