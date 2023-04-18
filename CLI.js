@@ -12,7 +12,7 @@ class CLI {
     this._tableNumber = null;
     this._customerNames = null;
     this._order = null;
-    this._itemDiscountName = null;
+    this._discountedItemName = null;
     this._itemDiscountPercent = null;
     this._itemDiscount = null;
   }
@@ -117,7 +117,7 @@ class CLI {
 
   finaliseItems() {
     console.log('Items finalised\n');
-    this.getItemDiscount();
+    this.checkForItemDiscount();
   }
 
   cancelOrder() {
@@ -138,26 +138,38 @@ class CLI {
     })
   }
 
-  getItemDiscount() {
+  checkForItemDiscount() {
     this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
       if (response === 'Yes') {
-        let itemName;
-        let discountPercent;
-        this._rl.question('Item name: ', (item) => {
-          try {
-            itemName = item;
-            console.log(itemName);
-            this._rl.question('Discount percent: ', (percent) => {
-              discountPercent = parseInt(percent);
-              this._itemDiscount = new ItemDiscount(itemName, discountPercent);
-              console.log(`Item discount added: ${discountPercent}% off ${itemName}`);
-            })
-          } catch (err) {
-            console.error(`Error: ${err.message}`);
-          }
-        })
+        this.getItemDiscountName();
       }
     })
+  }
+
+  getItemDiscountName() {
+    this._rl.question('Item name: ', (item) => {
+      try {
+        this._discountedItemName = item;
+        this.getItemDiscountPercent();
+      } catch (err) {
+      }
+    })
+  }
+
+  getItemDiscountPercent() {
+    this._rl.question('Discount percent: ', (percent) => {
+      try {
+        this._itemDiscountPercent = parseInt(percent);
+        this.createItemDiscountObject();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+      }
+    })
+  }
+
+  createItemDiscountObject() {
+    this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
+    console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}`);
   }
 }
 

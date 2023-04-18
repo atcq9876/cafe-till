@@ -281,11 +281,11 @@ describe('CLI', () => {
     })
   })
 
-  describe('getItemDiscount', () => {
+  describe('checkForItemDiscount', () => {
     it('is called when items are finalised', () => {
       cli._order = new Order(1, 'Andy');
       jest.spyOn(cli, 'finaliseItems');
-      jest.spyOn(cli, 'getItemDiscount');
+      jest.spyOn(cli, 'checkForItemDiscount');
 
       cli.takeOrder();
       cli._rl.input.emit('data', '1\n');
@@ -293,13 +293,13 @@ describe('CLI', () => {
       cli._rl.input.emit('data', '4\n');
 
       expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
-      expect(cli.getItemDiscount).toHaveBeenCalledTimes(1);
+      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
     })
 
     it('prints the item discount once added', () => {
       cli._order = new Order(1, 'Andy');
       const mockItemDiscount = new ItemDiscount('Tea', 10);
-      jest.spyOn(cli, 'getItemDiscount');
+      jest.spyOn(cli, 'checkForItemDiscount');
       jest.spyOn(console, 'log');
 
       cli.takeOrder();
@@ -310,7 +310,7 @@ describe('CLI', () => {
       cli._rl.input.emit('data', 'Tea\n');
       cli._rl.input.emit('data', '10\n');
 
-      expect(cli.getItemDiscount).toHaveBeenCalledTimes(1);
+      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
       expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Tea');
       expect(cli._itemDiscount).toEqual(mockItemDiscount);
     })
