@@ -204,9 +204,14 @@ class CLI {
   }
 
   createItemDiscountObject() {
-    this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
-    console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}`);
-    this.checkForTotalPriceDiscount();
+    try {
+      this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
+      console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}`);
+      this.checkForTotalPriceDiscount();
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      this._rl.close();
+    }
   }
 
   checkForTotalPriceDiscount() {

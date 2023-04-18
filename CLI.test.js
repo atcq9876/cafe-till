@@ -389,5 +389,13 @@ describe('CLI', () => {
       expect(cli.getItemDiscountPercent).toHaveBeenCalledTimes(2);
       expect(console.error).toHaveBeenCalledWith('Error: Discount percent must be between 1 and 100');
     })
+
+    it('closes the application if there is an error when creating the itemDiscountObject', () => {
+      jest.spyOn(cli._rl, 'close');
+      
+      cli.createItemDiscountObject();
+
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
   })
 })
