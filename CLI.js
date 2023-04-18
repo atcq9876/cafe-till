@@ -217,8 +217,15 @@ class CLI {
 
   checkForTotalPriceDiscount() {
     this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
-      if (response === 'No') {
-        this.calculateTotalPrice();
+      try {
+          if (response === 'No') {
+          this.calculateTotalPrice();
+        } else {
+          throw new Error("Please respond 'Yes' or 'No'");
+        }
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.checkForTotalPriceDiscount();
       }
     })
   }

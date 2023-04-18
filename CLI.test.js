@@ -382,5 +382,17 @@ describe('CLI', () => {
       expect(cli._totalPriceDiscount).toEqual(null);
       expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
     })
+
+    it('throws error if response isnt Yes/No', () => {
+      jest.spyOn(cli, 'checkForTotalPriceDiscount');
+      jest.spyOn(cli, 'calculateTotalPrice');
+
+      cli.checkForTotalPriceDiscount();
+      cli._rl.input.emit('data', 'ooo\n');
+
+      expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(2);
+      expect(cli._totalPriceDiscount).toEqual(null);
+      expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(0);
+    })
   })
 })
