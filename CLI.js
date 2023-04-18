@@ -16,6 +16,7 @@ class CLI {
     this._discountedItemName = null;
     this._itemDiscountPercent = null;
     this._itemDiscount = null;
+    this._minTotalPriceForDiscount = null;
     this._totalPriceDiscount = null;
   }
 
@@ -187,9 +188,9 @@ class CLI {
   getItemDiscountPercent() {
     this._rl.question('Discount percent: ', (percent) => {
       try {
-        const intPercent = parseInt(percent);
-        this.#validateDiscountPercent(intPercent);
-        this._itemDiscountPercent = intPercent;
+        const percentInt = parseInt(percent);
+        this.#validateDiscountPercent(percentInt);
+        this._itemDiscountPercent = percentInt;
         this.createItemDiscountObject();
       } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -235,7 +236,9 @@ class CLI {
   getMinTotalPrice() {
     this._rl.question('What is the min total price for the discount? ', (minTotal) => {
       try {
-        this.#validateMinTotalPrice(minTotal);
+        const minTotalInt = parseInt(minTotal);
+        this.#validateMinTotalPrice(minTotalInt);
+        this._minTotalPriceForDiscount = minTotalInt;
         this.getTotalDiscountPercent();
       } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -248,6 +251,10 @@ class CLI {
     if (minTotalPrice < 0) {
       throw new Error('Min total price must not be a negative number');
     }
+  }
+
+  getTotalDiscountPercent() {
+    
   }
 
   calculateTotalPrice() {

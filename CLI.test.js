@@ -412,5 +412,16 @@ describe('CLI', () => {
       expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(2);
       expect(console.error).toHaveBeenCalledWith('Error: Min total price must not be a negative number');
     })
+
+    it('calls getTotalDiscountPercent if minTotalPrice is valid', () => {
+      jest.spyOn(cli, 'getTotalDiscountPercent');
+
+
+      cli.getMinTotalPrice();
+      cli._rl.input.emit('data', '20\n');
+
+      expect(cli._minTotalPriceForDiscount).toEqual(20);
+      expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(1);
+    })
   })
 })
