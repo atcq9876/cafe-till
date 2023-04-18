@@ -297,57 +297,39 @@ describe('CLI', () => {
     })
 
     it('creates an item discount and prints its info to console', () => {
-      cli._order = new Order(1, 'Andy');
       const mockItemDiscount = new ItemDiscount('Tea', 10);
-      jest.spyOn(cli, 'checkForItemDiscount');
       jest.spyOn(cli, 'checkForTotalPriceDiscount');
       jest.spyOn(console, 'log');
 
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
+      cli.checkForItemDiscount();
       cli._rl.input.emit('data', 'Yes\n');
       cli._rl.input.emit('data', 'Tea\n');
       cli._rl.input.emit('data', '10\n');
 
-      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
       expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Teas');
       expect(cli._itemDiscount).toEqual(mockItemDiscount);
       expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
     })
 
     it('doesnt create an item discount if user doesnt have a voucher', () => {
-      cli._order = new Order(1, 'Andy');
-      const mockItemDiscount = new ItemDiscount('Tea', 10);
-      jest.spyOn(cli, 'checkForItemDiscount');
       jest.spyOn(cli, 'getItemDiscountName');
       jest.spyOn(cli, 'checkForTotalPriceDiscount');
       jest.spyOn(console, 'log');
 
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
+      cli.checkForItemDiscount();
       cli._rl.input.emit('data', 'No\n');
 
-      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
       expect(cli.getItemDiscountName).toHaveBeenCalledTimes(0);
       expect(cli._itemDiscount).toEqual(null);
       expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
     })
 
     it('checks for item discount again if user response is not Yes/No', () => {
-      cli._order = new Order(1, 'Andy');
-      const mockItemDiscount = new ItemDiscount('Tea', 10);
       jest.spyOn(cli, 'checkForItemDiscount');
       jest.spyOn(cli, 'getItemDiscountName');
       jest.spyOn(console, 'error');
 
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
+      cli.checkForItemDiscount();
       cli._rl.input.emit('data', 'hi\n');
 
       expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(2);
@@ -357,15 +339,10 @@ describe('CLI', () => {
     })
 
     it('throws error if discounted item isnt on menu', () => {
-      cli._order = new Order(1, 'Andy');
-      const mockItemDiscount = new ItemDiscount('Tea', 10);
       jest.spyOn(cli, 'getItemDiscountName');
       jest.spyOn(console, 'error');
 
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
+      cli.checkForItemDiscount();
       cli._rl.input.emit('data', 'Yes\n');
       cli._rl.input.emit('data', 'Test\n');
 
@@ -374,14 +351,10 @@ describe('CLI', () => {
     })
 
     it('throws error if percentage is not between 1 and 100', () => {
-      cli._order = new Order(1, 'Andy');
       jest.spyOn(cli, 'getItemDiscountPercent');
       jest.spyOn(console, 'error');
 
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
+      cli.checkForItemDiscount();
       cli._rl.input.emit('data', 'Yes\n');
       cli._rl.input.emit('data', 'Tea\n');
       cli._rl.input.emit('data', '101\n');
