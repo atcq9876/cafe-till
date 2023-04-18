@@ -423,5 +423,15 @@ describe('CLI', () => {
       expect(cli._minTotalPriceForDiscount).toEqual(20);
       expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(1);
     })
+
+    it('sets the totalDiscountPercent instance variable and calls createTotalPriceDiscount', () => {
+      jest.spyOn(cli, 'createTotalPriceDiscountObject');
+      
+      cli.getTotalDiscountPercent();
+      cli._rl.input.emit('data', '10\n');
+
+      expect(cli._totalPriceDiscountPercent).toEqual(10);
+      expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(1);
+    })
   })
 })

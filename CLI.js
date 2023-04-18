@@ -254,6 +254,13 @@ class CLI {
   }
 
   getTotalDiscountPercent() {
+    this._rl.question('Discount percent: ', (percent) => {
+      this._totalPriceDiscountPercent = parseInt(percent);
+      this.createTotalPriceDiscountObject();
+    })
+  }
+
+  createTotalPriceDiscountObject() {
     
   }
 
