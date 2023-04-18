@@ -17,6 +17,7 @@ class CLI {
     this._itemDiscountPercent = null;
     this._itemDiscount = null;
     this._minTotalPriceForDiscount = null;
+    this._totalPriceDiscountPercent = null;
     this._totalPriceDiscount = null;
   }
 
@@ -255,8 +256,15 @@ class CLI {
 
   getTotalDiscountPercent() {
     this._rl.question('Discount percent: ', (percent) => {
-      this._totalPriceDiscountPercent = parseInt(percent);
-      this.createTotalPriceDiscountObject();
+      try {
+        const percentInt = parseInt(percent);
+        this.#validateDiscountPercent(percentInt);
+        this._totalPriceDiscountPercent = percentInt;
+        this.createTotalPriceDiscountObject();
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.getTotalDiscountPercent();
+      }
     })
   }
 

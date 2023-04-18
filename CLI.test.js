@@ -433,5 +433,17 @@ describe('CLI', () => {
       expect(cli._totalPriceDiscountPercent).toEqual(10);
       expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(1);
     })
+
+    it('throws error if input is not between 1 and 100 and calls get percent again', () => {
+      jest.spyOn(cli, 'getTotalDiscountPercent');
+      jest.spyOn(cli, 'createTotalPriceDiscountObject');
+      
+      cli.getTotalDiscountPercent();
+      cli._rl.input.emit('data', '101\n');
+
+      expect(cli._totalPriceDiscountPercent).toEqual(null);
+      expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(2);
+      expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(0);
+    })
   })
 })
