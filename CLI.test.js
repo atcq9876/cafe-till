@@ -262,7 +262,7 @@ describe('CLI', () => {
       expect(cli._rl.close).toHaveBeenCalledTimes(0);
     })
 
-    it('will throw error if user doesnt respond Yes or No to warning', () => {
+    it('will throw error if user doesnt respond Yes or No to cancelOrder warning', () => {
       cli._order = new Order(1, 'Andy');
       jest.spyOn(cli, 'takeOrder');
       jest.spyOn(cli, 'cancelOrder');
