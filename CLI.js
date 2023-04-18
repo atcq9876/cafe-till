@@ -118,8 +118,12 @@ class CLI {
   cancelOrder() {
     this._rl.question('Are you sure want to cancel the order? ', (response) => {
       try {
-        if (response === 'Yes') console.log('Order cancelled\n');
-        this._rl.close();
+        if (response === 'Yes') {
+          console.log('Order cancelled\n');
+          this._rl.close();
+        } else if (response === 'No') {
+          this.takeOrder();
+        }
       } catch (err) {
         console.error(`Error: ${err.message}`);
         this.cancelOrder();
