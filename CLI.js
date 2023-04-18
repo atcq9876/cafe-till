@@ -124,7 +124,7 @@ class CLI {
     this._rl.question('Are you sure want to cancel the order? Yes/No: ', (response) => {
       try {
         if (response !== 'Yes' && response !== 'No') {
-          throw new Error("Please response 'Yes' or 'No'");
+          throw new Error("Please respond 'Yes' or 'No'");
         } else if (response === 'Yes') {
           console.log('Order cancelled\n');
           this._rl.close();
@@ -140,8 +140,17 @@ class CLI {
 
   checkForItemDiscount() {
     this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
-      if (response === 'Yes') {
-        this.getItemDiscountName();
+      try {
+        if (response === 'Yes') {
+          this.getItemDiscountName();
+        } else if (response === 'No') {
+          this.checkForTotalPriceDiscount();
+        } else {
+          throw new Error("Please respond 'Yes' or 'No'");
+        }
+      } catch (err) {
+        console.error(`Error: ${err.message}`);
+        this.checkForItemDiscount();
       }
     })
   }
@@ -170,6 +179,11 @@ class CLI {
   createItemDiscountObject() {
     this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
     console.log(`Item discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}`);
+    this.checkForTotalPriceDiscount();
+  }
+
+  checkForTotalPriceDiscount() {
+
   }
 }
 

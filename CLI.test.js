@@ -277,7 +277,7 @@ describe('CLI', () => {
       expect(cli.takeOrder).toHaveBeenCalledTimes(1);
       expect(cli.cancelOrder).toHaveBeenCalledTimes(2);
       expect(cli._rl.close).toHaveBeenCalledTimes(0);
-      expect(console.error).toHaveBeenCalledWith("Error: Please response 'Yes' or 'No'");
+      expect(console.error).toHaveBeenCalledWith("Error: Please respond 'Yes' or 'No'");
     })
   })
 
@@ -300,6 +300,7 @@ describe('CLI', () => {
       cli._order = new Order(1, 'Andy');
       const mockItemDiscount = new ItemDiscount('Tea', 10);
       jest.spyOn(cli, 'checkForItemDiscount');
+      jest.spyOn(cli, 'checkForTotalPriceDiscount');
       jest.spyOn(console, 'log');
 
       cli.takeOrder();
@@ -313,6 +314,46 @@ describe('CLI', () => {
       expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
       expect(console.log).toHaveBeenCalledWith('Item discount added: 10% off Tea');
       expect(cli._itemDiscount).toEqual(mockItemDiscount);
+      expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
+    })
+
+    it('doesnt create an item discount if user doesnt have a voucher', () => {
+      cli._order = new Order(1, 'Andy');
+      const mockItemDiscount = new ItemDiscount('Tea', 10);
+      jest.spyOn(cli, 'checkForItemDiscount');
+      jest.spyOn(cli, 'getItemDiscountName');
+      jest.spyOn(cli, 'checkForTotalPriceDiscount');
+      jest.spyOn(console, 'log');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '4\n');
+      cli._rl.input.emit('data', 'No\n');
+
+      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
+      expect(cli.getItemDiscountName).toHaveBeenCalledTimes(0);
+      expect(cli._itemDiscount).toEqual(null);
+      expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
+    })
+
+    it('checks for item discount again if user response is not Yes/No', () => {
+      cli._order = new Order(1, 'Andy');
+      const mockItemDiscount = new ItemDiscount('Tea', 10);
+      jest.spyOn(cli, 'checkForItemDiscount');
+      jest.spyOn(cli, 'getItemDiscountName');
+      jest.spyOn(console, 'error');
+
+      cli.takeOrder();
+      cli._rl.input.emit('data', '1\n');
+      cli._rl.input.emit('data', 'Tea\n');
+      cli._rl.input.emit('data', '4\n');
+      cli._rl.input.emit('data', 'hi\n');
+
+      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(2);
+      expect(console.error).toHaveBeenCalledWith("Error: Please respond 'Yes' or 'No'")
+      expect(cli.getItemDiscountName).toHaveBeenCalledTimes(0);
+      expect(cli._itemDiscount).toEqual(null);
     })
   })
 })
