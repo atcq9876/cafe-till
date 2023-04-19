@@ -356,6 +356,7 @@ class CLI {
   printReceipt() {
     const receiptObject = new Receipt(this._order, this._priceCalculator, this._payment);
     this._receipt = receiptObject.printReceipt();
+    this._rl.close();
   }
 }
 

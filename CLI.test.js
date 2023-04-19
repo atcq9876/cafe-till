@@ -751,5 +751,17 @@ describe('CLI', () => {
 
       expect(cli._receipt).toEqual(expectedReceipt);
     })
+
+    it('closes the app after printing the receipt', () => {
+      cli._order = new Order(2, 'Andy, Anna');
+      cli._order.addItem('Cappucino');
+      cli._priceCalculator = new PriceCalculator(cli._order);
+      cli._payment = new Payment(cli._priceCalculator, 10);
+      jest.spyOn(cli._rl, 'close');
+
+      cli.printReceipt();
+
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
   })
 })
