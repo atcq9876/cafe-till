@@ -2,6 +2,7 @@ const CLI = require('./CLI');
 const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
 const TotalPriceDiscount = require('./totalPriceDiscount');
+const PriceCalculator = require('./priceCalculator');
 
 describe('CLI', () => {
   let cli;
@@ -650,14 +651,5 @@ describe('CLI', () => {
   })
 
   describe('takePayment', () => {
-    it('closes app if priceCalculator hasnt been created', () => {
-      jest.spyOn(console, 'error');
-      jest.spyOn(cli._rl, 'close');
-      
-      cli.takePayment();
-
-      expect(console.error).toHaveBeenCalledWith("\nError: Can't take payment if price hasnt been calculated");
-      expect(cli._rl.close).toHaveBeenCalledTimes(1);
-    })
   })
 })

@@ -321,12 +321,6 @@ class CLI {
   }
 
   takePayment() {
-    try {
-      if (!this._priceCalculator) throw new Error("Can't take payment if price hasnt been calculated")
-    } catch (err) {
-      console.error(`\nError: ${err.message}`);
-      this._rl.close();
-    }
   }
 }
 
