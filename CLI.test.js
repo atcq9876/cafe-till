@@ -393,37 +393,43 @@ describe('CLI', () => {
       expect(cli._itemDiscount).toEqual(null);
     })
 
-    it('throws error if discounted item isnt on menu', () => {
-      jest.spyOn(cli, 'getItemDiscountName');
-      jest.spyOn(console, 'error');
-
-      cli.checkForItemDiscount();
-      cli._rl.input.emit('data', 'Yes\n');
-      cli._rl.input.emit('data', 'Test\n');
-
-      expect(cli.getItemDiscountName).toHaveBeenCalledTimes(2);
-      expect(console.error).toHaveBeenCalledWith('Error: That item is not on the menu');
+    describe('getItemDiscountName', () => {
+      it('throws error if discounted item isnt on menu', () => {
+        jest.spyOn(cli, 'getItemDiscountName');
+        jest.spyOn(console, 'error');
+  
+        cli.checkForItemDiscount();
+        cli._rl.input.emit('data', 'Yes\n');
+        cli._rl.input.emit('data', 'Test\n');
+  
+        expect(cli.getItemDiscountName).toHaveBeenCalledTimes(2);
+        expect(console.error).toHaveBeenCalledWith('Error: That item is not on the menu');
+      })
     })
 
-    it('throws error if percentage is not between 1 and 100', () => {
-      jest.spyOn(cli, 'getItemDiscountPercent');
-      jest.spyOn(console, 'error');
-
-      cli.checkForItemDiscount();
-      cli._rl.input.emit('data', 'Yes\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '101\n');
-
-      expect(cli.getItemDiscountPercent).toHaveBeenCalledTimes(2);
-      expect(console.error).toHaveBeenCalledWith('Error: Discount percent must be between 1 and 100');
+    describe('getItemDiscountPercent', () => {
+      it('throws error if percentage is not between 1 and 100', () => {
+        jest.spyOn(cli, 'getItemDiscountPercent');
+        jest.spyOn(console, 'error');
+  
+        cli.checkForItemDiscount();
+        cli._rl.input.emit('data', 'Yes\n');
+        cli._rl.input.emit('data', 'Tea\n');
+        cli._rl.input.emit('data', '101\n');
+  
+        expect(cli.getItemDiscountPercent).toHaveBeenCalledTimes(2);
+        expect(console.error).toHaveBeenCalledWith('Error: Discount percent must be between 1 and 100');
+      })
     })
 
-    it('closes the application if there is an error when creating the itemDiscountObject', () => {
-      jest.spyOn(cli._rl, 'close');
-      
-      cli.createItemDiscountObject();
-
-      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    describe('createItemDiscountObject', () => {
+      it('closes the application if there is an error when creating the itemDiscountObject', () => {
+        jest.spyOn(cli._rl, 'close');
+        
+        cli.createItemDiscountObject();
+  
+        expect(cli._rl.close).toHaveBeenCalledTimes(1);
+      })
     })
   })
 
