@@ -763,5 +763,15 @@ describe('CLI', () => {
 
       expect(cli._rl.close).toHaveBeenCalledTimes(1);
     })
+
+    it('throws error and closes app if theres an error printing receipt', () => {
+      jest.spyOn(console, 'error');
+      jest.spyOn(cli._rl, 'close');
+
+      cli.printReceipt();
+
+      expect(console.error).toHaveBeenCalledWith("Error: Can't print receipt before payment is made");
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
   })
 })
