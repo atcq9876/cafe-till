@@ -504,7 +504,7 @@ describe('CLI', () => {
         expect(console.error).toHaveBeenCalledWith('Error: Min total price must not be a negative number');
       })
   
-      it('calls getTotalDiscountPercent if minTotalPrice is valid', () => {
+      it('saves value and calls getTotalDiscountPercent if minTotalPrice is valid', () => {
         jest.spyOn(cli, 'getTotalDiscountPercent');
   
         cli.getMinTotalPrice();
@@ -516,7 +516,7 @@ describe('CLI', () => {
     })
 
     describe('getTotalDiscountPercent', () => {
-      it('sets the totalDiscountPercent instance variable and calls createTotalPriceDiscount', () => {
+      it('saves value and calls createTotalPriceDiscount if input is valid', () => {
         jest.spyOn(cli, 'createTotalPriceDiscountObject');
         
         cli.getTotalDiscountPercent();
