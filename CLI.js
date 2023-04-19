@@ -323,7 +323,10 @@ class CLI {
   takePayment() {
     this._rl.question('\nHow much cash has the customer given you? ', (cash) => {
       try {
-        if (!cash) throw new Error('Please enter an amount equal to or greater than the total price')
+        const cashInt = parseInt(cash);
+        if (!cash || cashInt < this._priceCalculator.calculateTotalPrice()) {
+          throw new Error('Please enter an amount equal to or greater than the total price');
+        }
         this.printChange();
       } catch (err) {
         console.error(`Error: ${err.message}`);

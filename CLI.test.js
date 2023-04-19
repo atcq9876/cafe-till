@@ -676,5 +676,19 @@ describe('CLI', () => {
       expect(console.error).toHaveBeenCalledWith('Error: Please enter an amount equal to or greater than the total price');
       expect(cli.takePayment).toHaveBeenCalledTimes(2);
     })
+
+    it('throws error if change is less than total price', () => {
+      cli._order = new Order(1, 'Andy');
+      cli._order.addItem('Americano');
+      cli._priceCalculator = new PriceCalculator(cli._order);
+      jest.spyOn(console, 'error');
+      jest.spyOn(cli, 'takePayment');
+
+      cli.takePayment();
+      cli._rl.input.emit('data', '1\n');
+
+      expect(console.error).toHaveBeenCalledWith('Error: Please enter an amount equal to or greater than the total price');
+      expect(cli.takePayment).toHaveBeenCalledTimes(2);
+    })
   })
 })
