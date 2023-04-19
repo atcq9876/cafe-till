@@ -276,18 +276,18 @@ describe('CLI', () => {
     describe('finaliseItems', () => {
       it('can mark the items as finalised', () => {
         cli._order = new Order(1, 'Andy');
-        jest.spyOn(cli, 'takeOrder');
+        cli._order._items = ['Tea'];
         jest.spyOn(cli, 'finaliseItems');
+        jest.spyOn(cli, 'checkForItemDiscount');
         jest.spyOn(console, 'log');
   
         cli.takeOrder();
-        cli._rl.input.emit('data', '1\n');
-        cli._rl.input.emit('data', 'Tea\n');
         cli._rl.input.emit('data', '4\n');
   
-        expect(cli.takeOrder).toHaveBeenCalledTimes(2);
         expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
         expect(console.log).toHaveBeenCalledWith('Items finalised\n');
+        expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
+        expect(cli._order._items).toEqual(['Tea']);
       })
     })
 
