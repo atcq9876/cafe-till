@@ -351,19 +351,14 @@ describe('CLI', () => {
   })
 
   describe('checkForItemDiscount', () => {
-    it('creates an item discount and prints its info to console', () => {
-      const mockItemDiscount = new ItemDiscount('Tea', 10);
-      jest.spyOn(cli, 'checkForTotalPriceDiscount');
+    it('asks for the name of the discounted item if customer has voucher', () => {
+      jest.spyOn(cli, 'getItemDiscountName');
       jest.spyOn(console, 'log');
 
       cli.checkForItemDiscount();
       cli._rl.input.emit('data', 'Yes\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '10\n');
 
-      expect(console.log).toHaveBeenCalledWith('Discount added: 10% off Teas');
-      expect(cli._itemDiscount).toEqual(mockItemDiscount);
-      expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
+      expect(cli.getItemDiscountName).toHaveBeenCalledTimes(1);
     })
 
     it('doesnt create an item discount if user doesnt have a voucher', () => {
@@ -426,12 +421,14 @@ describe('CLI', () => {
       it('creates an item discount object', () => {
         jest.spyOn(cli, 'checkForTotalPriceDiscount');
         jest.spyOn(console, 'log');
+        const mockItemDiscount = new ItemDiscount('Tea', 10);
         cli._discountedItemName = 'Tea';
         cli._itemDiscountPercent = 10;
   
         cli.createItemDiscountObject();
   
         expect(console.log).toHaveBeenCalledWith('Discount added: 10% off Teas');
+        expect(cli._itemDiscount).toEqual(mockItemDiscount);
         expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
       })
       
