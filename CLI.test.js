@@ -608,12 +608,12 @@ describe('CLI', () => {
     it('creates a priceBreakdown object when there are no discounts', () => {
       cli._order = new Order(1, 'Andy');
       cli._order.addItem('Americano');
-      jest.spyOn(cli, 'takePayment');
+      jest.spyOn(cli, 'getCustomerCash');
 
       cli.createPriceCalculatorObject();
 
       expect(cli._priceCalculator.calculateTotalPrice()).toEqual(3.75);
-      expect(cli.takePayment).toHaveBeenCalledTimes(1);
+      expect(cli.getCustomerCash).toHaveBeenCalledTimes(1);
     })
 
     it('creates a priceBreakdown object when there are discounts', () => {
@@ -621,12 +621,12 @@ describe('CLI', () => {
       cli._order.addItem('Americano');
       cli._itemDiscount = new ItemDiscount('Americano', 10);
       cli._totalPriceDiscount = new TotalPriceDiscount(1, 5);
-      jest.spyOn(cli, 'takePayment');
+      jest.spyOn(cli, 'getCustomerCash');
 
       cli.createPriceCalculatorObject();
 
       expect(cli._priceCalculator.calculateTotalPrice()).toEqual(3.21);
-      expect(cli.takePayment).toHaveBeenCalledTimes(1);
+      expect(cli.getCustomerCash).toHaveBeenCalledTimes(1);
     })
 
     it('prints the total price', () => {
@@ -650,14 +650,14 @@ describe('CLI', () => {
     })
   })
 
-  describe('takePayment', () => {
+  describe('getCustomerCash', () => {
     it('calls printChange', () => {
       cli._order = new Order(1, 'Andy');
       cli._order.addItem('Americano');
       cli._priceCalculator = new PriceCalculator(cli._order);
       jest.spyOn(cli, 'printChange');
 
-      cli.takePayment();
+      cli.getCustomerCash();
       cli._rl.input.emit('data', '10\n');
 
       expect(cli._cash).toEqual(10);
@@ -669,13 +669,13 @@ describe('CLI', () => {
       cli._order.addItem('Americano');
       cli._priceCalculator = new PriceCalculator(cli._order);
       jest.spyOn(console, 'error');
-      jest.spyOn(cli, 'takePayment');
+      jest.spyOn(cli, 'getCustomerCash');
 
-      cli.takePayment();
+      cli.getCustomerCash();
       cli._rl.input.emit('data', '\n');
 
       expect(console.error).toHaveBeenCalledWith('Error: Please enter an amount equal to or greater than the total price');
-      expect(cli.takePayment).toHaveBeenCalledTimes(2);
+      expect(cli.getCustomerCash).toHaveBeenCalledTimes(2);
     })
 
     it('throws error if change is less than total price', () => {
@@ -683,13 +683,29 @@ describe('CLI', () => {
       cli._order.addItem('Americano');
       cli._priceCalculator = new PriceCalculator(cli._order);
       jest.spyOn(console, 'error');
-      jest.spyOn(cli, 'takePayment');
+      jest.spyOn(cli, 'getCustomerCash');
 
-      cli.takePayment();
+      cli.getCustomerCash();
       cli._rl.input.emit('data', '1\n');
 
       expect(console.error).toHaveBeenCalledWith('Error: Please enter an amount equal to or greater than the total price');
-      expect(cli.takePayment).toHaveBeenCalledTimes(2);
+      expect(cli.getCustomerCash).toHaveBeenCalledTimes(2);
+    })
+  })
+
+  describe('printChange', () => {
+    it('prints change', () => {
+      cli._order = new Order(1, 'Andy');
+      cli._order.addItem('Americano');
+      cli._priceCalculator = new PriceCalculator(cli._order);
+      cli._cash = 5;
+      jest.spyOn(console, 'log');
+      jest.spyOn(cli, 'printReceipt');
+
+      cli.printChange();
+
+      expect(console.log).toHaveBeenCalledWith('\nChange: $1.25');
+      expect(cli.printReceipt).toHaveBeenCalledTimes(1);
     })
   })
 })

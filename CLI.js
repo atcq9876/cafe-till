@@ -1,9 +1,10 @@
 const readline = require('readline');
+const menu = require('./cafeMenu.json');
 const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
-const menu = require('./cafeMenu.json');
 const TotalPriceDiscount = require('./totalPriceDiscount');
 const PriceCalculator = require('./priceCalculator');
+const Payment = require('./payment');
 
 
 class CLI {
@@ -23,6 +24,7 @@ class CLI {
     this._totalPriceDiscount = null;
     this._priceCalculator = null;
     this._cash = null;
+    this._payment = null;
   }
 
   start() {
@@ -315,14 +317,14 @@ class CLI {
       if (!this._order) throw new Error("Can't calculate the price of an empty order")
       this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
       console.log(`\nTotal price: $${this._priceCalculator.calculateTotalPrice()}`);
-      this.takePayment();
+      this.getCustomerCash();
     } catch (err) {
       console.error(`Error: ${err.message}`);
       this._rl.close();
     }
   }
 
-  takePayment() {
+  getCustomerCash() {
     this._rl.question('\nHow much cash has the customer given you? ', (cash) => {
       try {
         const cashInt = parseInt(cash);
@@ -333,13 +335,19 @@ class CLI {
         this.printChange();
       } catch (err) {
         console.error(`Error: ${err.message}`);
-        this.takePayment();
+        this.getCustomerCash();
       }
     })
   }
 
   printChange() {
-    
+    this._payment = new Payment(this._priceCalculator, this._cash);
+    console.log(`\nChange: $${this._payment.calculateChange()}`);
+    this.printReceipt();
+  }
+
+  printReceipt() {
+
   }
 }
 
