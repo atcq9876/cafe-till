@@ -598,4 +598,16 @@ describe('CLI', () => {
       expect(cli._rl.close).toHaveBeenCalledTimes(1);
     })
   })
+
+  describe('takePayment', () => {
+    it('closes app if priceCalculator hasnt been created', () => {
+      jest.spyOn(console, 'error');
+      jest.spyOn(cli._rl, 'close');
+      
+      cli.takePayment();
+
+      expect(console.error).toHaveBeenCalledWith("Error: Can't take payment if price hasnt been calculated");
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
+  })
 })
