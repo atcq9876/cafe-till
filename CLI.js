@@ -124,9 +124,16 @@ class CLI {
   }
 
   viewItems() {
-    console.log('Items added so far:')
-    console.log(this._order.getItems().join(', ') + '\n');
-    this.takeOrder();
+    const orderedItems = this._order.getItems();
+    try {
+      if (orderedItems.length === 0) throw new Error('No items have been added to the order yet');
+      console.log('Items added so far:')
+      console.log(orderedItems.join(', ') + '\n');
+      this.takeOrder();
+    } catch (err) {
+      console.error(err.message);
+      this.takeOrder();
+    }
   }
 
   finaliseItems() {

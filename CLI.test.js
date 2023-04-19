@@ -247,23 +247,37 @@ describe('CLI', () => {
       })
     })
 
-    it('can display the items of the current order', () => {
-      cli._order = new Order(1, 'Andy');
-      jest.spyOn(cli, 'takeOrder');
-      jest.spyOn(cli, 'viewItems');
-      jest.spyOn(console, 'log');
+    describe('viewItems', () => {
+      it('can display the items of the current order', () => {
+        cli._order = new Order(1, 'Andy');
+        jest.spyOn(cli, 'takeOrder');
+        jest.spyOn(cli, 'viewItems');
+        jest.spyOn(console, 'log');
+  
+        cli.takeOrder();
+        cli._rl.input.emit('data', '1\n');
+        cli._rl.input.emit('data', 'Tea\n');
+        cli._rl.input.emit('data', '1\n');
+        cli._rl.input.emit('data', 'Tea\n');
+        cli._rl.input.emit('data', '3\n');
+  
+        expect(console.log).toHaveBeenCalledWith('Items added so far:');
+        expect(console.log).toHaveBeenCalledWith('Tea, Tea\n');
+        expect(cli.takeOrder).toHaveBeenCalledTimes(4);
+        expect(cli.viewItems).toHaveBeenCalledTimes(1);
+      })
 
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '3\n');
-
-      expect(console.log).toHaveBeenCalledWith('Items added so far:');
-      expect(console.log).toHaveBeenCalledWith('Tea, Tea\n');
-      expect(cli.takeOrder).toHaveBeenCalledTimes(4);
-      expect(cli.viewItems).toHaveBeenCalledTimes(1);
+      it('prints that order is empty if no items added', () => {
+        cli._order = new Order(1, 'Andy');
+        jest.spyOn(cli, 'takeOrder');
+        jest.spyOn(cli, 'viewItems');
+        jest.spyOn(console, 'error');
+  
+        cli.viewItems();
+  
+        expect(console.error).toHaveBeenCalledWith('No items have been added to the order yet');
+        expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+      })
     })
 
     it('can mark the items as finalised', () => {
