@@ -187,18 +187,17 @@ describe('CLI', () => {
     describe('removeItem', () => {
       it('can remove an item from the order', () => {
         cli._order = new Order(1, 'Andy');
+        cli._order._items = ['Tea']
         jest.spyOn(cli, 'takeOrder');
         jest.spyOn(cli, 'removeItem');
   
         cli.takeOrder();
-        cli._rl.input.emit('data', '1\n');
-        cli._rl.input.emit('data', 'Tea\n');
         cli._rl.input.emit('data', '2\n');
         cli._rl.input.emit('data', 'Tea\n');
   
         expect(console.log).toHaveBeenCalledWith('Item successfully removed\n')
         expect(cli._order.getItems()).toEqual([]);
-        expect(cli.takeOrder).toHaveBeenCalledTimes(3);
+        expect(cli.takeOrder).toHaveBeenCalledTimes(2);
         expect(cli.removeItem).toHaveBeenCalledTimes(1);
       })
   
@@ -208,12 +207,10 @@ describe('CLI', () => {
         jest.spyOn(console, 'error');
   
         cli.takeOrder();
-        cli._rl.input.emit('data', '1\n');
-        cli._rl.input.emit('data', 'Tea\n');
         cli._rl.input.emit('data', '2\n');
         cli._rl.input.emit('data', 'testtt\n');
   
-        expect(cli._order.getItems()).toEqual(['Tea']);
+        expect(cli._order.getItems()).toEqual([]);
         expect(console.error).toHaveBeenCalledWith('Error: This is not an item on the menu');
         expect(cli.removeItem).toHaveBeenCalledTimes(2);
       })
@@ -280,20 +277,22 @@ describe('CLI', () => {
       })
     })
 
-    it('can mark the items as finalised', () => {
-      cli._order = new Order(1, 'Andy');
-      jest.spyOn(cli, 'takeOrder');
-      jest.spyOn(cli, 'finaliseItems');
-      jest.spyOn(console, 'log');
-
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
-
-      expect(cli.takeOrder).toHaveBeenCalledTimes(2);
-      expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
-      expect(console.log).toHaveBeenCalledWith('Items finalised\n');
+    describe('finaliseItems', () => {
+      it('can mark the items as finalised', () => {
+        cli._order = new Order(1, 'Andy');
+        jest.spyOn(cli, 'takeOrder');
+        jest.spyOn(cli, 'finaliseItems');
+        jest.spyOn(console, 'log');
+  
+        cli.takeOrder();
+        cli._rl.input.emit('data', '1\n');
+        cli._rl.input.emit('data', 'Tea\n');
+        cli._rl.input.emit('data', '4\n');
+  
+        expect(cli.takeOrder).toHaveBeenCalledTimes(2);
+        expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
+        expect(console.log).toHaveBeenCalledWith('Items finalised\n');
+      })
     })
 
     it('can cancel an order', () => {
