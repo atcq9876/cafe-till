@@ -305,7 +305,7 @@ class CLI {
   }
 
   createPriceCalculatorObject() {
-    this._priceCalculator = new PriceCalculator(this._order);
+    this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
     this.takePayment();
   }
 

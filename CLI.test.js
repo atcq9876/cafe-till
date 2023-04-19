@@ -1,6 +1,7 @@
 const CLI = require('./CLI');
 const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
+const TotalPriceDiscount = require('./totalPriceDiscount');
 
 describe('CLI', () => {
   let cli;
@@ -571,6 +572,20 @@ describe('CLI', () => {
       cli.createPriceCalculatorObject();
 
       expect(cli._priceCalculator.calculateTotalPrice()).toEqual(3.75);
+      expect(cli.takePayment).toHaveBeenCalledTimes(1);
+    })
+
+    it('creates a priceBreakdown object when there are discounts', () => {
+      cli._order = new Order(1, 'Andy');
+      cli._order.addItem('Americano');
+      cli._itemDiscount = new ItemDiscount('Americano', 10);
+      cli._totalPriceDiscount = new TotalPriceDiscount(1, 5);
+
+      jest.spyOn(cli, 'takePayment');
+
+      cli.createPriceCalculatorObject();
+
+      expect(cli._priceCalculator.calculateTotalPrice()).toEqual(3.21);
       expect(cli.takePayment).toHaveBeenCalledTimes(1);
     })
   })
