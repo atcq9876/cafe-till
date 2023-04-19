@@ -3,6 +3,7 @@ const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
 const menu = require('./cafeMenu.json');
 const TotalPriceDiscount = require('./totalPriceDiscount');
+const PriceCalculator = require('./priceCalculator');
 
 
 class CLI {
@@ -247,7 +248,7 @@ class CLI {
         if (response === 'Yes') {
           this.getMinTotalPrice();
         } else if (response === 'No') {
-          this.calculateTotalPrice();
+          this.createPriceCalculatorObject();
         } else {
           throw new Error("Please respond 'Yes' or 'No'");
         }
@@ -296,14 +297,19 @@ class CLI {
     try {
       this._totalPriceDiscount = new TotalPriceDiscount(this._minTotalPriceForDiscount, this._totalPriceDiscountPercent);
       console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}`);
-      this.calculateTotalPrice();
+      this.createPriceCalculatorObject();
     } catch (err) {
       console.error(`Error: ${err.message}`);
       this._rl.close();
     }
   }
 
-  calculateTotalPrice() {
+  createPriceCalculatorObject() {
+    this._priceCalculator = new PriceCalculator(this._order);
+    this.takePayment();
+  }
+
+  takePayment() {
 
   }
 }

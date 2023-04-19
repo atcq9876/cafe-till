@@ -464,13 +464,13 @@ describe('CLI', () => {
 
   describe('checkForTotalPriceDiscount', () => {
     it('doesnt create a totalPriceDiscount if customer doesnt have a voucher', () => {
-      jest.spyOn(cli, 'calculateTotalPrice');
+      jest.spyOn(cli, 'createPriceCalculatorObject');
 
       cli.checkForTotalPriceDiscount();
       cli._rl.input.emit('data', 'No\n');
 
       expect(cli._totalPriceDiscount).toEqual(null);
-      expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
+      expect(cli.createPriceCalculatorObject).toHaveBeenCalledTimes(1);
     })
 
     it('throws error if response isnt Yes/No', () => {
@@ -541,7 +541,7 @@ describe('CLI', () => {
 
     describe('createTotalPriceDiscountObject', () => {
       it('creates a totalPriceDiscount object', () => {
-        jest.spyOn(cli, 'calculateTotalPrice');
+        jest.spyOn(cli, 'createPriceCalculatorObject');
         jest.spyOn(console, 'log');
         cli._minTotalPriceForDiscount = 10;
         cli._totalPriceDiscountPercent = 5;
@@ -549,7 +549,7 @@ describe('CLI', () => {
         cli.createTotalPriceDiscountObject();
   
         expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10');
-        expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
+        expect(cli.createPriceCalculatorObject).toHaveBeenCalledTimes(1);
       })
   
       it('closes the application if there is an error when creating the itemDiscountObject', () => {
@@ -559,6 +559,19 @@ describe('CLI', () => {
   
         expect(cli._rl.close).toHaveBeenCalledTimes(1);
       })
+    })
+  })
+
+  describe('createPriceCalculatorObject', () => {
+    it('creates a priceBreakdown object when there are no discounts', () => {
+      cli._order = new Order(1, 'Andy');
+      cli._order.addItem('Americano');
+      jest.spyOn(cli, 'takePayment');
+
+      cli.createPriceCalculatorObject();
+
+      expect(cli._priceCalculator.calculateTotalPrice()).toEqual(3.75);
+      expect(cli.takePayment).toHaveBeenCalledTimes(1);
     })
   })
 })
