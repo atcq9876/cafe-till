@@ -358,6 +358,7 @@ class CLI {
       if(!this._payment) throw new Error("Can't print receipt before payment is made");
       const receiptObject = new Receipt(this._order, this._priceCalculator, this._payment);
       this._receipt = receiptObject.printReceipt();
+      console.log(this._receipt);
       this._rl.close();
     } catch (err) {
       console.error(`Error: ${err.message}`);

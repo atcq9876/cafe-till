@@ -722,6 +722,7 @@ describe('CLI', () => {
 
   describe('printReceipt', () => {
     it('prints a receipt', () => {
+      jest.spyOn(console, 'log');
       cli._order = new Order(2, 'Andy, Anna');
       cli._order.addItem('Cappucino');
       cli._priceCalculator = new PriceCalculator(cli._order);
@@ -750,6 +751,7 @@ describe('CLI', () => {
       cli.printReceipt();
 
       expect(cli._receipt).toEqual(expectedReceipt);
+      expect(console.log).toHaveBeenCalledWith(expectedReceipt);
     })
 
     it('closes the app after printing the receipt', () => {
