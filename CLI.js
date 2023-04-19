@@ -305,8 +305,14 @@ class CLI {
   }
 
   createPriceCalculatorObject() {
-    this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
-    this.takePayment();
+    try {
+      if (!this._order) throw new Error("Can't calculate the price of an empty order")
+      this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
+      this.takePayment();
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      this._rl.close();
+    }
   }
 
   takePayment() {

@@ -580,13 +580,22 @@ describe('CLI', () => {
       cli._order.addItem('Americano');
       cli._itemDiscount = new ItemDiscount('Americano', 10);
       cli._totalPriceDiscount = new TotalPriceDiscount(1, 5);
-
       jest.spyOn(cli, 'takePayment');
 
       cli.createPriceCalculatorObject();
 
       expect(cli._priceCalculator.calculateTotalPrice()).toEqual(3.21);
       expect(cli.takePayment).toHaveBeenCalledTimes(1);
+    })
+
+    it('closes app if no order is created', () => {
+      jest.spyOn(console, 'error');
+      jest.spyOn(cli._rl, 'close');
+      
+      cli.createPriceCalculatorObject();
+
+      expect(console.error).toHaveBeenCalledWith("Error: Can't calculate the price of an empty order");
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
     })
   })
 })
