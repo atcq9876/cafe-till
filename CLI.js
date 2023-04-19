@@ -87,7 +87,7 @@ class CLI {
           this.viewItems();
         } else if (input === '4') {
           this.finaliseItems();
-        } else if (input == '9') {
+        } else if (input === '9') {
           this.cancelOrder();
         }
       } catch (err) {
