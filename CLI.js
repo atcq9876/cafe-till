@@ -321,6 +321,13 @@ class CLI {
   }
 
   takePayment() {
+    this._rl.question('\nHow much cash has the customer given you? ', (cash) => {
+      this.printChange();
+    })
+  }
+
+  printChange() {
+    
   }
 }
 

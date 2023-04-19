@@ -651,5 +651,16 @@ describe('CLI', () => {
   })
 
   describe('takePayment', () => {
+    it('calls printChange', () => {
+      cli._order = new Order(1, 'Andy');
+      cli._order.addItem('Americano');
+      cli._priceCalculator = new PriceCalculator(cli._order);
+      jest.spyOn(cli, 'printChange');
+
+      cli.takePayment();
+      cli._rl.input.emit('data', '10\n');
+
+      expect(cli.printChange).toHaveBeenCalledTimes(1);
+    })
   })
 })
