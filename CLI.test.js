@@ -463,68 +463,73 @@ describe('CLI', () => {
       expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(1);
     })
 
-    it('throws error if minTotalPrice is a negative number', () => {
-      jest.spyOn(cli, 'getMinTotalPrice');
-      jest.spyOn(console, 'error');
-
-      cli.getMinTotalPrice()
-      cli._rl.input.emit('data', '-1\n');
-
-      expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(2);
-      expect(console.error).toHaveBeenCalledWith('Error: Min total price must not be a negative number');
+    describe('getMinTotalPrice', () => {
+      it('throws error if minTotalPrice is a negative number', () => {
+        jest.spyOn(cli, 'getMinTotalPrice');
+        jest.spyOn(console, 'error');
+  
+        cli.getMinTotalPrice()
+        cli._rl.input.emit('data', '-1\n');
+  
+        expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(2);
+        expect(console.error).toHaveBeenCalledWith('Error: Min total price must not be a negative number');
+      })
+  
+      it('calls getTotalDiscountPercent if minTotalPrice is valid', () => {
+        jest.spyOn(cli, 'getTotalDiscountPercent');
+  
+        cli.getMinTotalPrice();
+        cli._rl.input.emit('data', '20\n');
+  
+        expect(cli._minTotalPriceForDiscount).toEqual(20);
+        expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(1);
+      })
     })
 
-    it('calls getTotalDiscountPercent if minTotalPrice is valid', () => {
-      jest.spyOn(cli, 'getTotalDiscountPercent');
-
-
-      cli.getMinTotalPrice();
-      cli._rl.input.emit('data', '20\n');
-
-      expect(cli._minTotalPriceForDiscount).toEqual(20);
-      expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(1);
+    describe('getTotalDiscountPercent', () => {
+      it('sets the totalDiscountPercent instance variable and calls createTotalPriceDiscount', () => {
+        jest.spyOn(cli, 'createTotalPriceDiscountObject');
+        
+        cli.getTotalDiscountPercent();
+        cli._rl.input.emit('data', '10\n');
+  
+        expect(cli._totalPriceDiscountPercent).toEqual(10);
+        expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(1);
+      })
+  
+      it('throws error if input is not between 1 and 100 and calls get percent again', () => {
+        jest.spyOn(cli, 'getTotalDiscountPercent');
+        jest.spyOn(cli, 'createTotalPriceDiscountObject');
+        
+        cli.getTotalDiscountPercent();
+        cli._rl.input.emit('data', '101\n');
+  
+        expect(cli._totalPriceDiscountPercent).toEqual(null);
+        expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(2);
+        expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(0);
+      })
     })
 
-    it('sets the totalDiscountPercent instance variable and calls createTotalPriceDiscount', () => {
-      jest.spyOn(cli, 'createTotalPriceDiscountObject');
-      
-      cli.getTotalDiscountPercent();
-      cli._rl.input.emit('data', '10\n');
-
-      expect(cli._totalPriceDiscountPercent).toEqual(10);
-      expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(1);
-    })
-
-    it('throws error if input is not between 1 and 100 and calls get percent again', () => {
-      jest.spyOn(cli, 'getTotalDiscountPercent');
-      jest.spyOn(cli, 'createTotalPriceDiscountObject');
-      
-      cli.getTotalDiscountPercent();
-      cli._rl.input.emit('data', '101\n');
-
-      expect(cli._totalPriceDiscountPercent).toEqual(null);
-      expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(2);
-      expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(0);
-    })
-
-    it('creates a totalPriceDiscount object', () => {
-      jest.spyOn(cli, 'calculateTotalPrice');
-      jest.spyOn(console, 'log');
-
-      cli._minTotalPriceForDiscount = 10;
-      cli._totalPriceDiscountPercent = 5;
-      cli.createTotalPriceDiscountObject();
-
-      expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10');
-      expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
-    })
-
-    it('closes the application if there is an error when creating the itemDiscountObject', () => {
-      jest.spyOn(cli._rl, 'close');
-      
-      cli.createTotalPriceDiscountObject();
-
-      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    describe('createTotalPriceDiscountObject', () => {
+      it('creates a totalPriceDiscount object', () => {
+        jest.spyOn(cli, 'calculateTotalPrice');
+        jest.spyOn(console, 'log');
+        cli._minTotalPriceForDiscount = 10;
+        cli._totalPriceDiscountPercent = 5;
+  
+        cli.createTotalPriceDiscountObject();
+  
+        expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10');
+        expect(cli.calculateTotalPrice).toHaveBeenCalledTimes(1);
+      })
+  
+      it('closes the application if there is an error when creating the itemDiscountObject', () => {
+        jest.spyOn(cli._rl, 'close');
+        
+        cli.createTotalPriceDiscountObject();
+  
+        expect(cli._rl.close).toHaveBeenCalledTimes(1);
+      })
     })
   })
 })
