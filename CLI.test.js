@@ -81,19 +81,15 @@ describe('CLI', () => {
     it('should set the customer name(s) if input is valid', () => {
       cli._tableNumber = 1;
       const validInput = 'Andy, Anna';
-      jest.spyOn(cli, 'takeOrder');
       jest.spyOn(console, 'log');
-  
+      
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${validInput}\n`);
-  
+      
       expect(console.log).toHaveBeenCalledWith('Customer name(s) successfully added\n')
       expect(cli._customerNames).toEqual('Andy, Anna');
-      expect(cli._order.getTable()).toEqual(1);
-      expect(cli._order.getNames()).toEqual('Andy, Anna');
-      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
     })
-  
+
     it('should prompt for input again if input is an empty string', () => {
       const invalidInput = '';
       jest.spyOn(cli, 'getCustomerNames');
@@ -117,6 +113,29 @@ describe('CLI', () => {
       expect(console.error).toHaveBeenCalledWith('Error: Please enter one or more names\n');
       expect(cli.getCustomerNames).toHaveBeenCalledTimes(2);
       expect(cli._order).toEqual(null);
+    })
+  })
+
+  describe('createOrderObject', () => {
+    it('creates an Order object', () => {
+      cli._customerNames = 'Andy, Anna';
+      cli._tableNumber = 1;
+      jest.spyOn(cli, 'takeOrder');
+      
+      cli.createOrderObject();
+
+      expect(cli._order.getTable()).toEqual(1);
+      expect(cli._order.getNames()).toEqual('Andy, Anna');
+      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+    })
+
+    it('closes the app if there is an error creating an order (e.g. if table and names not set)', () => {
+      jest.spyOn(cli, 'takeOrder');
+
+      cli.createOrderObject();
+
+      expect(cli._order).toEqual(null);
+      expect(cli.takeOrder).toHaveBeenCalledTimes(0);
     })
   })
 

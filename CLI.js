@@ -50,13 +50,22 @@ class CLI {
         if (!names) throw new Error('Please enter one or more names\n');
         this._customerNames = names;
         console.log('Customer name(s) successfully added\n')
-        this._order = new Order(this._tableNumber, this._customerNames);
-        this.takeOrder();
+        this.createOrderObject();
       } catch (err) {
         console.error(`Error: ${err.message}`);
         this.getCustomerNames();
       }
     })
+  }
+
+  createOrderObject() {
+    try {
+      this._order = new Order(this._tableNumber, this._customerNames);
+      this.takeOrder();
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      this._rl.close();
+    }
   }
 
   takeOrder() {
