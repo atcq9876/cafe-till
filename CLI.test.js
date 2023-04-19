@@ -289,6 +289,20 @@ describe('CLI', () => {
         expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
         expect(cli._order._items).toEqual(['Tea']);
       })
+
+      it('throws error if order is empty', () => {
+        cli._order = new Order(1, 'Andy');
+        jest.spyOn(cli, 'finaliseItems');
+        jest.spyOn(cli, 'takeOrder');
+        jest.spyOn(cli, 'checkForItemDiscount');
+        jest.spyOn(console, 'error');
+  
+        cli.finaliseItems();
+  
+        expect(console.error).toHaveBeenCalledWith("Error: No items have been added to the order yet");
+        expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+        expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(0);
+      })
     })
 
     it('can cancel an order', () => {

@@ -137,8 +137,15 @@ class CLI {
   }
 
   finaliseItems() {
-    console.log('Items finalised\n');
-    this.checkForItemDiscount();
+    const orderedItems = this._order.getItems();
+    try {
+      if (orderedItems.length === 0) throw new Error('No items have been added to the order yet');
+      console.log('Items finalised\n');
+      this.checkForItemDiscount();
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      this.takeOrder();
+    }
   }
 
   cancelOrder() {
