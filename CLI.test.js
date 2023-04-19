@@ -247,27 +247,23 @@ describe('CLI', () => {
     describe('viewItems', () => {
       it('can display the items of the current order', () => {
         cli._order = new Order(1, 'Andy');
+        cli._order._items = ['Tea', 'Tea'];
         jest.spyOn(cli, 'takeOrder');
         jest.spyOn(cli, 'viewItems');
         jest.spyOn(console, 'log');
   
         cli.takeOrder();
-        cli._rl.input.emit('data', '1\n');
-        cli._rl.input.emit('data', 'Tea\n');
-        cli._rl.input.emit('data', '1\n');
-        cli._rl.input.emit('data', 'Tea\n');
         cli._rl.input.emit('data', '3\n');
   
         expect(console.log).toHaveBeenCalledWith('Items added so far:');
         expect(console.log).toHaveBeenCalledWith('Tea, Tea\n');
-        expect(cli.takeOrder).toHaveBeenCalledTimes(4);
+        expect(cli.takeOrder).toHaveBeenCalledTimes(2);
         expect(cli.viewItems).toHaveBeenCalledTimes(1);
       })
 
       it('prints that order is empty if no items added', () => {
         cli._order = new Order(1, 'Andy');
         jest.spyOn(cli, 'takeOrder');
-        jest.spyOn(cli, 'viewItems');
         jest.spyOn(console, 'error');
   
         cli.viewItems();
