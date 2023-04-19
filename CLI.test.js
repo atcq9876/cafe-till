@@ -305,53 +305,48 @@ describe('CLI', () => {
       })
     })
 
-    it('can cancel an order', () => {
-      cli._order = new Order(1, 'Andy');
-      jest.spyOn(cli, 'takeOrder');
-      jest.spyOn(cli, 'cancelOrder');
-      jest.spyOn(console, 'log');
-      jest.spyOn(cli._rl, 'close');
-
-      cli.takeOrder();
-      cli._rl.input.emit('data', '9\n');
-      cli._rl.input.emit('data', 'Yes\n');
-
-      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
-      expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
-      expect(console.log).toHaveBeenCalledWith('Order cancelled\n');
-      expect(cli._rl.close).toHaveBeenCalledTimes(1);
-    })
-
-    it('wont cancel order if user responds no to warning', () => {
-      cli._order = new Order(1, 'Andy');
-      jest.spyOn(cli, 'takeOrder');
-      jest.spyOn(cli, 'cancelOrder');
-      jest.spyOn(cli._rl, 'close');
-
-      cli.takeOrder();
-      cli._rl.input.emit('data', '9\n');
-      cli._rl.input.emit('data', 'No\n');
-
-      expect(cli.takeOrder).toHaveBeenCalledTimes(2);
-      expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
-      expect(cli._rl.close).toHaveBeenCalledTimes(0);
-    })
-
-    it('will throw error if user doesnt respond Yes or No to cancelOrder warning', () => {
-      cli._order = new Order(1, 'Andy');
-      jest.spyOn(cli, 'takeOrder');
-      jest.spyOn(cli, 'cancelOrder');
-      jest.spyOn(cli._rl, 'close');
-      jest.spyOn(console, 'error');
-
-      cli.takeOrder();
-      cli._rl.input.emit('data', '9\n');
-      cli._rl.input.emit('data', 'test\n');
-
-      expect(cli.takeOrder).toHaveBeenCalledTimes(1);
-      expect(cli.cancelOrder).toHaveBeenCalledTimes(2);
-      expect(cli._rl.close).toHaveBeenCalledTimes(0);
-      expect(console.error).toHaveBeenCalledWith("Error: Please respond 'Yes' or 'No'");
+    describe('cancelOrder', () => {
+      it('can cancel an order', () => {
+        jest.spyOn(cli, 'takeOrder');
+        jest.spyOn(cli, 'cancelOrder');
+        jest.spyOn(console, 'log');
+        jest.spyOn(cli._rl, 'close');
+  
+        cli.takeOrder();
+        cli._rl.input.emit('data', '9\n');
+        cli._rl.input.emit('data', 'Yes\n');
+  
+        expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+        expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
+        expect(console.log).toHaveBeenCalledWith('Order cancelled\n');
+        expect(cli._rl.close).toHaveBeenCalledTimes(1);
+      })
+  
+      it('wont cancel order if user responds no to warning', () => {
+        jest.spyOn(cli, 'cancelOrder');
+        jest.spyOn(cli, 'takeOrder');
+        jest.spyOn(cli._rl, 'close');
+  
+        cli.cancelOrder();
+        cli._rl.input.emit('data', 'No\n');
+  
+        expect(cli.takeOrder).toHaveBeenCalledTimes(1);
+        expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
+        expect(cli._rl.close).toHaveBeenCalledTimes(0);
+      })
+  
+      it('will throw error if user doesnt respond Yes or No to cancelOrder warning', () => {
+        jest.spyOn(cli, 'cancelOrder');
+        jest.spyOn(cli._rl, 'close');
+        jest.spyOn(console, 'error');
+  
+        cli.cancelOrder();
+        cli._rl.input.emit('data', 'test\n');
+  
+        expect(cli.cancelOrder).toHaveBeenCalledTimes(2);
+        expect(cli._rl.close).toHaveBeenCalledTimes(0);
+        expect(console.error).toHaveBeenCalledWith("Error: Please respond 'Yes' or 'No'");
+      })
     })
   })
 
