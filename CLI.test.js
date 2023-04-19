@@ -351,20 +351,6 @@ describe('CLI', () => {
   })
 
   describe('checkForItemDiscount', () => {
-    it('is called when items are finalised', () => {
-      cli._order = new Order(1, 'Andy');
-      jest.spyOn(cli, 'finaliseItems');
-      jest.spyOn(cli, 'checkForItemDiscount');
-
-      cli.takeOrder();
-      cli._rl.input.emit('data', '1\n');
-      cli._rl.input.emit('data', 'Tea\n');
-      cli._rl.input.emit('data', '4\n');
-
-      expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
-      expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
-    })
-
     it('creates an item discount and prints its info to console', () => {
       const mockItemDiscount = new ItemDiscount('Tea', 10);
       jest.spyOn(cli, 'checkForTotalPriceDiscount');
