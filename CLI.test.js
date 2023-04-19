@@ -448,7 +448,7 @@ describe('CLI', () => {
   
         cli.createItemDiscountObject();
   
-        expect(console.log).toHaveBeenCalledWith('Discount added: 10% off Teas');
+        expect(console.log).toHaveBeenCalledWith('Discount added: 10% off Teas\n');
         expect(cli._itemDiscount).toEqual(mockItemDiscount);
         expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
       })
@@ -549,7 +549,7 @@ describe('CLI', () => {
   
         cli.createTotalPriceDiscountObject();
   
-        expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10');
+        expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10\n');
         expect(cli.createPriceCalculatorObject).toHaveBeenCalledTimes(1);
       })
   
@@ -595,7 +595,7 @@ describe('CLI', () => {
 
       cli.createPriceCalculatorObject();
 
-      expect(console.log).toHaveBeenCalledWith('Total price: $3.75');
+      expect(console.log).toHaveBeenCalledWith('Total price: $3.75\n');
     })
 
     it('closes app if no order is created', () => {

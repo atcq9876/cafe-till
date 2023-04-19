@@ -234,7 +234,7 @@ class CLI {
   createItemDiscountObject() {
     try {
       this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
-      console.log(`Discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s`);
+      console.log(`Discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s\n`);
       this.checkForTotalPriceDiscount();
     } catch (err) {
       console.error(`Error: ${err.message}`);
@@ -296,7 +296,7 @@ class CLI {
   createTotalPriceDiscountObject() {
     try {
       this._totalPriceDiscount = new TotalPriceDiscount(this._minTotalPriceForDiscount, this._totalPriceDiscountPercent);
-      console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}`);
+      console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}\n`);
       this.createPriceCalculatorObject();
     } catch (err) {
       console.error(`Error: ${err.message}`);
@@ -308,7 +308,7 @@ class CLI {
     try {
       if (!this._order) throw new Error("Can't calculate the price of an empty order")
       this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
-      console.log(`Total price: $${this._priceCalculator.calculateTotalPrice()}`);
+      console.log(`Total price: $${this._priceCalculator.calculateTotalPrice()}\n`);
       this.takePayment();
     } catch (err) {
       console.error(`Error: ${err.message}`);
