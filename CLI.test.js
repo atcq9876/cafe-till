@@ -389,6 +389,16 @@ describe('CLI', () => {
     })
 
     describe('getItemDiscountName', () => {
+      it('saves value and calls getItemDiscountPercent if name is valid', () => {
+        jest.spyOn(cli, 'getItemDiscountPercent');
+        
+        cli.getItemDiscountName();
+        cli._rl.input.emit('data', 'Americano\n');
+
+        expect(cli._discountedItemName).toEqual('Americano');
+        expect(cli.getItemDiscountPercent).toHaveBeenCalledTimes(1);
+      })
+
       it('throws error if discounted item isnt on menu', () => {
         jest.spyOn(cli, 'getItemDiscountName');
         jest.spyOn(console, 'error');
