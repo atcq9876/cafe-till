@@ -413,6 +413,16 @@ describe('CLI', () => {
     })
 
     describe('getItemDiscountPercent', () => {
+      it('saves value and calls createItemDiscountObject if name is valid', () => {
+        jest.spyOn(cli, 'createItemDiscountObject');
+
+        cli.getItemDiscountPercent();
+        cli._rl.input.emit('data', '20\n');
+
+        expect(cli._itemDiscountPercent).toEqual(20);
+        expect(cli.createItemDiscountObject).toHaveBeenCalledTimes(1);
+      })
+      
       it('throws error if percentage is not between 1 and 100', () => {
         jest.spyOn(cli, 'getItemDiscountPercent');
         jest.spyOn(console, 'error');
