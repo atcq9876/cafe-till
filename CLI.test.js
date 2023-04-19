@@ -21,7 +21,7 @@ describe('CLI', () => {
 
       cli.start();
 
-      expect(console.log).toHaveBeenCalledWith('New order opened\n');
+      expect(console.log).toHaveBeenCalledWith('New order opened');
       expect(cli.getTableNumber).toHaveBeenCalledTimes(1);
     })
   })
@@ -36,7 +36,7 @@ describe('CLI', () => {
       cli.getTableNumber();
       cli._rl.input.emit('data', `${validInput}\n`);
   
-      expect(console.log).toHaveBeenCalledWith('Table number successfully added\n')
+      expect(console.log).toHaveBeenCalledWith('\nTable number successfully added')
       expect(cli._tableNumber).toEqual(expectedTableNumber);
       expect(cli.getCustomerNames).toHaveBeenCalledTimes(1);
     })
@@ -49,7 +49,7 @@ describe('CLI', () => {
       cli.getTableNumber();
       cli._rl.input.emit('data', `${invalidInput}\n`);
 
-      expect(console.error).toHaveBeenCalledWith('Error: Table must be a number between 1 and 4\n');
+      expect(console.error).toHaveBeenCalledWith('\nError: Table must be a number between 1 and 4');
       expect(cli.getTableNumber).toHaveBeenCalledTimes(2);
     })
   
@@ -61,7 +61,7 @@ describe('CLI', () => {
       cli.getTableNumber();
       cli._rl.input.emit('data', `${invalidInput}\n`);
 
-      expect(console.error).toHaveBeenCalledWith('Error: Table must be a number between 1 and 4\n');
+      expect(console.error).toHaveBeenCalledWith('\nError: Table must be a number between 1 and 4');
       expect(cli.getTableNumber).toHaveBeenCalledTimes(2);
     })
   
@@ -73,7 +73,7 @@ describe('CLI', () => {
       cli.getTableNumber();
       cli._rl.input.emit('data', `${invalidInput}\n`);
 
-      expect(console.error).toHaveBeenCalledWith('Error: Table must be a number between 1 and 4\n');
+      expect(console.error).toHaveBeenCalledWith('\nError: Table must be a number between 1 and 4');
       expect(cli.getTableNumber).toHaveBeenCalledTimes(2);
     })
   })
@@ -87,7 +87,7 @@ describe('CLI', () => {
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${validInput}\n`);
       
-      expect(console.log).toHaveBeenCalledWith('Customer name(s) successfully added\n')
+      expect(console.log).toHaveBeenCalledWith('\nCustomer name(s) successfully added')
       expect(cli._customerNames).toEqual('Andy, Anna');
     })
 
@@ -99,7 +99,7 @@ describe('CLI', () => {
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${invalidInput}\n`);
 
-      expect(console.error).toHaveBeenCalledWith('Error: Please enter one or more names\n');
+      expect(console.error).toHaveBeenCalledWith('\nError: Please enter one or more names');
       expect(cli.getCustomerNames).toHaveBeenCalledTimes(2);
     })
   
@@ -111,7 +111,7 @@ describe('CLI', () => {
       cli.getCustomerNames();
       cli._rl.input.emit('data', `${invalidInput}\n`);
 
-      expect(console.error).toHaveBeenCalledWith('Error: Please enter one or more names\n');
+      expect(console.error).toHaveBeenCalledWith('\nError: Please enter one or more names');
       expect(cli.getCustomerNames).toHaveBeenCalledTimes(2);
       expect(cli._order).toEqual(null);
     })
@@ -149,7 +149,7 @@ describe('CLI', () => {
       cli.takeOrder();
       cli._rl.input.emit('data', `${invalidInput}\n`)
       
-      expect(console.error).toHaveBeenCalledWith('Error: Please enter 1, 2, 3, 4 or 9\n');
+      expect(console.error).toHaveBeenCalledWith('\nError: Please enter 1, 2, 3, 4 or 9');
       expect(cli.takeOrder).toHaveBeenCalledTimes(2);
     })
 
@@ -164,7 +164,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', '1\n');
         cli._rl.input.emit('data', 'Tea\n');
   
-        expect(console.log).toHaveBeenCalledWith('Item successfully added\n')
+        expect(console.log).toHaveBeenCalledWith('\nItem successfully added')
         expect(cli._order.getItems()).toEqual(['Tea']);
         expect(cli.takeOrder).toHaveBeenCalledTimes(2);
         expect(cli.addItem).toHaveBeenCalledTimes(1);
@@ -180,7 +180,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', 'test\n');
   
         expect(cli._order.getItems()).toEqual([]);
-        expect(console.error).toHaveBeenCalledWith('Error: This is not an item on the menu');
+        expect(console.error).toHaveBeenCalledWith('\nError: This is not an item on the menu');
         expect(cli.addItem).toHaveBeenCalledTimes(2);
       })
     })
@@ -196,7 +196,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', '2\n');
         cli._rl.input.emit('data', 'Tea\n');
   
-        expect(console.log).toHaveBeenCalledWith('Item successfully removed\n')
+        expect(console.log).toHaveBeenCalledWith('\nItem successfully removed')
         expect(cli._order.getItems()).toEqual([]);
         expect(cli.takeOrder).toHaveBeenCalledTimes(2);
         expect(cli.removeItem).toHaveBeenCalledTimes(1);
@@ -212,7 +212,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', 'testtt\n');
   
         expect(cli._order.getItems()).toEqual([]);
-        expect(console.error).toHaveBeenCalledWith('Error: This is not an item on the menu');
+        expect(console.error).toHaveBeenCalledWith('\nError: This is not an item on the menu');
         expect(cli.removeItem).toHaveBeenCalledTimes(2);
       })
 
@@ -226,7 +226,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', 'Cafe Latte\n');
   
         expect(cli._order.getItems()).toEqual([]);
-        expect(console.error).toHaveBeenCalledWith("Error: Can't remove an item that hasn't been added yet");
+        expect(console.error).toHaveBeenCalledWith("\nError: Can't remove an item that hasn't been added yet");
         expect(cli.removeItem).toHaveBeenCalledTimes(2);
       })
 
@@ -240,7 +240,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', 'Cafe Latte\n');
   
         expect(cli._order.getItems()).toEqual([]);
-        expect(console.error).toHaveBeenCalledWith("Error: Can't remove an item that hasn't been added yet");
+        expect(console.error).toHaveBeenCalledWith("\nError: Can't remove an item that hasn't been added yet");
         expect(cli.removeItem).toHaveBeenCalledTimes(2);
       })
     })
@@ -256,8 +256,8 @@ describe('CLI', () => {
         cli.takeOrder();
         cli._rl.input.emit('data', '3\n');
   
-        expect(console.log).toHaveBeenCalledWith('Items added so far:');
-        expect(console.log).toHaveBeenCalledWith('Tea, Tea\n');
+        expect(console.log).toHaveBeenCalledWith('\nItems added so far:');
+        expect(console.log).toHaveBeenCalledWith('\nTea, Tea');
         expect(cli.takeOrder).toHaveBeenCalledTimes(2);
         expect(cli.viewItems).toHaveBeenCalledTimes(1);
       })
@@ -269,7 +269,7 @@ describe('CLI', () => {
   
         cli.viewItems();
   
-        expect(console.error).toHaveBeenCalledWith('No items have been added to the order yet');
+        expect(console.error).toHaveBeenCalledWith('\nNo items have been added to the order yet');
         expect(cli.takeOrder).toHaveBeenCalledTimes(1);
       })
     })
@@ -286,7 +286,7 @@ describe('CLI', () => {
         cli._rl.input.emit('data', '4\n');
   
         expect(cli.finaliseItems).toHaveBeenCalledTimes(1);
-        expect(console.log).toHaveBeenCalledWith('Items finalised\n');
+        expect(console.log).toHaveBeenCalledWith('\nItems finalised');
         expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(1);
         expect(cli._order._items).toEqual(['Tea']);
       })
@@ -300,7 +300,7 @@ describe('CLI', () => {
   
         cli.finaliseItems();
   
-        expect(console.error).toHaveBeenCalledWith("Error: No items have been added to the order yet");
+        expect(console.error).toHaveBeenCalledWith("\nError: No items have been added to the order yet");
         expect(cli.takeOrder).toHaveBeenCalledTimes(1);
         expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(0);
       })
@@ -319,7 +319,7 @@ describe('CLI', () => {
   
         expect(cli.takeOrder).toHaveBeenCalledTimes(1);
         expect(cli.cancelOrder).toHaveBeenCalledTimes(1);
-        expect(console.log).toHaveBeenCalledWith('Order cancelled\n');
+        expect(console.log).toHaveBeenCalledWith('\nOrder cancelled\n');
         expect(cli._rl.close).toHaveBeenCalledTimes(1);
       })
   
@@ -346,7 +346,7 @@ describe('CLI', () => {
   
         expect(cli.cancelOrder).toHaveBeenCalledTimes(2);
         expect(cli._rl.close).toHaveBeenCalledTimes(0);
-        expect(console.error).toHaveBeenCalledWith("Error: Please respond 'Yes' or 'No'");
+        expect(console.error).toHaveBeenCalledWith("\nError: Please respond 'Yes' or 'No'");
       })
     })
   })
@@ -384,7 +384,7 @@ describe('CLI', () => {
       cli._rl.input.emit('data', 'hi\n');
 
       expect(cli.checkForItemDiscount).toHaveBeenCalledTimes(2);
-      expect(console.error).toHaveBeenCalledWith("Error: Please respond 'Yes' or 'No'")
+      expect(console.error).toHaveBeenCalledWith("\nError: Please respond 'Yes' or 'No'")
       expect(cli.getItemDiscountName).toHaveBeenCalledTimes(0);
       expect(cli._itemDiscount).toEqual(null);
     })
@@ -448,7 +448,7 @@ describe('CLI', () => {
   
         cli.createItemDiscountObject();
   
-        expect(console.log).toHaveBeenCalledWith('Discount added: 10% off Teas\n');
+        expect(console.log).toHaveBeenCalledWith('\nDiscount added: 10% off Teas');
         expect(cli._itemDiscount).toEqual(mockItemDiscount);
         expect(cli.checkForTotalPriceDiscount).toHaveBeenCalledTimes(1);
       })
@@ -530,11 +530,13 @@ describe('CLI', () => {
       it('throws error if input is not between 1 and 100 and calls get percent again', () => {
         jest.spyOn(cli, 'getTotalDiscountPercent');
         jest.spyOn(cli, 'createTotalPriceDiscountObject');
+        jest.spyOn(console, 'error');
         
         cli.getTotalDiscountPercent();
         cli._rl.input.emit('data', '101\n');
   
         expect(cli._totalPriceDiscountPercent).toEqual(null);
+        expect(console.error).toHaveBeenCalledWith('Error: Discount percent must be between 1 and 100')
         expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(2);
         expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(0);
       })
@@ -549,7 +551,7 @@ describe('CLI', () => {
   
         cli.createTotalPriceDiscountObject();
   
-        expect(console.log).toHaveBeenCalledWith('Discount added: 5% off orders over $10\n');
+        expect(console.log).toHaveBeenCalledWith('\nDiscount added: 5% off orders over $10');
         expect(cli.createPriceCalculatorObject).toHaveBeenCalledTimes(1);
       })
   
@@ -595,7 +597,7 @@ describe('CLI', () => {
 
       cli.createPriceCalculatorObject();
 
-      expect(console.log).toHaveBeenCalledWith('Total price: $3.75\n');
+      expect(console.log).toHaveBeenCalledWith('\nTotal price: $3.75');
     })
 
     it('closes app if no order is created', () => {
@@ -616,7 +618,7 @@ describe('CLI', () => {
       
       cli.takePayment();
 
-      expect(console.error).toHaveBeenCalledWith("Error: Can't take payment if price hasnt been calculated");
+      expect(console.error).toHaveBeenCalledWith("\nError: Can't take payment if price hasnt been calculated");
       expect(cli._rl.close).toHaveBeenCalledTimes(1);
     })
   })

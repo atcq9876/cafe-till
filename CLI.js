@@ -24,36 +24,36 @@ class CLI {
   }
 
   start() {
-    console.log('New order opened\n');
+    console.log('New order opened');
     this.getTableNumber()
   }
 
   getTableNumber() {
-    this._rl.question('Please enter the table number: ', (tableNumber) => {
+    this._rl.question('\nPlease enter the table number: ', (tableNumber) => {
       try {
         const parsedTableNumber = parseInt(tableNumber);
         if (isNaN(parsedTableNumber) || parsedTableNumber < 1 || parsedTableNumber > 4) {
-          throw new Error('Table must be a number between 1 and 4\n');
+          throw new Error('Table must be a number between 1 and 4');
         }
         this._tableNumber = parseInt(tableNumber);
-        console.log('Table number successfully added\n')
+        console.log('\nTable number successfully added')
         this.getCustomerNames();
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.getTableNumber();
       }
     })
   }
 
   getCustomerNames() {
-    this._rl.question('Please enter the customer name(s): ', (names) => {
+    this._rl.question('\nPlease enter the customer name(s): ', (names) => {
       try {
-        if (!names) throw new Error('Please enter one or more names\n');
+        if (!names) throw new Error('Please enter one or more names');
         this._customerNames = names;
-        console.log('Customer name(s) successfully added\n')
+        console.log('\nCustomer name(s) successfully added')
         this.createOrderObject();
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.getCustomerNames();
       }
     })
@@ -64,13 +64,13 @@ class CLI {
       this._order = new Order(this._tableNumber, this._customerNames);
       this.takeOrder();
     } catch (err) {
-      console.error(`Error: ${err.message}`);
+      console.error(`\nError: ${err.message}\n`);
       this._rl.close();
     }
   }
 
   takeOrder() {
-    const optionsMessage = 'Press one of the following keys to update the order:\n'
+    const optionsMessage = '\nPress one of the following keys to update the order:\n'
       + '1 - Add an item\n'
       + '2 - Remove an item\n'
       + '3 - View the order\n'
@@ -79,7 +79,7 @@ class CLI {
     const validOptions = ['1', '2', '3', '4', '9'];
     this._rl.question(optionsMessage, (input) => {
       try {
-        if (!validOptions.includes(input)) throw new Error('Please enter 1, 2, 3, 4 or 9\n');
+        if (!validOptions.includes(input)) throw new Error('Please enter 1, 2, 3, 4 or 9');
         if (input === '1') {
           this.addItem();
         } else if (input === '2') {
@@ -92,33 +92,33 @@ class CLI {
           this.cancelOrder();
         }
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.takeOrder();
       }
     }) 
   }
 
   addItem() {
-    this._rl.question('Which item would you like to add? ', (item) => {
+    this._rl.question('\nWhich item would you like to add? ', (item) => {
       try {
         this._order.addItem(item);
-        console.log('Item successfully added\n');
+        console.log('\nItem successfully added');
         this.takeOrder();
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.addItem();
       }
     })
   }
 
   removeItem() {
-    this._rl.question('Which item would you like to remove? ', (item) => {
+    this._rl.question('\nWhich item would you like to remove? ', (item) => {
       try {
         this._order.removeItem(item);
-        console.log('Item successfully removed\n');
+        console.log('\nItem successfully removed');
         this.takeOrder();
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.removeItem();
       }
     })
@@ -128,11 +128,11 @@ class CLI {
     const orderedItems = this._order.getItems();
     try {
       if (orderedItems.length === 0) throw new Error('No items have been added to the order yet');
-      console.log('Items added so far:')
-      console.log(orderedItems.join(', ') + '\n');
+      console.log('\nItems added so far:')
+      console.log('\n' + orderedItems.join(', '));
       this.takeOrder();
     } catch (err) {
-      console.error(err.message);
+      console.error('\n' + err.message);
       this.takeOrder();
     }
   }
@@ -141,34 +141,34 @@ class CLI {
     const orderedItems = this._order.getItems();
     try {
       if (orderedItems.length === 0) throw new Error('No items have been added to the order yet');
-      console.log('Items finalised\n');
+      console.log('\nItems finalised');
       this.checkForItemDiscount();
     } catch (err) {
-      console.error(`Error: ${err.message}`);
+      console.error(`\nError: ${err.message}`);
       this.takeOrder();
     }
   }
 
   cancelOrder() {
-    this._rl.question('Are you sure want to cancel the order? Yes/No: ', (response) => {
+    this._rl.question('\nAre you sure want to cancel the order? Yes/No: ', (response) => {
       try {
         if (response !== 'Yes' && response !== 'No') {
           throw new Error("Please respond 'Yes' or 'No'");
         } else if (response === 'Yes') {
-          console.log('Order cancelled\n');
+          console.log('\nOrder cancelled\n');
           this._rl.close();
         } else if (response === 'No') {
           this.takeOrder();
         }
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.cancelOrder();
       }
     })
   }
 
   checkForItemDiscount() {
-    this._rl.question('Does the customer have an item discount voucher? Yes/No: ', (response) => {
+    this._rl.question('\nDoes the customer have an item discount voucher? Yes/No: ', (response) => {
       try {
         if (response === 'Yes') {
           this.getItemDiscountName();
@@ -178,7 +178,7 @@ class CLI {
           throw new Error("Please respond 'Yes' or 'No'");
         }
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.checkForItemDiscount();
       }
     })
@@ -226,7 +226,9 @@ class CLI {
   }
 
   #validateDiscountPercent(discountPercent) {
-    if (discountPercent < 1 || discountPercent > 100) {
+    if (!discountPercent) {
+      throw new Error('Please enter a number');
+    } else if (discountPercent < 1 || discountPercent > 100) {
       throw new Error('Discount percent must be between 1 and 100');
     }
   }
@@ -234,7 +236,7 @@ class CLI {
   createItemDiscountObject() {
     try {
       this._itemDiscount = new ItemDiscount(this._discountedItemName, this._itemDiscountPercent);
-      console.log(`Discount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s\n`);
+      console.log(`\nDiscount added: ${this._itemDiscountPercent}% off ${this._discountedItemName}s`);
       this.checkForTotalPriceDiscount();
     } catch (err) {
       console.error(`Error: ${err.message}`);
@@ -243,7 +245,7 @@ class CLI {
   }
 
   checkForTotalPriceDiscount() {
-    this._rl.question('Does the customer have a total price discount voucher? Yes/No: ', (response) => {
+    this._rl.question('\nDoes the customer have a total price discount voucher? Yes/No: ', (response) => {
       try {
         if (response === 'Yes') {
           this.getMinTotalPrice();
@@ -253,7 +255,7 @@ class CLI {
           throw new Error("Please respond 'Yes' or 'No'");
         }
       } catch (err) {
-        console.error(`Error: ${err.message}`);
+        console.error(`\nError: ${err.message}`);
         this.checkForTotalPriceDiscount();
       }
     })
@@ -274,7 +276,9 @@ class CLI {
   }
 
   #validateMinTotalPrice(minTotalPrice) {
-    if (minTotalPrice < 0) {
+    if (!minTotalPrice) {
+      throw new Error('Please enter a number');
+    } else if (minTotalPrice < 0) {
       throw new Error('Min total price must not be a negative number');
     }
   }
@@ -296,7 +300,7 @@ class CLI {
   createTotalPriceDiscountObject() {
     try {
       this._totalPriceDiscount = new TotalPriceDiscount(this._minTotalPriceForDiscount, this._totalPriceDiscountPercent);
-      console.log(`Discount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}\n`);
+      console.log(`\nDiscount added: ${this._totalPriceDiscountPercent}% off orders over $${this._minTotalPriceForDiscount}`);
       this.createPriceCalculatorObject();
     } catch (err) {
       console.error(`Error: ${err.message}`);
@@ -308,7 +312,7 @@ class CLI {
     try {
       if (!this._order) throw new Error("Can't calculate the price of an empty order")
       this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
-      console.log(`Total price: $${this._priceCalculator.calculateTotalPrice()}\n`);
+      console.log(`\nTotal price: $${this._priceCalculator.calculateTotalPrice()}`);
       this.takePayment();
     } catch (err) {
       console.error(`Error: ${err.message}`);
@@ -320,7 +324,7 @@ class CLI {
     try {
       if (!this._priceCalculator) throw new Error("Can't take payment if price hasnt been calculated")
     } catch (err) {
-      console.error(`Error: ${err.message}`);
+      console.error(`\nError: ${err.message}`);
       this._rl.close();
     }
   }
