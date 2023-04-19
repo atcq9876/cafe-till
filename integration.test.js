@@ -4,6 +4,7 @@ const PriceCalculator = require('./priceCalculator');
 const Payment = require('./payment');
 const ItemDiscount = require('./itemDiscount');
 const TotalPriceDiscount = require('./totalPriceDiscount');
+const CLI = require('./CLI');
 
 describe('integration', () => {
   it('prints correct receipt for order of three items', () => {
@@ -202,7 +203,58 @@ describe('integration', () => {
       + 'Cash:                   $25.00\n'
       + 'Change:                  $3.68\n';
     
-      console.log(receipt.printReceipt());
     expect(receipt.printReceipt()).toEqual(expectedReceipt);
+  })
+
+  it('processes the order via a CLI', () => {
+    const currentDateAndTime = new Date(Date.now())
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\..+/, '')
+      .replace(/-/g, '.')
+      + '\n';
+    const expectedReceipt = currentDateAndTime
+      + 'The Coffee Connection\n\n'
+      + '123 Lakeside Way\n'
+      + 'Phone: +1 (650) 360-0708\n\n'
+      + 'Voucher 10% Off All Muffins!\n'
+      + 'Valid 01/04/2023 to 31/12/2023\n\n'
+      + 'Table: 1 / [4]\n'
+      + 'Andy, June, John, Jen\n'
+      + ' Cappucino            1 x 3.85\n'
+      + ' Flat White           2 x 4.75\n'
+      + ' Tea                  1 x 3.65\n'
+      + ' Choc Mudcake         1 x 6.40\n\n'
+      + 'Discount:                $2.08\n'
+      + 'Tax:                     $1.84\n'
+      + 'Total:                  $21.32\n'
+      + 'Cash:                   $25.00\n'
+      + 'Change:                  $3.68\n';
+    
+    jest.spyOn(console, 'log');
+    const cli = new CLI();
+    cli.start()
+    cli._rl.input.emit('data', `1\n`);
+    cli._rl.input.emit('data', `Andy, June, John, Jen\n`);
+    cli._rl.input.emit('data', `1\n`);
+    cli._rl.input.emit('data', `Cappucino\n`);
+    cli._rl.input.emit('data', `1\n`);
+    cli._rl.input.emit('data', `Flat White\n`);
+    cli._rl.input.emit('data', `1\n`);
+    cli._rl.input.emit('data', `Flat White\n`);
+    cli._rl.input.emit('data', `1\n`);
+    cli._rl.input.emit('data', `Tea\n`);
+    cli._rl.input.emit('data', `1\n`);
+    cli._rl.input.emit('data', `Choc Mudcake\n`);
+    cli._rl.input.emit('data', `4\n`);
+    cli._rl.input.emit('data', `Yes\n`);
+    cli._rl.input.emit('data', `Cappucino\n`);
+    cli._rl.input.emit('data', `25\n`);
+    cli._rl.input.emit('data', `Yes\n`);
+    cli._rl.input.emit('data', `10\n`);
+    cli._rl.input.emit('data', `5\n`);
+    cli._rl.input.emit('data', `25\n`);
+
+    expect(console.log).toHaveBeenCalledWith(expectedReceipt);
   })
 })
