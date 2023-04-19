@@ -707,5 +707,21 @@ describe('CLI', () => {
       expect(console.log).toHaveBeenCalledWith('\nChange: $1.25');
       expect(cli.printReceipt).toHaveBeenCalledTimes(1);
     })
+
+    it('closes the app if there is an error', () => {
+      jest.spyOn(console, 'error');
+      jest.spyOn(cli._rl, 'close');
+
+      cli.printChange();
+
+      expect(console.error).toHaveBeenCalledWith("\nError: Can't print change without receiving cash from customer");
+      expect(cli._rl.close).toHaveBeenCalledTimes(1);
+    })
   })
+
+  // describe('printReceipt', () => {
+  //   it('prints a receipt for the order', () => {
+      
+  //   })
+  // })
 })

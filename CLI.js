@@ -341,9 +341,15 @@ class CLI {
   }
 
   printChange() {
-    this._payment = new Payment(this._priceCalculator, this._cash);
-    console.log(`\nChange: $${this._payment.calculateChange()}`);
-    this.printReceipt();
+    try {
+      if (!this._cash) throw new Error("Can't print change without receiving cash from customer");
+      this._payment = new Payment(this._priceCalculator, this._cash);
+      console.log(`\nChange: $${this._payment.calculateChange()}`);
+      this.printReceipt();
+    } catch (err) {
+      console.error(`\nError: ${err.message}`);
+      this._rl.close();
+    }
   }
 
   printReceipt() {
