@@ -5,7 +5,7 @@ const ItemDiscount = require('./itemDiscount');
 const TotalPriceDiscount = require('./totalPriceDiscount');
 const PriceCalculator = require('./priceCalculator');
 const Payment = require('./payment');
-
+const Receipt = require('./receipt');
 
 class CLI {
   constructor() {
@@ -25,6 +25,7 @@ class CLI {
     this._priceCalculator = null;
     this._cash = null;
     this._payment = null;
+    this._receipt = null;
   }
 
   start() {
@@ -353,7 +354,8 @@ class CLI {
   }
 
   printReceipt() {
-
+    const receiptObject = new Receipt(this._order, this._priceCalculator, this._payment);
+    this._receipt = receiptObject.printReceipt();
   }
 }
 

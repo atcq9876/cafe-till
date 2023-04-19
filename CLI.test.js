@@ -3,6 +3,7 @@ const Order = require('./order');
 const ItemDiscount = require('./itemDiscount');
 const TotalPriceDiscount = require('./totalPriceDiscount');
 const PriceCalculator = require('./priceCalculator');
+const Payment = require('./payment');
 
 describe('CLI', () => {
   let cli;
@@ -719,9 +720,36 @@ describe('CLI', () => {
     })
   })
 
-  // describe('printReceipt', () => {
-  //   it('prints a receipt for the order', () => {
-      
-  //   })
-  // })
+  describe('printReceipt', () => {
+    it('prints a receipt', () => {
+      cli._order = new Order(2, 'Andy, Anna');
+      cli._order.addItem('Cappucino');
+      cli._priceCalculator = new PriceCalculator(cli._order);
+      cli._payment = new Payment(cli._priceCalculator, 10);
+
+      const currentDateAndTime = new Date(Date.now())
+        .toISOString()
+        .replace('T', ' ')
+        .replace(/\..+/, '')
+        .replace(/-/g, '.')
+        + '\n';
+      const expectedReceipt = currentDateAndTime
+        + 'The Coffee Connection\n\n'
+        + '123 Lakeside Way\n'
+        + 'Phone: +1 (650) 360-0708\n\n'
+        + 'Voucher 10% Off All Muffins!\n'
+        + 'Valid 01/04/2023 to 31/12/2023\n\n'
+        + 'Table: 2 / [4]\n'
+        + 'Andy, Anna\n'
+        + ' Cappucino            1 x 3.85\n\n'
+        + 'Tax:                     $0.33\n'
+        + 'Total:                   $3.85\n'
+        + 'Cash:                   $10.00\n'
+        + 'Change:                  $6.15\n';
+
+      cli.printReceipt();
+
+      expect(cli._receipt).toEqual(expectedReceipt);
+    })
+  })
 })
