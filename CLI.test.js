@@ -660,6 +660,7 @@ describe('CLI', () => {
       cli.takePayment();
       cli._rl.input.emit('data', '10\n');
 
+      expect(cli._cash).toEqual(10);
       expect(cli.printChange).toHaveBeenCalledTimes(1);
     })
 

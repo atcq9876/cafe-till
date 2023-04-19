@@ -21,6 +21,8 @@ class CLI {
     this._minTotalPriceForDiscount = null;
     this._totalPriceDiscountPercent = null;
     this._totalPriceDiscount = null;
+    this._priceCalculator = null;
+    this._cash = null;
   }
 
   start() {
@@ -327,6 +329,7 @@ class CLI {
         if (!cash || cashInt < this._priceCalculator.calculateTotalPrice()) {
           throw new Error('Please enter an amount equal to or greater than the total price');
         }
+        this._cash = cashInt;
         this.printChange();
       } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -336,7 +339,7 @@ class CLI {
   }
 
   printChange() {
-
+    
   }
 }
 
