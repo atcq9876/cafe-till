@@ -424,6 +424,19 @@ describe('CLI', () => {
         expect(cli.createItemDiscountObject).toHaveBeenCalledTimes(1);
       })
       
+      it('throws error if percentage is falsy', () => {
+        jest.spyOn(cli, 'getItemDiscountPercent');
+        jest.spyOn(console, 'error');
+  
+        cli.checkForItemDiscount();
+        cli._rl.input.emit('data', 'Yes\n');
+        cli._rl.input.emit('data', 'Tea\n');
+        cli._rl.input.emit('data', '\n');
+  
+        expect(cli.getItemDiscountPercent).toHaveBeenCalledTimes(2);
+        expect(console.error).toHaveBeenCalledWith('Error: Please enter a number');
+      })
+
       it('throws error if percentage is not between 1 and 100', () => {
         jest.spyOn(cli, 'getItemDiscountPercent');
         jest.spyOn(console, 'error');
@@ -494,6 +507,18 @@ describe('CLI', () => {
     })
 
     describe('getMinTotalPrice', () => {
+      it('throws error if input is falsy', () => {
+        jest.spyOn(cli, 'getMinTotalPrice');
+        jest.spyOn(console, 'error');
+  
+        cli.checkForTotalPriceDiscount();
+        cli._rl.input.emit('data', 'Yes\n');
+        cli._rl.input.emit('data', '\n');
+  
+        expect(cli.getMinTotalPrice).toHaveBeenCalledTimes(2);
+        expect(console.error).toHaveBeenCalledWith('Error: Please enter a number');
+      })
+      
       it('throws error if minTotalPrice is a negative number', () => {
         jest.spyOn(cli, 'getMinTotalPrice');
         jest.spyOn(console, 'error');
@@ -527,6 +552,19 @@ describe('CLI', () => {
         expect(cli.createTotalPriceDiscountObject).toHaveBeenCalledTimes(1);
       })
   
+      it('throws error if percentage is falsy', () => {
+        jest.spyOn(cli, 'getTotalDiscountPercent');
+        jest.spyOn(console, 'error');
+  
+        cli.checkForTotalPriceDiscount();
+        cli._rl.input.emit('data', 'Yes\n');
+        cli._rl.input.emit('data', '10\n');
+        cli._rl.input.emit('data', '\n');
+  
+        expect(cli.getTotalDiscountPercent).toHaveBeenCalledTimes(2);
+        expect(console.error).toHaveBeenCalledWith('Error: Please enter a number');
+      })
+
       it('throws error if input is not between 1 and 100 and calls get percent again', () => {
         jest.spyOn(cli, 'getTotalDiscountPercent');
         jest.spyOn(cli, 'createTotalPriceDiscountObject');
