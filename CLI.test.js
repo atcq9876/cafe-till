@@ -588,6 +588,16 @@ describe('CLI', () => {
       expect(cli.takePayment).toHaveBeenCalledTimes(1);
     })
 
+    it('prints the total price', () => {
+      cli._order = new Order(1, 'Andy');
+      cli._order.addItem('Americano');
+      jest.spyOn(console, 'log');
+
+      cli.createPriceCalculatorObject();
+
+      expect(console.log).toHaveBeenCalledWith('Total price: $3.75');
+    })
+
     it('closes app if no order is created', () => {
       jest.spyOn(console, 'error');
       jest.spyOn(cli._rl, 'close');

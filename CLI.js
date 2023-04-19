@@ -308,6 +308,7 @@ class CLI {
     try {
       if (!this._order) throw new Error("Can't calculate the price of an empty order")
       this._priceCalculator = new PriceCalculator(this._order, this._itemDiscount, this._totalPriceDiscount);
+      console.log(`Total price: $${this._priceCalculator.calculateTotalPrice()}`);
       this.takePayment();
     } catch (err) {
       console.error(`Error: ${err.message}`);
