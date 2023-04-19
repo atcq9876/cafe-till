@@ -231,6 +231,20 @@ describe('CLI', () => {
         expect(console.error).toHaveBeenCalledWith("Error: Can't remove an item that hasn't been added yet");
         expect(cli.removeItem).toHaveBeenCalledTimes(2);
       })
+
+      it('throws error if trying to remove an item that hasnt been added to order yet', () => {
+        cli._order = new Order(1, 'Andy');
+        jest.spyOn(cli, 'removeItem');
+        jest.spyOn(console, 'error');
+  
+        cli.takeOrder();
+        cli._rl.input.emit('data', '2\n');
+        cli._rl.input.emit('data', 'Cafe Latte\n');
+  
+        expect(cli._order.getItems()).toEqual([]);
+        expect(console.error).toHaveBeenCalledWith("Error: Can't remove an item that hasn't been added yet");
+        expect(cli.removeItem).toHaveBeenCalledTimes(2);
+      })
     })
 
     it('can display the items of the current order', () => {
