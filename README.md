@@ -21,7 +21,7 @@ Here is a sample receipt incorporating the above requirements:
 Sample receipt:
 
 ```
-2023.04.20 16:42:45
+2023.04.19 16:42:45
 The Coffee Connection
 
 123 Lakeside Way
