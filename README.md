@@ -15,20 +15,6 @@ This program handles:
 - Printing receipts
 
 ## Specification
-Here are the requirements I tasked myself with fulfilling:
-
-### Sprint 1
-Implement a system that contains the business logic to produce receipts similar to this, using a json menu (see cafeMenu.json).
-
-Receipts must calculate and show the correct amount of tax (in this shop's case, 8.64%), as well as correct line totals and total amount. Do not worry about calculating discounts or change yet. Consider what output formats may be suitable.
-
-### Sprint 2
-Add functionality to take payment and calculate correct change.
-Add functionality to handle discounts - both discounts for selected items (e.g., Tea, Cappucinos or Muffins) and on orders over a certain total value (e.g., 10% on orders over $20).
-
-### Sprint 3
-Implement a command-line interface so that members of staff can use the till.
-
 ### Sample receipt
 Here is a sample receipt incorporating the above requirements:
 
@@ -57,6 +43,20 @@ Total:                  $21.32
 Cash:                   $25.00
 Change:                  $3.68
 ```
+
+Here are the requirements I tasked myself with fulfilling:
+
+### Sprint 1
+Implement a system that contains the business logic to produce receipts similar to the one above, using a json menu (see cafeMenu.json).
+
+Receipts must calculate and show the correct amount of tax (in this shop's case, 8.64%), as well as correct line totals and total amount. Don't worry about calculating discounts or change yet.
+
+### Sprint 2
+Add functionality to handle discounts - both discounts for selected items (e.g., Tea, Cappucinos or Muffins) and on orders over a certain total value (e.g., 10% on orders over $20).
+Add functionality to take payment and calculate correct change.
+
+### Sprint 3
+Implement a command-line interface so that members of staff can use the till.
 
 ## Structure and approach
 I employed a strict TDD approach for this challenge, achieving approximately 100% test coverage from 155 tests. I focused on following OOP principles (such as encapsulation and abstraction), the single-responsibility principle, and class decoupling, ensuring that my unit tests mocked other classes. The only exception to this is the CLI class, for which I took more of a procedural approach.
