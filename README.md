@@ -41,6 +41,7 @@ Cash:                   $25.00
 Change:                  $3.68
 ```
 
+### Requirements
 Here are the requirements I tasked myself with fulfilling:
 
 ### Sprint 1
