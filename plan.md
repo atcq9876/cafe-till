@@ -130,41 +130,6 @@ class itemDiscount {
 }
 
 
-old test for priceCalculator
-  // it('provides a discount for orders over a certain price', () => {
-  //   const MockOrder = createMockOrder(['Tiramisu', 'Tiramisu', 'Affogato', 'Affogato', 'Affogato']);
-  //   const order = new MockOrder();
-  //   const priceCalculator = new PriceCalculator(order);
-  //   const minPriceForDiscount = 50;
-  //   const discount = 5;
-  //   priceCalculator.addTotalPriceDiscount(minPriceForDiscount, discount);
-
-  //   // 67.2 * 0.95 = 63.84
-  //   expect(priceCalculator.calculateTotalPrice()).toEqual(63.84);
-  // })
-
-
-
-
-<!-- class itemDiscount {
-    constructor(order, itemName, discountPercent) {
-        validate order
-        this._order = order
-        validate itemName
-        this._itemName = itemName
-        validate discountPercent
-        this._discountPercent = discountPercent
-    }
-    
-    itemDiscount() {
-        if (order.includes(itemName)) {
-            discount = menu.prices.item.price * this._discountPercent
-            return discount
-        }
-    }
-} -->
-
-
 
 Version 3
 ---------
