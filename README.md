@@ -55,7 +55,7 @@ Receipts must calculate and show the correct amount of tax (in this shop's case,
 Add functionality to handle discounts - both discounts for selected items (e.g., Tea, Cappucinos or Muffins) and on orders over a certain total value (e.g., 10% on orders over $20).
 Add functionality to take payment and calculate correct change.
 
-### Sprint 3
+### Sprint 3
 Implement a command-line interface so that members of staff can use the till.
 
 ## Structure and approach
