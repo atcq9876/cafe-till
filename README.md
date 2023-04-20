@@ -16,7 +16,6 @@ This program handles:
 
 ## Specification
 ### Sample receipt
-Sample receipt:
 
 ```
 2023.04.19 16:42:45
