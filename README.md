@@ -68,14 +68,13 @@ I employed a strict TDD approach for this challenge, achieving approximately 100
 4. Run ```npm install```
 
 ## How to run the code
-1. Enter the directory: ```cd cafe-till```.
-2. Run ```node cli.js```.
+1. Enter the directory: ```cd cafe-till```
+2. Run ```node cli.js```
 3. Enjoy!
 
 ## How to run tests on the code
-1. Run ```npx jest```.
-2. For test coverage, run ```npx jest --coverage```.
-Test coverage for the project can be seen in the screenshots below.
+1. Run ```npx jest```
+2. For test coverage, run ```npx jest --coverage```
 
 ## Screenshots
 #### The program producing a receipt identical to the sample
