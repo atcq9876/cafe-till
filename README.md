@@ -82,3 +82,6 @@ I employed a strict TDD approach for this challenge, committing after each passi
 
 #### A different series of input and output (no discounts)
 ![another screenshot of the program running in Node](./screenshots/other-example-screenshot.png)
+
+#### All 155 tests passing with c. 100% coverage
+![a screenshot of all 155 tests passing with c. 100% coverage](./screenshots/test-coverage-screenshot.png)
