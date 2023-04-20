@@ -80,8 +80,7 @@ I employed a strict TDD approach for this challenge, committing after each passi
 #### The program producing a receipt the same as the sample (but with the current date)
 ![a screenshot of the program meeting the acceptance criteria in Node](./screenshots/acceptance-criteria-screenshot.png)
 
-#### A different series of input and output (no discounts)
-![another screenshot of the program running in Node](./screenshots/other-example-screenshot.png)
+
 
 #### All 155 tests passing with c. 100% coverage
 ![a screenshot of all 155 tests passing with c. 100% coverage](./screenshots/test-coverage-screenshot.png)
