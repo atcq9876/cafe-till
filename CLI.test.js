@@ -751,7 +751,7 @@ describe('CLI', () => {
       cli.printReceipt();
 
       expect(cli._receipt).toEqual(expectedReceipt);
-      expect(console.log).toHaveBeenCalledWith(expectedReceipt);
+      expect(console.log).toHaveBeenCalledWith('\n' + expectedReceipt);
     })
 
     it('closes the app after printing the receipt', () => {
