@@ -16,8 +16,6 @@ This program handles:
 
 ## Specification
 ### Sample receipt
-Here is a sample receipt incorporating the above requirements:
-
 Sample receipt:
 
 ```
