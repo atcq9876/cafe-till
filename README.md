@@ -50,7 +50,7 @@ Implement a system that contains the business logic to produce receipts similar 
 Receipts must calculate and show the correct amount of tax (in this shop's case, 8.64%), as well as correct line totals and total amount. Don't worry about calculating discounts or change yet.
 
 ### Sprint 2
-Add functionality to handle discounts - both discounts for selected items (e.g., Tea, Cappucinos or Muffins) and on orders over a certain total value (e.g., 10% on orders over $20).
+Add functionality to handle discounts - both discounts for selected items (e.g., 5% off Tea, Cappucinos or Muffins) and on orders over a certain total value (e.g., 10% off orders over $20).
 Add functionality to take payment and calculate correct change.
 
 ### Sprint 3
