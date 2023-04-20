@@ -18,7 +18,7 @@ This program handles:
 ### Sample receipt
 
 ```
-2023.04.19 16:42:45
+2023.04.17 16:42:45
 The Coffee Connection
 
 123 Lakeside Way
@@ -77,10 +77,10 @@ I employed a strict TDD approach for this challenge, achieving approximately 100
 2. For test coverage, run ```npx jest --coverage```
 
 ## Screenshots
-#### The program producing a receipt identical to the sample
+#### The program producing a receipt identical to the sample (but with the current date)
 ![a screenshot of the program meeting the acceptance criteria in Node](./screenshots/acceptance-criteria-screenshot.png)
 
-#### A different series of input and output
+#### A different series of input and output (no discounts)
 ![another screenshot of the program running in Node](./screenshots/other-example-screenshot.png)
 
 #### All 155 tests passing with c. 100% coverage
