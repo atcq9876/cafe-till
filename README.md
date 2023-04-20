@@ -57,7 +57,7 @@ Add functionality to take payment and calculate correct change.
 Implement a command-line interface so that members of staff can use the till.
 
 ## Structure and approach
-I employed a strict TDD approach for this challenge, achieving approximately 100% test coverage from 155 tests. I focused on following OOP principles (such as encapsulation and abstraction), the single-responsibility principle, and class decoupling, ensuring that my unit tests mocked other classes. The only exception to this is the CLI class, for which I took more of a procedural approach.
+I employed a strict TDD approach for this challenge, committing after each passing test and each refactor. Approximately 100% test coverage from 155 tests was achieved. I focused on following OOP principles (such as encapsulation and abstraction), the single-responsibility principle, and class decoupling, ensuring that my unit tests mocked other classes. The only exception to this is the CLI class, for which I took more of a procedural approach.
 
 ## How to install the code
 1. If not already installed: Install Node Version Manager (NVM): ```brew install nvm```
