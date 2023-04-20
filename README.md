@@ -77,7 +77,7 @@ I employed a strict TDD approach for this challenge, achieving approximately 100
 2. For test coverage, run ```npx jest --coverage```
 
 ## Screenshots
-#### The program producing a receipt identical to the sample (but with the current date)
+#### The program producing a receipt the same as the sample (but with the current date)
 ![a screenshot of the program meeting the acceptance criteria in Node](./screenshots/acceptance-criteria-screenshot.png)
 
 #### A different series of input and output (no discounts)
