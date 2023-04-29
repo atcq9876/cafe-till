@@ -255,6 +255,6 @@ describe('integration', () => {
     cli._rl.input.emit('data', `5\n`);
     cli._rl.input.emit('data', `25\n`);
 
-    expect(console.log).toHaveBeenCalledWith('\n' + expectedReceipt);
+    expect(console.log).toHaveBeenCalledWith('\n\n' + expectedReceipt);
   })
 })
