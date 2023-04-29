@@ -76,6 +76,10 @@ I employed a strict TDD approach for this challenge, committing after each passi
 1. Run ```npx jest```
 2. For test coverage, run ```npx jest --coverage```
 
+## Demo video
+
+https://user-images.githubusercontent.com/109452908/235307913-98c82fdf-21a4-4396-9903-7675245cb252.mov
+
 ## Screenshots
 #### The program producing a receipt the same as the sample (but with the current date)
 ![a screenshot of the program meeting the acceptance criteria in Node](./screenshots/acceptance-criteria-screenshot.png)
